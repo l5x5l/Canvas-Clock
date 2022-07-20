@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="iconButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:tint">@color/color_selector_press</item>
+        <item name="android:scaleType">center</item>
+    </style>
+    <style name="textButton">
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/color_selector_press</item>
+        <item name="android:scaleType">center</item>
+    </style>
+</resources>
