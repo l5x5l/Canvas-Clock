@@ -11,7 +11,8 @@ object Mapper {
             clockIdx = clock.clockIdx,
             hourHandColor = clock.hourHandColor, hourHandWidth = clock.hourHandWidth,
             minuteHandColor = clock.minuteHandColor, minuteHandWidth = clock.minuteHandWidth,
-            secondHandColor = clock.secondHandColor, secondHandWidth = clock.secondHandWidth
+            secondHandColor = clock.secondHandColor, secondHandWidth = clock.secondHandWidth,
+            lastModifiedTime = clock.lastModifiedTime
         )
     }
 
@@ -26,7 +27,8 @@ object Mapper {
             hourHandColor = clockEntity.hourHandColor, hourHandWidth = clockEntity.hourHandWidth,
             minuteHandColor = clockEntity.minuteHandColor, minuteHandWidth = clockEntity.minuteHandWidth,
             secondHandColor = clockEntity.secondHandColor, secondHandWidth = clockEntity.secondHandWidth,
-            clockPartList = clockPartList
+            clockPartList = clockPartList,
+            lastModifiedTime = clockEntity.lastModifiedTime
         )
     }
 
@@ -48,7 +50,7 @@ object Mapper {
         )
     }
 
-    fun toClockPartData(clockPartEntity : ClockPartEntity) : ClockPartData {
+    private fun toClockPartData(clockPartEntity : ClockPartEntity) : ClockPartData {
         return ClockPartData(
             clockIdx = clockPartEntity.clockIdx,
             clockPartIdx = clockPartEntity.clockPartIdx,

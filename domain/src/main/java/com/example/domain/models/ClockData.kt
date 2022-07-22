@@ -9,7 +9,8 @@ data class ClockData (
     val minuteHandWidth : Int,
     val secondHandColor : String,
     val secondHandWidth : Int,
-    val uiStateData: UiStateData = UiStateData()
+    val uiStateData: UiStateData = UiStateData(),
+    val lastModifiedTime : String
 ) {
     companion object {
         fun getDefaultClockList() : ArrayList<ClockData> {
@@ -28,7 +29,8 @@ data class ClockData (
                     minuteHandColor = "#FF000000",
                     minuteHandWidth = 12,
                     secondHandColor = "#FFF06060",
-                    secondHandWidth = 8
+                    secondHandWidth = 8,
+                    lastModifiedTime = "2207221430"
                 )
             )
             defaultClockList.add(
@@ -40,7 +42,8 @@ data class ClockData (
                     minuteHandColor = "#FF000000",
                     minuteHandWidth = 12,
                     secondHandColor = "#FFF06060",
-                    secondHandWidth = 8
+                    secondHandWidth = 8,
+                    lastModifiedTime = "2207221430"
                 )
             )
             defaultClockList.add(
@@ -52,7 +55,8 @@ data class ClockData (
                     minuteHandColor = "#FF000000",
                     minuteHandWidth = 12,
                     secondHandColor = "#FFF06060",
-                    secondHandWidth = 8
+                    secondHandWidth = 8,
+                    lastModifiedTime = "2207221430"
                 )
             )
 

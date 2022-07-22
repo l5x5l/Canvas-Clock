@@ -10,5 +10,6 @@ data class ClockEntity(
     val minuteHandColor : String,
     val minuteHandWidth : Int,
     val secondHandColor : String,
-    val secondHandWidth : Int
+    val secondHandWidth : Int,
+    val lastModifiedTime : String
 )
