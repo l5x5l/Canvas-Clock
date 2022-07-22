@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">CanvasClock</string>
+
+    <string name="clock_list">시계 목록</string>
+    <string name="full_list">전체 목록</string>
 </resources>
