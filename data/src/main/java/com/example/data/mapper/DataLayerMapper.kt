@@ -5,7 +5,7 @@ import com.example.data.datasource.room.entities.ClockPartEntity
 import com.example.domain.models.ClockData
 import com.example.domain.models.ClockPartData
 
-object Mapper {
+object DataLayerMapper {
     fun toClockEntity(clock : ClockData) : ClockEntity {
         return ClockEntity(
             clockIdx = clock.clockIdx,

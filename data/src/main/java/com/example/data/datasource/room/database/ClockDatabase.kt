@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.data.datasource.room.dao.ClockDao
 import com.example.data.datasource.room.entities.ClockEntity
 import com.example.data.datasource.room.entities.ClockPartEntity
-import com.example.data.mapper.Mapper
+import com.example.data.mapper.DataLayerMapper
 import com.example.domain.models.ClockData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -33,9 +33,9 @@ abstract class ClockDatabase : RoomDatabase() {
     suspend fun setInitData(){
         val defaultClockList = ClockData.getDefaultClockList()
         for (defaultClock in defaultClockList) {
-            clockDao().insertClock(Mapper.toClockEntity(clock =defaultClock))
+            clockDao().insertClock(DataLayerMapper.toClockEntity(clock =defaultClock))
             for (clockPart in defaultClock.clockPartList){
-                clockDao().insertClockPart(Mapper.toClockPartEntity(clockPart = clockPart))
+                clockDao().insertClockPart(DataLayerMapper.toClockPartEntity(clockPart = clockPart))
             }
         }
     }
