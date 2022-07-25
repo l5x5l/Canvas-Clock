@@ -5,7 +5,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import com.example.domain.mapper.DomainLayerMapper
+import com.example.domain.models.ClockData
 import com.example.domain.models.ClockPartData
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.cos
+import kotlin.math.sin
 
 fun drawClock(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx : Int, my : Int, radius : Int) {
     for (clockPart in clockPartList) {
@@ -51,4 +56,55 @@ fun drawClock(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx : In
             canvas.drawPath(strokePath, strokePaint)
         }
     }
+}
+
+fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius : Int, is24HourMode : Boolean = true){
+    val toRadian = (Math.PI / 180).toFloat()
+
+    val calendar = Calendar.getInstance()
+
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+    val second = calendar.get(Calendar.SECOND)
+
+    val secondAngle = (second * 6 - 90) * toRadian
+    val minuteAngle = (minute * 6 - 90) * toRadian
+    val hourAngle = if (is24HourMode){
+        ((hour * 15 + minute * 0.25f - 90) * toRadian)
+    } else {
+        ((hour * 30 + minute * 0.5f - 90) * toRadian)
+    }
+
+    val secondX = (mx + (radius * 1f) * cos(secondAngle))
+    val secondY = (my + (radius * 1f) * sin(secondAngle))
+
+    val secondPaint = Paint()
+    secondPaint.style = Paint.Style.STROKE
+    secondPaint.color = Color.parseColor(clock.secondHandColor)
+    secondPaint.strokeCap = Paint.Cap.ROUND
+    secondPaint.strokeJoin = Paint.Join.ROUND
+    secondPaint.strokeWidth = clock.secondHandWidth.toFloat()
+    canvas.drawLine(mx.toFloat(), my.toFloat(), secondX, secondY, secondPaint)
+
+    val minuteX = (mx + (radius * 0.8f) * cos(minuteAngle))
+    val minuteY = (my + (radius * 0.8f) * sin(minuteAngle))
+
+    val minutePaint = Paint()
+    minutePaint.style = Paint.Style.STROKE
+    minutePaint.color = Color.parseColor(clock.minuteHandColor)
+    minutePaint.strokeCap = Paint.Cap.ROUND
+    minutePaint.strokeJoin = Paint.Join.ROUND
+    minutePaint.strokeWidth = clock.minuteHandWidth.toFloat()
+    canvas.drawLine(mx.toFloat(), my.toFloat(), minuteX, minuteY, minutePaint)
+
+    val hourX = (mx + (radius * 0.5f) * cos(hourAngle))
+    val hourY = (my + (radius * 0.5f) * sin(hourAngle))
+
+    val hourPaint = Paint()
+    hourPaint.style = Paint.Style.STROKE
+    hourPaint.color = Color.parseColor(clock.hourHandColor)
+    hourPaint.strokeCap = Paint.Cap.ROUND
+    hourPaint.strokeJoin = Paint.Join.ROUND
+    hourPaint.strokeWidth = clock.hourHandWidth.toFloat()
+    canvas.drawLine(mx.toFloat(), my.toFloat(), hourX, hourY, hourPaint)
 }
