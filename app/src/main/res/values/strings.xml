@@ -3,4 +3,7 @@
 
     <string name="clock_list">시계 목록</string>
     <string name="full_list">전체 목록</string>
+
+    <string name="form_time">%1$02d:%2$02d</string>
+    <string name="form_date">%1$d월 %2$d일</string>
 </resources>
