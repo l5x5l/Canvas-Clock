@@ -49,7 +49,7 @@ data class ClockData (
             defaultClockList.add(
                 ClockData(
                     clockIdx = 2,
-                    clockPartList = ClockPartData.getDefaultClockPartList(clockIdx = 2, partAmount = 7, firstColor = "#FF000000", secondColor = "#FFFFFFFF", strokeColor = "#FF000000", strokeWidth = 2, startRadius = 0, middleRadius = 90, endRadius = 50),
+                    clockPartList = ClockPartData.getDefaultClockPartList(clockIdx = 2, partAmount = 8, firstColor = "#FF000000", secondColor = "#FFFFFFFF", strokeColor = "#FF000000", strokeWidth = 2, startRadius = 0, middleRadius = 90, endRadius = 50),
                     hourHandColor = "#FF000000",
                     hourHandWidth = 16,
                     minuteHandColor = "#FF000000",
