@@ -7,7 +7,6 @@ import android.graphics.Path
 import com.example.domain.mapper.DomainLayerMapper
 import com.example.domain.models.ClockData
 import com.example.domain.models.ClockPartData
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.cos
 import kotlin.math.sin
@@ -58,14 +57,8 @@ fun drawClock(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx : In
     }
 }
 
-fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius : Int, is24HourMode : Boolean = true){
+fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius : Int, is24HourMode : Boolean = true, hour : Int, minute : Int, second : Int){
     val toRadian = (Math.PI / 180).toFloat()
-
-    val calendar = Calendar.getInstance()
-
-    val hour = calendar.get(Calendar.HOUR_OF_DAY)
-    val minute = calendar.get(Calendar.MINUTE)
-    val second = calendar.get(Calendar.SECOND)
 
     val secondAngle = (second * 6 - 90) * toRadian
     val minuteAngle = (minute * 6 - 90) * toRadian

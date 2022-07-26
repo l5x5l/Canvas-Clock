@@ -13,6 +13,10 @@ class ClockTimerView(context : Context, attrs : AttributeSet) : View(context, at
     private var my = 0
     private var radius = 0
 
+    private var hour = 0
+    private var minute = 15
+    private var second = 25
+
     private var is24HourMode = false
 
     private lateinit var clockData: ClockData
@@ -34,6 +38,12 @@ class ClockTimerView(context : Context, attrs : AttributeSet) : View(context, at
         clockData = newClock
     }
 
+    fun setTime(hour : Int, minute : Int, second : Int){
+        this.hour = hour
+        this.minute = minute
+        this.second = second
+    }
+
     fun invalidateTimerHand(){
         invalidate()
     }
@@ -42,7 +52,7 @@ class ClockTimerView(context : Context, attrs : AttributeSet) : View(context, at
         super.draw(canvas)
 
         canvas?.let {
-            drawTimeHand(canvas = canvas, clock = clockData, mx = mx, my = my, radius = radius, is24HourMode = is24HourMode)
+            drawTimeHand(canvas = canvas, clock = clockData, mx = mx, my = my, radius = radius, is24HourMode = is24HourMode, hour = hour, minute = minute, second = second)
         }
     }
 }

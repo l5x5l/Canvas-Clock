@@ -7,6 +7,6 @@ class UseCaseGetMainClock @Inject constructor(private val repository : ClockRepo
     suspend fun execute(amount : Int) = repository.getRandomClockList(amount = amount)
 }
 
-class UseCaseGetRandomClock @Inject constructor(private val repository: ClockRepository) {
-    suspend fun execute() = repository.getRecentClockList(5)
+class UseCaseGetRecentClock @Inject constructor(private val repository: ClockRepository) {
+    suspend fun execute(amount : Int?) = repository.getRecentClockList(amount = amount)
 }
