@@ -25,6 +25,7 @@ data class ClockPartEntity(
     val secondColor : String,
     val startRadius : Int,
     val middleRadius : Int,
+    val useMiddleRadius : Boolean = true,
     val endRadius : Int,
     val useMiddleLineStroke : Boolean,
     val strokeColor : String,
