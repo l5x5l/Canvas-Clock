@@ -3,16 +3,16 @@ package com.example.domain.models
 import java.io.Serializable
 
 data class ClockData (
-    val clockIdx : Int,
-    val clockPartList : ArrayList<ClockPartData>,
-    val hourHandColor : String,
-    val hourHandWidth : Int,
-    val minuteHandColor : String,
-    val minuteHandWidth : Int,
-    val secondHandColor : String,
-    val secondHandWidth : Int,
+    val clockIdx : Int = 0,
+    val clockPartList : ArrayList<ClockPartData> = arrayListOf(),
+    val hourHandColor : String = "#FF000000",
+    val hourHandWidth : Int = 12,
+    val minuteHandColor : String = "#FF000000",
+    val minuteHandWidth : Int = 6,
+    val secondHandColor : String = "#FF000000",
+    val secondHandWidth : Int = 6,
     val uiStateData: UiStateData = UiStateData(),
-    val lastModifiedTime : String
+    val lastModifiedTime : String = "2201010000"
 ) : Serializable {
     companion object {
         fun getDefaultClockList() : ArrayList<ClockData> {
