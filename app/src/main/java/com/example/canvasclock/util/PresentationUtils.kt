@@ -57,6 +57,34 @@ fun drawClock(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx : In
     }
 }
 
+fun drawClockIcon(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx : Int, my : Int, radius : Int) {
+    for (clockPart in clockPartList) {
+        val coordinateClockPart = DomainLayerMapper.toCoordinateClockPartData(clockPartData = clockPart, viewMx = mx, viewMy = my, viewRadius = radius)
+
+        val paint1 = Paint()
+        paint1.color = Color.parseColor("#9EA4AA")
+        paint1.style = Paint.Style.STROKE
+
+        val path1 = Path()
+        path1.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
+        path1.lineTo(coordinateClockPart.endLeftCoordinate.x, coordinateClockPart.endLeftCoordinate.y)
+        path1.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
+        path1.close()
+        canvas.drawPath(path1, paint1)
+
+        val paint2 = Paint()
+        paint2.color = Color.parseColor("#9EA4AA")
+        paint2.style = Paint.Style.STROKE
+
+        val path2 = Path()
+        path2.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
+        path2.lineTo(coordinateClockPart.endRightCoordinate.x, coordinateClockPart.endRightCoordinate.y)
+        path2.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
+        path2.close()
+        canvas.drawPath(path2, paint2)
+    }
+}
+
 fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius : Int, is24HourMode : Boolean = true, hour : Int, minute : Int, second : Int){
     val toRadian = (Math.PI / 180).toFloat()
 

@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
+import com.example.canvasclock.R
 import com.example.canvasclock.util.drawClock
+import com.example.canvasclock.util.drawClockIcon
 import com.example.domain.models.ClockPartData
 import kotlin.math.min
 
@@ -13,6 +15,11 @@ class ClockShapeView(context: Context, attrs : AttributeSet) : View(context, att
     private var mx = 0
     private var my = 0
     private var radius = 0
+    private var isIconMode = false
+
+    init {
+        isIconMode = context.obtainStyledAttributes(attrs, R.styleable.ClockShapeView).getBoolean(R.styleable.ClockShapeView_iconMode, false)
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -39,7 +46,11 @@ class ClockShapeView(context: Context, attrs : AttributeSet) : View(context, att
         super.draw(canvas)
 
         if (canvas != null && ::clockPartList.isInitialized){
-            drawClock(canvas, clockPartList, mx, my, radius)
+            if (isIconMode){
+                drawClockIcon(canvas, clockPartList, mx, my, radius)
+            } else {
+                drawClock(canvas, clockPartList, mx, my, radius)
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.canvasclock.ui.page.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -9,7 +10,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.canvasclock.R
 import com.example.canvasclock.config.BaseActivity
+import com.example.canvasclock.config.INTENT_KEY_CLOCK
 import com.example.canvasclock.databinding.ActivityMainBinding
+import com.example.canvasclock.ui.page.clock_detail.ClockDetailActivity
 import com.example.canvasclock.ui.recycler.adapter.MainClockAdapter
 import com.example.canvasclock.ui.recycler.decoration.Grid3Decoration
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,7 +78,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
 
     override fun setButton() {
-
+        binding.viewClockShape.setOnClickListener {
+            val intent = Intent(this, ClockDetailActivity::class.java)
+            intent.putExtra(INTENT_KEY_CLOCK, viewModel.mainClockState.value.value?.get(0))
+            startActivity(intent)
+        }
     }
 
     override fun setRecyclerView() {

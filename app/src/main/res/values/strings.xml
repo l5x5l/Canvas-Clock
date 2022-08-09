@@ -6,4 +6,9 @@
 
     <string name="form_time">%1$02d:%2$02d</string>
     <string name="form_date">%1$d월 %2$d일</string>
+
+    <string name="modify_time_handle_color">시/분/초침 색상 수정</string>
+    <string name="modify_clock_parts">시계 파츠 수정</string>
+
+    <string name="modify">수정하기</string>
 </resources>
