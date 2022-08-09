@@ -1,5 +1,7 @@
 package com.example.domain.models
 
+import java.io.Serializable
+
 data class ClockData (
     val clockIdx : Int,
     val clockPartList : ArrayList<ClockPartData>,
@@ -11,7 +13,7 @@ data class ClockData (
     val secondHandWidth : Int,
     val uiStateData: UiStateData = UiStateData(),
     val lastModifiedTime : String
-) {
+) : Serializable {
     companion object {
         fun getDefaultClockList() : ArrayList<ClockData> {
             val defaultClockList = arrayListOf<ClockData>()

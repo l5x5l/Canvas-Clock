@@ -1,5 +1,7 @@
 package com.example.domain.models
 
+import java.io.Serializable
+
 data class ClockPartData (
     val clockIdx : Int,
     val clockPartIdx : Int,
@@ -16,7 +18,7 @@ data class ClockPartData (
     val strokeWidth : Int,
     val uiState : UiStateData = UiStateData(),
     var priority : Int
-) {
+) : Serializable {
     companion object {
         fun getDefaultClockPartList(clockIdx : Int, partAmount : Int, firstColor : String, secondColor : String, strokeColor: String = "#FF000000", strokeWidth: Int = 0, startRadius: Int = 0, middleRadius: Int = 90, endRadius: Int = 50) : ArrayList<ClockPartData> {
             val range = 360f / partAmount
