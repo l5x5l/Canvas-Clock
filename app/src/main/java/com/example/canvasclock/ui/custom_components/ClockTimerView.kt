@@ -52,7 +52,19 @@ class ClockTimerView(context : Context, attrs : AttributeSet) : View(context, at
         super.draw(canvas)
 
         canvas?.let {
-            drawTimeHand(canvas = canvas, clock = clockData, mx = mx, my = my, radius = radius, is24HourMode = is24HourMode, hour = hour, minute = minute, second = second)
+            if (::clockData.isInitialized) {
+                drawTimeHand(
+                    canvas = canvas,
+                    clock = clockData,
+                    mx = mx,
+                    my = my,
+                    radius = radius,
+                    is24HourMode = is24HourMode,
+                    hour = hour,
+                    minute = minute,
+                    second = second
+                )
+            }
         }
     }
 }
