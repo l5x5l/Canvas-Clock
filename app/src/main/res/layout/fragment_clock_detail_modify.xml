@@ -8,6 +8,7 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutbtn_modify_handle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_container_normal_light"
@@ -33,6 +34,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutbtn_modify_shape"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
