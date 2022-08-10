@@ -6,10 +6,13 @@
     <dimen name="margin_very_small">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_very_large">40dp</dimen>
 
     <dimen name="padding_very_small">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_middle">16dp</dimen>
 
     <dimen name="clock_part_item_height">48dp</dimen>
+    <dimen name="seekbar_height">32dp</dimen>
 </resources>

@@ -12,6 +12,21 @@
 
     <string name="modify">수정하기</string>
     <string name="delete">삭제하기</string>
+    <string name="cancel">취소하기</string>
     <string name="save">저장하기</string>
     <string name="add_with_plus">+ 추가하기</string>
+
+    <string name="complete">완료</string>
+
+    <string name="start_time">시작 시각</string>
+    <string name="end_time">종료 시각</string>
+    <string name="color1">색상1</string>
+    <string name="color2">색상2</string>
+    <string name="start_point">시작 지점</string>
+    <string name="middle_point">중간 지점</string>
+    <string name="end_point">종료 지점</string>
+    <string name="stroke_color">테두리 색상</string>
+    <string name="stroke_width">테두리 두께</string>
+    <string name="use_middle_stroke">중앙선 테두리 사용</string>
+    <string name="not_use">사용안함</string>
 </resources>
