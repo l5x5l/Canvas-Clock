@@ -11,4 +11,7 @@
     <string name="modify_clock_parts">시계 파츠 수정</string>
 
     <string name="modify">수정하기</string>
+    <string name="delete">삭제하기</string>
+    <string name="save">저장하기</string>
+    <string name="add_with_plus">+ 추가하기</string>
 </resources>
