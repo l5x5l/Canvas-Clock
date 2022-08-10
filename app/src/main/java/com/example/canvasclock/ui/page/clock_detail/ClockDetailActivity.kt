@@ -1,5 +1,6 @@
 package com.example.canvasclock.ui.page.clock_detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -13,6 +14,7 @@ import com.example.canvasclock.config.INTENT_KEY_CLOCK
 import com.example.canvasclock.databinding.ActivityClockDetailBinding
 import com.example.canvasclock.ui.page.clock_detail.modify.ClockDetailModifyFragment
 import com.example.canvasclock.ui.page.clock_detail.parts.ClockDetailPartsFragment
+import com.example.canvasclock.ui.page.clock_modify_shape.ClockModifyShapeActivity
 import com.example.domain.models.ClockData
 import kotlinx.coroutines.launch
 
@@ -73,5 +75,10 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
     private fun initFragment(){
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, modifyFragment).hide(modifyFragment).add(binding.layoutFragment.id, partsFragment).commit()
         currentFragment = partsFragment
+    }
+
+    fun moveToModifyShape(){
+        val intent = Intent(this, ClockModifyShapeActivity::class.java)
+        startActivity(intent)
     }
 }

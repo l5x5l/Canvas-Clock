@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="clockPart"
+            type="com.example.domain.models.ClockPartData" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginHorizontal="@dimen/margin_normal">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_container"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/clock_part_item_height"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:paddingHorizontal="@dimen/padding_middle"
+            android:background="@drawable/selector_clock_part_modify">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/margin_small"
+                tools:text="10:00 ~ 13:00"/>
+
+            <include
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/view_color2"
+                layout="@layout/view_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <include
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/view_color1"
+                layout="@layout/view_color"
+                app:layout_constraintEnd_toStartOf="@id/view_color2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:checked="@{clockPart.uiState.selected}"/>
+
+    </LinearLayout>
+
+</layout>

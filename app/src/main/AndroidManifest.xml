@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.page.clock_detail.ClockDetailActivity"/>
+        <activity android:name=".ui.page.clock_modify_shape.ClockModifyShapeActivity"/>
     </application>
 
 </manifest>
