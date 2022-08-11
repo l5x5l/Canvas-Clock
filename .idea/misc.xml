@@ -36,6 +36,7 @@
         <entry key="app/src/main/res/layout/view_clock.xml" value="0.18206521739130435" />
         <entry key="app/src/main/res/layout/view_color.xml" value="1.0" />
         <entry key="app/src/main/res/layout/view_color_picker.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/view_time_picker.xml" value="0.25" />
       </map>
     </option>
   </component>

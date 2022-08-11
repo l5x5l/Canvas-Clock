@@ -15,6 +15,7 @@ import com.example.canvasclock.config.ADD_MODE
 import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.databinding.ActivityClockModifySinglePartBinding
 import com.example.canvasclock.models.ClockPartColorComponent
+import com.example.canvasclock.models.ClockPartTimeComponent
 import com.example.domain.utils.angleToTime
 import kotlinx.coroutines.launch
 
@@ -39,6 +40,15 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             viewModel.saveToMiddle()
         })
         binding.viewColorPicker.attachChangeCallbackFunction(::changeColor)
+
+        binding.viewTimePicker.setButtonCallback(cancelCallback = {
+            hideTimePicker()
+            viewModel.rollbackTime()
+        }, selectCallback = {
+            hideTimePicker()
+            viewModel.saveToMiddle()
+        })
+        binding.viewTimePicker.attachChangeCallbackFunction(::changeTime)
 
 
         binding.viewClockShape.linkClockInfo(viewModel.getCurrentClockPart())
@@ -148,8 +158,21 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             viewModel.pickedColorComponent = ClockPartColorComponent.STROKE
             showColorPicker()
         }
+
+        binding.tvbtnStartTime.setOnClickListener {
+            viewModel.pickedTimeComponent = ClockPartTimeComponent.START
+            binding.viewTimePicker.setDate(viewModel.changedClockPartAttr.value.startAngle)
+            showTimePicker()
+        }
+
+        binding.tvbtnEndTime.setOnClickListener {
+            viewModel.pickedTimeComponent = ClockPartTimeComponent.END
+            binding.viewTimePicker.setDate(viewModel.changedClockPartAttr.value.endAngle)
+            showTimePicker()
+        }
     }
 
+    // 함수 분리 필요
     private fun showColorPicker() {
         binding.viewColorPicker.setColorInUse()
         binding.nestedColorPicker.visibility = View.VISIBLE
@@ -164,5 +187,17 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
 
     private fun changeColor(colorString : String) {
         viewModel.setCurrentColor(colorString)
+    }
+
+    private fun showTimePicker(){
+        binding.nestedTimePicker.visibility = View.VISIBLE
+    }
+
+    private fun hideTimePicker(){
+        binding.nestedTimePicker.visibility = View.GONE
+    }
+
+    private fun changeTime(hour : Int, minute : Int) {
+        viewModel.setTimeAngle(hour = hour, minute = minute)
     }
 }

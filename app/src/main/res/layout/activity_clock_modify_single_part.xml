@@ -394,5 +394,23 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_time_picker"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/guideline_vertical_center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="?attr/colorPrimary"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <com.example.canvasclock.ui.custom_components.TimePickerView
+                android:id="@+id/view_time_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="32dp"/>
+
+        </androidx.core.widget.NestedScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
