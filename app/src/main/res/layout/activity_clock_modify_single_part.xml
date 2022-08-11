@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.5"
+            android:orientation="horizontal"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivbtn_back"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="@dimen/margin_very_small"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:scaleType="center"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivbtn_back"
+            app:layout_constraintBottom_toBottomOf="@id/ivbtn_back"
+            android:text="@string/save"/>
+
+        <FrameLayout
+            android:id="@+id/layout_clock"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toBottomOf="@id/ivbtn_back"
+            app:layout_constraintBottom_toTopOf="@id/guideline_vertical_center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_small">
+
+            <com.example.canvasclock.ui.custom_components.ClockShapeView
+                android:id="@+id/view_clock_shape"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.example.canvasclock.ui.custom_components.ClockTimerView
+                android:id="@+id/view_clock_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/guideline_vertical_center"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_middle">
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_horizontal_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_percent="0.5"
+                    android:orientation="vertical"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_seekbar_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_end="68dp"
+                    android:orientation="vertical"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_time_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_begin="112dp"
+                    android:orientation="vertical"/>
+
+                <!-- 시작 시각 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_time"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    style="@style/title1"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvbtn_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/guideline_time_start"
+                    app:layout_constraintTop_toTopOf="@id/tv_start_time"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_start_time"
+                    style="@style/body1"
+                    tools:text="03:00"/>
+
+                <!-- 종료 시각 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_time"
+                    app:layout_constraintTop_toBottomOf="@id/tv_start_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_large"
+                    style="@style/title1"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvbtn_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/guideline_time_start"
+                    app:layout_constraintTop_toTopOf="@id/tv_end_time"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_end_time"
+                    style="@style/body1"
+                    tools:text="03:00"/>
+
+                <!-- 색상1 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_color_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/color1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_end_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_large"
+                    style="@style/title1"/>
+
+                <include
+                    android:id="@+id/viewbtn_color1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    layout="@layout/view_color"
+                    android:layout_marginStart="@dimen/margin_large"
+                    app:layout_constraintStart_toEndOf="@id/tv_color_1"
+                    app:layout_constraintTop_toTopOf="@id/tv_color_1"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_color_1"/>
+
+                <!-- 색상 2 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_color_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/color2"
+                    app:layout_constraintTop_toTopOf="@id/tv_color_1"
+                    app:layout_constraintStart_toStartOf="@id/guideline_horizontal_center"
+                    style="@style/title1"/>
+
+                <include
+                    android:id="@+id/viewbtn_color2"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    layout="@layout/view_color"
+                    android:layout_marginStart="@dimen/margin_large"
+                    app:layout_constraintStart_toEndOf="@id/tv_color_2"
+                    app:layout_constraintTop_toTopOf="@id/tv_color_2"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_color_2"/>
+
+
+                <!-- 시작 지점 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_start_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_point"
+                    app:layout_constraintTop_toBottomOf="@id/tv_color_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_very_large"
+                    style="@style/title1"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_start_point"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/seekbar_start_point"
+                    app:layout_constraintBottom_toBottomOf="@id/seekbar_start_point"
+                    app:layout_constraintStart_toStartOf="@id/guideline_seekbar_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="center"
+                    android:background="@null"
+                    tools:text="100"/>
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekbar_start_point"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/seekbar_height"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:max="100"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
+                    app:layout_constraintTop_toBottomOf="@id/tv_start_point"
+                    android:thumb="@drawable/thumb_1"/>
+
+
+                <!-- 중간 지점 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_middle_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/middle_point"
+                    app:layout_constraintTop_toBottomOf="@id/seekbar_start_point"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_large"
+                    style="@style/title1"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_not_use_middle_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/tv_middle_point"
+                    app:layout_constraintTop_toTopOf="@id/tv_middle_point"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_middle_point"
+                    android:layout_marginStart="@dimen/margin_very_large"
+                    android:text="@string/not_use"
+                    style="@style/body2"/>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_not_use_middle_point"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_middle_point"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_middle_point"
+                    app:layout_constraintStart_toEndOf="@id/tv_not_use_middle_point"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:gravity="center"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_middle_point"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/seekbar_middle_point"
+                    app:layout_constraintBottom_toBottomOf="@id/seekbar_middle_point"
+                    app:layout_constraintStart_toStartOf="@id/guideline_seekbar_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="center"
+                    android:background="@null"
+                    tools:text="100"/>
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekbar_middle_point"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/seekbar_height"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:max="100"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
+                    app:layout_constraintTop_toBottomOf="@id/tv_middle_point"
+                    android:thumb="@drawable/thumb_2"/>
+
+                <!-- 종료 지점 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_end_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_point"
+                    app:layout_constraintTop_toBottomOf="@id/seekbar_middle_point"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_large"
+                    style="@style/title1"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_end_point"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/seekbar_end_point"
+                    app:layout_constraintBottom_toBottomOf="@id/seekbar_end_point"
+                    app:layout_constraintStart_toStartOf="@id/guideline_seekbar_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="center"
+                    android:background="@null"
+                    tools:text="100"/>
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekbar_end_point"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/seekbar_height"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:max="100"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
+                    app:layout_constraintTop_toBottomOf="@id/tv_end_point"
+                    android:thumb="@drawable/thumb_3"/>
+
+                <!-- 테두리 색 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_stroke_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stroke_color"
+                    app:layout_constraintTop_toBottomOf="@id/seekbar_end_point"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_very_large"
+                    style="@style/title1"/>
+
+                <include
+                    android:id="@+id/viewbtn_stroke_color"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    layout="@layout/view_color"
+                    android:layout_marginStart="@dimen/margin_large"
+                    app:layout_constraintStart_toEndOf="@id/tv_stroke_color"
+                    app:layout_constraintTop_toTopOf="@id/tv_stroke_color"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_stroke_color"/>
+
+                <!-- 테두리 두께 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_stroke_width"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stroke_width"
+                    app:layout_constraintTop_toBottomOf="@id/tv_stroke_color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_large"
+                    style="@style/title1"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_stroke_width"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/seekbar_stroke_width"
+                    app:layout_constraintBottom_toBottomOf="@id/seekbar_stroke_width"
+                    app:layout_constraintStart_toStartOf="@id/guideline_seekbar_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="center"
+                    android:background="@null"
+                    tools:text="100"/>
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekbar_stroke_width"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/seekbar_height"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:max="100"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
+                    app:layout_constraintTop_toBottomOf="@id/tv_stroke_width"
+                    android:thumb="@drawable/thumb_1"/>
+
+                <!-- 중앙선 테두리 사용 -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_use_middle_stroke"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_middle_stroke"
+                    style="@style/title1"
+                    app:layout_constraintTop_toBottomOf="@id/seekbar_stroke_width"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/margin_large"/>
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_use_middle_line"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_use_middle_stroke"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_use_middle_stroke"
+                    app:layout_constraintStart_toEndOf="@id/tv_use_middle_stroke"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:gravity="center"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_color_picker"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/guideline_vertical_center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="invisible"
+            tools:visibility="gone">
+
+            <com.example.canvasclock.ui.custom_components.ColorPickerView
+                android:id="@+id/view_color_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="32dp"/>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

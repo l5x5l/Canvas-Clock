@@ -12,6 +12,7 @@ import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.config.BaseFragment
 import com.example.canvasclock.config.INTENT_KEY_CLOCK
 import com.example.canvasclock.databinding.ActivityClockDetailBinding
+import com.example.canvasclock.models.ModifyClock
 import com.example.canvasclock.ui.page.clock_detail.modify.ClockDetailModifyFragment
 import com.example.canvasclock.ui.page.clock_detail.parts.ClockDetailPartsFragment
 import com.example.canvasclock.ui.page.clock_modify_shape.ClockModifyShapeActivity
@@ -79,6 +80,7 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
 
     fun moveToModifyShape(){
         val intent = Intent(this, ClockModifyShapeActivity::class.java)
+        ModifyClock.getInstance().setOriginalClock(viewModel.mainClockState.value.value!!)
         startActivity(intent)
     }
 }

@@ -17,6 +17,15 @@
     <string name="add_with_plus">+ 추가하기</string>
 
     <string name="complete">완료</string>
+    <string name="cancellation">취소</string>
+
+    <string name="r">R</string>
+    <string name="b">B</string>
+    <string name="g">G</string>
+    <string name="transparency">투명도</string>
+    <string name="color_in_use">사용중인 색상</string>
+    <string name="selection">선택</string>
+
 
     <string name="start_time">시작 시각</string>
     <string name="end_time">종료 시각</string>
