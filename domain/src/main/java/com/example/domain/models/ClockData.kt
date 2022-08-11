@@ -64,5 +64,20 @@ data class ClockData (
 
             return defaultClockList
         }
+
+        fun deepCopy(originalClockData: ClockData) : ClockData{
+            val copiedClockPartList = arrayListOf<ClockPartData>()
+            for (clockPart in originalClockData.clockPartList) {
+                copiedClockPartList.add(ClockPartData.deepCopy(clockPart))
+            }
+
+            return ClockData(
+                clockIdx = originalClockData.clockIdx, clockPartList = copiedClockPartList,
+                hourHandColor = originalClockData.hourHandColor, hourHandWidth = originalClockData.hourHandWidth,
+                minuteHandColor = originalClockData.minuteHandColor, minuteHandWidth = originalClockData.minuteHandWidth,
+                secondHandColor = originalClockData.secondHandColor, secondHandWidth = originalClockData.secondHandWidth,
+                uiStateData = originalClockData.uiStateData.copy(), lastModifiedTime = originalClockData.lastModifiedTime
+            )
+        }
     }
 }
