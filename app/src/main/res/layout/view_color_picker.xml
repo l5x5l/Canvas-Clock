@@ -94,6 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/seekbar_height"
             android:max="255"
+            android:thumb="@drawable/thumb_red"
             app:layout_constraintStart_toStartOf="@id/guideline_content_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
             app:layout_constraintTop_toBottomOf="@id/tv_red"/>
@@ -128,6 +129,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/seekbar_height"
             android:max="255"
+            android:thumb="@drawable/thumb_green"
             app:layout_constraintStart_toStartOf="@id/guideline_content_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
             app:layout_constraintTop_toBottomOf="@id/tv_green"/>
@@ -162,6 +164,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/seekbar_height"
             android:max="255"
+            android:thumb="@drawable/thumb_blue"
             app:layout_constraintStart_toStartOf="@id/guideline_content_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
             app:layout_constraintTop_toBottomOf="@id/tv_blue"/>
@@ -196,6 +199,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/seekbar_height"
             android:max="100"
+            android:thumb="@drawable/thumb_1"
             app:layout_constraintStart_toStartOf="@id/guideline_content_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_seekbar_end"
             app:layout_constraintTop_toBottomOf="@id/tv_transparency"/>

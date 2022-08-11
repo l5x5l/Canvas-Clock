@@ -16,5 +16,6 @@
         <item name="windowNoTitle">true</item>
         <item name="android:textViewStyle">@style/text_default</item>
         <item name="android:overScrollMode">never</item>
+        <item name="android:progressTint">@color/gray_900</item>
     </style>
 </resources>
