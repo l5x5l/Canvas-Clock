@@ -39,8 +39,6 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
     var pickedTimeComponent : ClockPartTimeComponent = ClockPartTimeComponent.START
 
 
-
-
     // currentClock 에 시계 부품을 추가합니다.
     fun initViewModel(isAddMode : Boolean){
         if (isAddMode) {
@@ -156,6 +154,20 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
             _changedClockPartAttr.value = stateValue
         }
     }
+
+    fun setUseMiddleRadius(isUse : Boolean){
+        val stateValue = ClockPartData.deepCopy(changedClockPartAttr.value)
+        if (stateValue.useMiddleRadius != isUse){
+            for (clockPart in currentClock.clockPartList) {
+                if (clockPart.uiState.isSelected) {
+                    clockPart.useMiddleRadius = isUse
+                }
+            }
+            stateValue.useMiddleRadius = isUse
+            _changedClockPartAttr.value = stateValue
+        }
+    }
+
 
     fun setColorPickerInitColor() {
         val colorString = when(pickedColorComponent) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.viewModels
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.lifecycle.Lifecycle
@@ -176,6 +177,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             viewModel.pickedTimeComponent = ClockPartTimeComponent.END
             binding.viewTimePicker.setDate(viewModel.changedClockPartAttr.value.endAngle)
             showTimePicker()
+        }
+
+        binding.cbNotUseMiddlePoint.setOnClickListener { checkBox ->
+            checkBox as AppCompatCheckBox
+            viewModel.setUseMiddleRadius(!checkBox.isChecked)
         }
     }
 
