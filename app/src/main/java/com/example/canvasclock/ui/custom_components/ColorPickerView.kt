@@ -8,7 +8,9 @@ import android.widget.SeekBar
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.canvasclock.databinding.ViewColorPickerBinding
+import com.example.canvasclock.ui.recycler.adapter.ColorInUseAdapter
 import com.example.domain.utils.*
 import kotlin.math.roundToInt
 
@@ -38,6 +40,7 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
 
         setSeekbar()
         setEditText()
+        setRecyclerView()
     }
 
     fun setColor(colorString : String) {
@@ -151,6 +154,11 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
         }
     }
 
+    private fun setRecyclerView(){
+        binding.rvColorInUse.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvColorInUse.adapter = ColorInUseAdapter(changeCallback)
+    }
+
     private fun changeColorText(edittext : AppCompatEditText, colorText : String) {
         if (edittext.text.toString() != colorText) {
             edittext.setText(colorText)
@@ -170,8 +178,8 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
     }
 
     // 사용중인 색상 목록을 갱신할 때 호출
-    fun setColorInUse() {
-
+    fun setColorInUse(colorInUseSet : MutableSet<String>) {
+        (binding.rvColorInUse.adapter as ColorInUseAdapter).changeData(colorInUseSet)
     }
 
     fun setIsInit(){

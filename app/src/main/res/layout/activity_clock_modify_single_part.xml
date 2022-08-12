@@ -90,13 +90,24 @@
                     app:layout_constraintGuide_begin="112dp"
                     android:orientation="vertical"/>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_cannot_change_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/message_cannot_change_time_range_when_multiple_part_selected"
+                    android:visibility="gone"
+                    android:paddingBottom="@dimen/padding_middle"
+                    style="@style/caption"/>
+
                 <!-- 시작 시각 -->
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/start_time"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_cannot_change_time"
                     app:layout_constraintStart_toStartOf="parent"
                     style="@style/title1"/>
 
@@ -402,7 +413,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="?attr/colorPrimary"
             android:visibility="invisible"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <com.example.canvasclock.ui.custom_components.TimePickerView
                 android:id="@+id/view_time_picker"

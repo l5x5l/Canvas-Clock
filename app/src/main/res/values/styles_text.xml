@@ -48,4 +48,10 @@
         <item name="fontFamily">sans-serif</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="caption">
+        <item name="android:textSize">12sp</item>
+        <item name="lineHeight">16sp</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

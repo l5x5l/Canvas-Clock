@@ -72,6 +72,8 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
 
     fun getCurrentClockPart() = currentClock.clockPartList
 
+    fun getCurrentClock() = currentClock
+
     fun selectedClockPartAmount() = selectedClockPartAmount
 
     // 시간값을 수정합니다.

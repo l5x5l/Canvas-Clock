@@ -79,5 +79,15 @@ data class ClockData (
                 uiStateData = originalClockData.uiStateData.copy(), lastModifiedTime = originalClockData.lastModifiedTime
             )
         }
+
+        fun getColorSet(clock : ClockData) : MutableSet<String> {
+            val colorSet = mutableSetOf<String>()
+            for (clockPart in clock.clockPartList){
+                colorSet.add(clockPart.firstColor.uppercase())
+                colorSet.add(clockPart.secondColor.uppercase())
+                colorSet.add(clockPart.strokeColor.uppercase())
+            }
+            return colorSet
+        }
     }
 }

@@ -16,6 +16,7 @@ import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.databinding.ActivityClockModifySinglePartBinding
 import com.example.canvasclock.models.ClockPartColorComponent
 import com.example.canvasclock.models.ClockPartTimeComponent
+import com.example.domain.models.ClockData
 import com.example.domain.utils.angleToTime
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,12 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
         setObserver()
         setSeekbar()
         setButton()
+
+        if (viewModel.selectedClockPartAmount() >= 2) {
+            binding.tvbtnStartTime.isEnabled = false
+            binding.tvbtnEndTime.isEnabled = false
+            binding.tvCannotChangeTime.visibility = View.VISIBLE
+        }
 
         binding.viewColorPicker.setButtonCallback(cancelCallback = {
             hideColorPicker()
@@ -174,7 +181,7 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
 
     // 함수 분리 필요
     private fun showColorPicker() {
-        binding.viewColorPicker.setColorInUse()
+        binding.viewColorPicker.setColorInUse(ClockData.getColorSet(viewModel.getCurrentClock()))
         binding.nestedColorPicker.visibility = View.VISIBLE
         binding.viewColorPicker.setIsInit()
         viewModel.setColorPickerInitColor()
