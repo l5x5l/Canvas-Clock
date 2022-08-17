@@ -2,6 +2,8 @@ package com.example.canvasclock.ui.custom_components
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -27,6 +29,7 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
     private var my = 0
     private var radius = 0
     private var pointMapSet = false
+    private var isMultipleModify = false
 
     // 인터렉션 view mount_down 시 view 내의 position 저장
     private var relativeXPositionInViewStartPoint = 0f
@@ -57,8 +60,8 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
         my = (y + measuredHeight / 2).toInt()
     }
 
-    fun timeIntervalChangeButtonHide() {
-        // 시작, 종료시각 조정 비활성화
+    fun setMultipleModifyMode() {
+        isMultipleModify = true
         binding.viewbtnStartTimePoint.visibility = View.GONE
         binding.viewbtnEndTimePoint.visibility = View.GONE
     }
@@ -181,6 +184,8 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
+        var tempClockPart = ClockPartData()
+
         if (canvas != null && ::clockPartList.isInitialized){
             pointMapSet = false
             for (clockPart in clockPartList) {
@@ -188,6 +193,7 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
 
                 drawClockPart(canvas, coordinateClockPart)
                 if (clockPart.uiState.isSelected && !pointMapSet) {
+                    tempClockPart = clockPart
                     val startAngle = (clockPart.startAngle - 90) * toRadian
                     val endAngle = (clockPart.endAngle - 90) * toRadian
                     val startLineX = mx + (radius * cos(startAngle)).toFloat()
@@ -204,6 +210,29 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
                     pointMap[ClockPartPointAttr.CENTER] = Coordinate(mx.toFloat(), my.toFloat())
                 }
             }
+
+            // draw 순서 때문에 이곳에 배치
+            if (!isMultipleModify) {
+                val linePaint = Paint()
+                linePaint.style = Paint.Style.STROKE
+                linePaint.color = Color.parseColor("#3c000000")
+                linePaint.strokeCap = Paint.Cap.ROUND
+                linePaint.strokeJoin = Paint.Join.ROUND
+                linePaint.strokeWidth = 6f
+                canvas.drawLine(mx.toFloat(), my.toFloat(), pointMap[ClockPartPointAttr.START_TIME]!!.x, pointMap[ClockPartPointAttr.START_TIME]!!.y, linePaint)
+                canvas.drawLine(mx.toFloat(), my.toFloat(), pointMap[ClockPartPointAttr.END_TIME]!!.x, pointMap[ClockPartPointAttr.END_TIME]!!.y, linePaint)
+            }
+
+            val circlePaint = Paint()
+            circlePaint.style = Paint.Style.STROKE
+            circlePaint.color = Color.parseColor("#3c000000")
+            circlePaint.strokeWidth = 6f
+            canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.startRadius / 100f * radius, circlePaint)
+            if (tempClockPart.useMiddleRadius) {
+                canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.middleRadius / 100f * radius, circlePaint)
+            }
+            canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.endRadius / 100f * radius, circlePaint)
+
         }
 
         changePointViewPosition()
@@ -219,12 +248,10 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
         binding.viewbtnEndPoint.x = pointMap[ClockPartPointAttr.END]!!.x - (binding.viewbtnEndPoint.width / 2)
         binding.viewbtnEndPoint.y = pointMap[ClockPartPointAttr.END]!!.y - (binding.viewbtnEndPoint.height / 2)
 
-        if (binding.viewbtnStartTimePoint.visibility == View.VISIBLE) {
+        if (!isMultipleModify) {
             binding.viewbtnStartTimePoint.x = pointMap[ClockPartPointAttr.START_TIME]!!.x - (binding.viewbtnStartTimePoint.width / 2)
             binding.viewbtnStartTimePoint.y = pointMap[ClockPartPointAttr.START_TIME]!!.y - (binding.viewbtnStartTimePoint.height / 2)
-        }
 
-        if (binding.viewbtnEndTimePoint.visibility == View.VISIBLE) {
             binding.viewbtnEndTimePoint.x = pointMap[ClockPartPointAttr.END_TIME]!!.x - (binding.viewbtnEndTimePoint.width / 2)
             binding.viewbtnEndTimePoint.y = pointMap[ClockPartPointAttr.END_TIME]!!.y - (binding.viewbtnEndTimePoint.height / 2)
         }
