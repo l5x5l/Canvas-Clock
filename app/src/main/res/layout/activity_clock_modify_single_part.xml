@@ -404,8 +404,7 @@
             <com.example.canvasclock.ui.custom_components.ColorPickerView
                 android:id="@+id/view_color_picker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="32dp"/>
+                android:layout_height="wrap_content"/>
 
         </androidx.core.widget.NestedScrollView>
 
@@ -422,8 +421,7 @@
             <com.example.canvasclock.ui.custom_components.TimePickerView
                 android:id="@+id/view_time_picker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="32dp"/>
+                android:layout_height="wrap_content"/>
 
         </androidx.core.widget.NestedScrollView>
 
