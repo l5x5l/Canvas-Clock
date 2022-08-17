@@ -5,9 +5,11 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import android.widget.FrameLayout
 import com.example.canvasclock.databinding.ViewClockInteractionModifyBinding
 import com.example.canvasclock.models.ClockPartPointAttr
+import com.example.canvasclock.models.ClockPartTimeComponent
 import com.example.canvasclock.util.drawClockPart
 import com.example.domain.mapper.DomainLayerMapper
 import com.example.domain.models.ClockPartData
@@ -55,15 +57,24 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
         my = (y + measuredHeight / 2).toInt()
     }
 
-    fun timeIntervalChangeDeactivate() {
+    fun timeIntervalChangeButtonHide() {
         // 시작, 종료시각 조정 비활성화
+        binding.viewbtnStartTimePoint.visibility = View.GONE
+        binding.viewbtnEndTimePoint.visibility = View.GONE
+    }
+
+    // 시간을 조정하는 인터렉션 버튼을 비활성화 합니다.
+    fun setTimeIntervalChangeButtonEnable(enabled : Boolean){
+        binding.viewbtnStartTimePoint.isEnabled = enabled
+        binding.viewbtnEndTimePoint.isEnabled = enabled
     }
 
     fun linkClockInfo(newClockPartData : ArrayList<ClockPartData>) {
         clockPartList = newClockPartData
     }
 
-    fun initModifyAction(setStartRadius : (Int) -> Unit, setMiddleRadius : (Int) -> Unit, setEndRadius : (Int) -> Unit) {
+
+    fun initModifyAction(setStartRadius : (Int) -> Unit, setMiddleRadius : (Int) -> Unit, setEndRadius : (Int) -> Unit, setTimeAngle : (Float, ClockPartTimeComponent) -> Unit, saveTimeAngle : () -> Unit) {
         binding.viewbtnStartPoint.setOnTouchListener{ view, motionEvent ->
             when (motionEvent.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -117,6 +128,50 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
             }
             true
         }
+
+        binding.viewbtnStartTimePoint.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    relativeXPositionInViewStartTimePoint = motionEvent.x
+                    relativeYPositionInViewStartTimePoint = motionEvent.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val center = pointMap[ClockPartPointAttr.CENTER]!!
+                    val radian = atan2((view.y + motionEvent.y - relativeXPositionInViewStartTimePoint - center.y), (view.x + motionEvent.x - relativeYPositionInViewStartTimePoint - center.x))
+                    val degree = (radian * 180 / Math.PI + 90).mod(360.0)
+
+                    setTimeAngle(degree.toFloat(), ClockPartTimeComponent.START)
+                }
+                MotionEvent.ACTION_UP -> {
+                    saveTimeAngle()
+                    view.performClick()
+                }
+            }
+
+            true
+        }
+
+        binding.viewbtnEndTimePoint.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    relativeXPositionInViewEndTimePoint = motionEvent.x
+                    relativeYPositionInViewEndTimePoint = motionEvent.y
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val center = pointMap[ClockPartPointAttr.CENTER]!!
+                    val radian = atan2((view.y + motionEvent.y - relativeXPositionInViewEndTimePoint - center.y), (view.x + motionEvent.x - relativeYPositionInViewEndTimePoint - center.x))
+                    val degree = (radian * 180 / Math.PI + 90).mod(360.0)
+
+                    setTimeAngle(degree.toFloat(), ClockPartTimeComponent.END)
+                }
+                MotionEvent.ACTION_UP -> {
+                    saveTimeAngle()
+                    view.performClick()
+                }
+            }
+
+            true
+        }
     }
 
     fun invalidateClock(){
@@ -135,10 +190,10 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
                 if (clockPart.uiState.isSelected && !pointMapSet) {
                     val startAngle = (clockPart.startAngle - 90) * toRadian
                     val endAngle = (clockPart.endAngle - 90) * toRadian
-                    val startLineX = mx + (mx + cos(radius * startAngle)).toFloat()
-                    val startLineY = my + (my + sin(radius * startAngle)).toFloat()
-                    val endLineX = mx + (mx + cos(radius * endAngle)).toFloat()
-                    val endLineY = my + (my + sin(radius * endAngle)).toFloat()
+                    val startLineX = mx + (radius * cos(startAngle)).toFloat()
+                    val startLineY = my + (radius * sin(startAngle)).toFloat()
+                    val endLineX = mx + (radius * cos(endAngle)).toFloat()
+                    val endLineY = my + (radius * sin(endAngle)).toFloat()
 
                     pointMapSet = true
                     pointMap[ClockPartPointAttr.START] = coordinateClockPart.startCoordinate
@@ -163,5 +218,15 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
 
         binding.viewbtnEndPoint.x = pointMap[ClockPartPointAttr.END]!!.x - (binding.viewbtnEndPoint.width / 2)
         binding.viewbtnEndPoint.y = pointMap[ClockPartPointAttr.END]!!.y - (binding.viewbtnEndPoint.height / 2)
+
+        if (binding.viewbtnStartTimePoint.visibility == View.VISIBLE) {
+            binding.viewbtnStartTimePoint.x = pointMap[ClockPartPointAttr.START_TIME]!!.x - (binding.viewbtnStartTimePoint.width / 2)
+            binding.viewbtnStartTimePoint.y = pointMap[ClockPartPointAttr.START_TIME]!!.y - (binding.viewbtnStartTimePoint.height / 2)
+        }
+
+        if (binding.viewbtnEndTimePoint.visibility == View.VISIBLE) {
+            binding.viewbtnEndTimePoint.x = pointMap[ClockPartPointAttr.END_TIME]!!.x - (binding.viewbtnEndTimePoint.width / 2)
+            binding.viewbtnEndTimePoint.y = pointMap[ClockPartPointAttr.END_TIME]!!.y - (binding.viewbtnEndTimePoint.height / 2)
+        }
     }
 }

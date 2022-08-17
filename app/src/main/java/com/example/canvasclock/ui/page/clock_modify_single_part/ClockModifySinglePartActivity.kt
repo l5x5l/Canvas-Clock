@@ -38,6 +38,7 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             binding.tvbtnStartTime.isEnabled = false
             binding.tvbtnEndTime.isEnabled = false
             binding.tvCannotChangeTime.visibility = View.VISIBLE
+            binding.viewClockShape.timeIntervalChangeButtonHide()
         }
 
         binding.viewColorPicker.setButtonCallback(cancelCallback = {
@@ -56,11 +57,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             hideTimePicker()
             viewModel.saveToMiddle()
         })
-        binding.viewTimePicker.attachChangeCallbackFunction(::changeTime)
+        binding.viewTimePicker.attachChangeCallbackFunction(viewModel::setTimeAngle)
 
 
         binding.viewClockShape.linkClockInfo(viewModel.getCurrentClockPart())
-        binding.viewClockShape.initModifyAction(setStartRadius = viewModel::setStartRadius, setMiddleRadius = viewModel::setMiddleRadius, setEndRadius = viewModel::setEndRadius)
+        binding.viewClockShape.initModifyAction(setStartRadius = viewModel::setStartRadius, setMiddleRadius = viewModel::setMiddleRadius, setEndRadius = viewModel::setEndRadius, setTimeAngle = viewModel::setTimeAngle, saveTimeAngle = viewModel::saveToMiddle)
     }
 
     private fun setObserver(){
@@ -169,13 +170,13 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
         }
 
         binding.tvbtnStartTime.setOnClickListener {
-            viewModel.pickedTimeComponent = ClockPartTimeComponent.START
+            binding.viewTimePicker.setTargetTimeComponent(ClockPartTimeComponent.START)
             binding.viewTimePicker.setDate(viewModel.changedClockPartAttr.value.startAngle)
             showTimePicker()
         }
 
         binding.tvbtnEndTime.setOnClickListener {
-            viewModel.pickedTimeComponent = ClockPartTimeComponent.END
+            binding.viewTimePicker.setTargetTimeComponent(ClockPartTimeComponent.END)
             binding.viewTimePicker.setDate(viewModel.changedClockPartAttr.value.endAngle)
             showTimePicker()
         }
@@ -205,13 +206,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
 
     private fun showTimePicker(){
         binding.nestedTimePicker.visibility = View.VISIBLE
+        binding.viewClockShape.setTimeIntervalChangeButtonEnable(enabled = false)
     }
 
     private fun hideTimePicker(){
         binding.nestedTimePicker.visibility = View.GONE
-    }
-
-    private fun changeTime(hour : Int, minute : Int) {
-        viewModel.setTimeAngle(hour = hour, minute = minute)
+        binding.viewClockShape.setTimeIntervalChangeButtonEnable(enabled = true)
     }
 }

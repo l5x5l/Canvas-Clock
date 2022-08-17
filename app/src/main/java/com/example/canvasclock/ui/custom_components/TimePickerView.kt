@@ -5,12 +5,18 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.canvasclock.databinding.ViewTimePickerBinding
+import com.example.canvasclock.models.ClockPartTimeComponent
 import com.example.domain.utils.angleToTime
 
 class TimePickerView(context : Context, attrs : AttributeSet) : ConstraintLayout(context, attrs) {
     private val binding = ViewTimePickerBinding.inflate(LayoutInflater.from(context), this, true)
+    private var timeComponent : ClockPartTimeComponent = ClockPartTimeComponent.START
 
     private var isInitSetting = false
+
+    fun setTargetTimeComponent(timeComponent: ClockPartTimeComponent) {
+        this.timeComponent = timeComponent
+    }
 
     fun setButtonCallback(cancelCallback : () -> Unit, selectCallback : () -> Unit) {
         binding.tvbtnCancel.setOnClickListener {
@@ -30,10 +36,10 @@ class TimePickerView(context : Context, attrs : AttributeSet) : ConstraintLayout
     }
 
 
-    fun attachChangeCallbackFunction(callback : (Int, Int) -> Unit) {
+    fun attachChangeCallbackFunction(callback : (Int, Int, ClockPartTimeComponent) -> Unit) {
         binding.viewTimePicker.setOnTimeChangedListener { _, hour, minute ->
             if (!isInitSetting) {
-                callback(hour, minute)
+                callback(hour, minute, timeComponent)
             }
         }
     }

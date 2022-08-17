@@ -36,7 +36,7 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
     val pickedColor = _pickedColor.asStateFlow()
     var pickedColorComponent : ClockPartColorComponent = ClockPartColorComponent.FIRST
 
-    var pickedTimeComponent : ClockPartTimeComponent = ClockPartTimeComponent.START
+    private var pickedTimeComponent : ClockPartTimeComponent = ClockPartTimeComponent.START
 
 
     // currentClock 에 시계 부품을 추가합니다.
@@ -75,15 +75,21 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
     fun selectedClockPartAmount() = selectedClockPartAmount
 
     // 시간값을 수정합니다.
-    fun setTimeAngle(hour : Int, minute : Int) {
+    fun setTimeAngle(hour : Int, minute : Int, timeComponent: ClockPartTimeComponent) {
         val angle = timeToAngle(is24Mode = true ,hour = hour, minute = minute)
+        setTimeAngle(angle, timeComponent)
+    }
+
+    // 시간값을 각도 기준으로 수정합니다.
+    fun setTimeAngle(degree : Float, timeComponent: ClockPartTimeComponent) {
+        pickedTimeComponent = timeComponent
         val stateValue = ClockPartData.deepCopy(changedClockPartAttr.value)
         if (pickedTimeComponent == ClockPartTimeComponent.START) {
-            currentClock.clockPartList[selectedClockPartPosition].startAngle = angle
-            stateValue.startAngle = angle
+            currentClock.clockPartList[selectedClockPartPosition].startAngle = degree
+            stateValue.startAngle = degree
         } else {
-            currentClock.clockPartList[selectedClockPartPosition].endAngle = angle
-            stateValue.endAngle = angle
+            currentClock.clockPartList[selectedClockPartPosition].endAngle = degree
+            stateValue.endAngle = degree
         }
         _changedClockPartAttr.value = stateValue
     }
