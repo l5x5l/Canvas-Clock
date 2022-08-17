@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:inset="8dp">
 
-    <shape android:shape="oval">
+    <shape android:shape="rectangle">
         <size
             android:width="18dp"
             android:height="18dp"/>
