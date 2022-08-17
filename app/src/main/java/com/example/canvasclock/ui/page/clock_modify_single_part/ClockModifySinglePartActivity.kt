@@ -1,5 +1,6 @@
 package com.example.canvasclock.ui.page.clock_modify_single_part
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +24,7 @@ import com.example.domain.models.ClockData
 import com.example.domain.utils.angleToTime
 import kotlinx.coroutines.launch
 
+@SuppressLint("SetTextI18n")
 class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePartBinding>(R.layout.activity_clock_modify_single_part) {
     private val viewModel : ClockModifySinglePartViewModel by viewModels()
 
@@ -159,7 +161,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             override fun afterTextChanged(p0: Editable?) {
                 val number = p0.toString().toIntOrNull()
                 number?.let {
-                    viewModel.setStartRadius(minOf(100, number))
+                    if (it in 0..100) {
+                        viewModel.setStartRadius(number)
+                    } else {
+                        binding.etStartPoint.setText("100")
+                    }
                 }
             }
         })
@@ -170,7 +176,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             override fun afterTextChanged(p0: Editable?) {
                 val number = p0.toString().toIntOrNull()
                 number?.let {
-                    viewModel.setMiddleRadius(minOf(100, number))
+                    if (it in 0..100) {
+                        viewModel.setMiddleRadius(number)
+                    } else {
+                        binding.etMiddlePoint.setText("100")
+                    }
                 }
             }
         })
@@ -181,7 +191,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             override fun afterTextChanged(p0: Editable?) {
                 val number = p0.toString().toIntOrNull()
                 number?.let {
-                    viewModel.setEndRadius(minOf(100, number))
+                    if (it in 0..100) {
+                        viewModel.setEndRadius(number)
+                    } else {
+                        binding.etEndPoint.setText("100")
+                    }
                 }
             }
         })
@@ -192,7 +206,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             override fun afterTextChanged(p0: Editable?) {
                 val number = p0.toString().toIntOrNull()
                 number?.let {
-                    viewModel.setStrokeWidth(minOf(100, number))
+                    if (it in 0..100) {
+                        viewModel.setStrokeWidth(number)
+                    } else {
+                        binding.etStrokeWidth.setText("100")
+                    }
                 }
             }
         })

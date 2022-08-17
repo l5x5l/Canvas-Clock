@@ -138,8 +138,12 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
             override fun afterTextChanged(p0: Editable?) {
                 val red = p0.toString().toIntOrNull()
                 red?.let {
-                    val newColorString = changeRed(redInt = min(it, 255))
-                    changeCallback(newColorString)
+                    if (it in 0..255) {
+                        val newColorString = changeRed(redInt = it)
+                        changeCallback(newColorString)
+                    } else {
+                        binding.etRed.setText("255")
+                    }
                 }
             }
         })
@@ -150,8 +154,12 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
             override fun afterTextChanged(p0: Editable?) {
                 val red = p0.toString().toIntOrNull()
                 red?.let {
-                    val newColorString = changeGreen(greenInt = min(it, 255))
-                    changeCallback(newColorString)
+                    if (it in 0..255) {
+                        val newColorString = changeGreen(greenInt = it)
+                        changeCallback(newColorString)
+                    } else {
+                        binding.etGreen.setText("255")
+                    }
                 }
             }
         })
@@ -162,8 +170,12 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
             override fun afterTextChanged(p0: Editable?) {
                 val red = p0.toString().toIntOrNull()
                 red?.let {
-                    val newColorString = changeBlue(blueInt = min(it, 255))
-                    changeCallback(newColorString)
+                    if (it in 0..255) {
+                        val newColorString = changeBlue(blueInt = it)
+                        changeCallback(newColorString)
+                    } else {
+                        binding.etBlue.setText("255")
+                    }
                 }
             }
         })
@@ -174,8 +186,12 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
             override fun afterTextChanged(p0: Editable?) {
                 val red = p0.toString().toIntOrNull()
                 red?.let {
-                    val newColorString = changeTransparency(transparencyInt = min(it, 100))
-                    changeCallback(newColorString)
+                    if (it in 0..100) {
+                        val newColorString = changeTransparency(transparencyInt = it)
+                        changeCallback(newColorString)
+                    } else {
+                        binding.etTransparency.setText("100")
+                    }
                 }
             }
         })
