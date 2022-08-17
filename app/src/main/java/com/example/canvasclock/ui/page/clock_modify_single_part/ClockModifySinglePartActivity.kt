@@ -2,6 +2,8 @@ package com.example.canvasclock.ui.page.clock_modify_single_part
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.viewModels
@@ -33,12 +35,13 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
         setObserver()
         setSeekbar()
         setButton()
+        setEditText()
 
         if (viewModel.selectedClockPartAmount() >= 2) {
             binding.tvbtnStartTime.isEnabled = false
             binding.tvbtnEndTime.isEnabled = false
             binding.tvCannotChangeTime.visibility = View.VISIBLE
-            binding.viewClockShape.timeIntervalChangeButtonHide()
+            binding.viewClockShape.setMultipleModifyMode()
         }
 
         binding.viewColorPicker.setButtonCallback(cancelCallback = {
@@ -146,6 +149,52 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) { viewModel.setStrokeWidth(p1) }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
+    }
+
+    private fun setEditText() {
+        binding.etStartPoint.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val number = p0.toString().toIntOrNull()
+                number?.let {
+                    viewModel.setStartRadius(minOf(100, number))
+                }
+            }
+        })
+
+        binding.etMiddlePoint.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val number = p0.toString().toIntOrNull()
+                number?.let {
+                    viewModel.setMiddleRadius(minOf(100, number))
+                }
+            }
+        })
+
+        binding.etEndPoint.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val number = p0.toString().toIntOrNull()
+                number?.let {
+                    viewModel.setEndRadius(minOf(100, number))
+                }
+            }
+        })
+
+        binding.etStrokeWidth.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val number = p0.toString().toIntOrNull()
+                number?.let {
+                    viewModel.setStrokeWidth(minOf(100, number))
+                }
+            }
         })
     }
 

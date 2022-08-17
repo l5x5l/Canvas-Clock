@@ -2,6 +2,8 @@ package com.example.canvasclock.ui.custom_components
 
 import android.content.Context
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.SeekBar
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.canvasclock.databinding.ViewColorPickerBinding
 import com.example.canvasclock.ui.recycler.adapter.ColorInUseAdapter
 import com.example.domain.utils.*
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayout(context, attrs) {
@@ -69,13 +72,7 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
         binding.seekbarRed.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 if (!isInitSetting){
-                    var red = p1.toString(16)
-                    if (red.length == 1) red = "0$red"
-                    val newColorString = if (currentColor.length == 7){
-                        "#FF" + red + currentColor.substring(3)
-                    } else {
-                        "#" + currentColor.substring(1, 3) + red + currentColor.substring(5)
-                    }
+                    val newColorString = changeRed(redInt = p1)
                     changeCallback(newColorString)
                 }
             }
@@ -86,13 +83,7 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
         binding.seekbarGreen.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 if (!isInitSetting) {
-                    var green = p1.toString(16)
-                    if (green.length == 1) green = "0$green"
-                    val newColorString = if (currentColor.length == 7){
-                        "#FF" + currentColor.substring(1, 3) + green + currentColor.substring(5)
-                    } else {
-                        "#" + currentColor.substring(1, 5) + green + currentColor.substring(7)
-                    }
+                    val newColorString = changeGreen(greenInt = p1)
                     changeCallback(newColorString)
                 }
             }
@@ -104,13 +95,7 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
         binding.seekbarBlue.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 if (!isInitSetting) {
-                    var blue = p1.toString(16)
-                    if (blue.length == 1) blue = "0$blue"
-                    val newColorString = if (currentColor.length == 7){
-                        "#FF" + currentColor.substring(1, 5) + blue
-                    } else {
-                        "#" + currentColor.substring(1, 7) + blue
-                    }
+                    val newColorString = changeBlue(blueInt = p1)
                     changeCallback(newColorString)
                 }
             }
@@ -121,13 +106,7 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
         binding.seekbarTransparency.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 if (!isInitSetting) {
-                    var transparency = (p1 * 255 / 100f).roundToInt().toString(16)
-                    if (transparency.length == 1) transparency = "0$transparency"
-                    val newColorString = if (currentColor.length == 7) {
-                        "#" + transparency + currentColor.substring(1)
-                    } else {
-                        "#" + transparency + currentColor.substring(3)
-                    }
+                    val newColorString = changeTransparency(transparencyInt = p1)
                     changeCallback(newColorString)
                 }
             }
@@ -152,6 +131,54 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
                 }
             }
         }
+
+        binding.etRed.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val red = p0.toString().toIntOrNull()
+                red?.let {
+                    val newColorString = changeRed(redInt = min(it, 255))
+                    changeCallback(newColorString)
+                }
+            }
+        })
+
+        binding.etGreen.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val red = p0.toString().toIntOrNull()
+                red?.let {
+                    val newColorString = changeGreen(greenInt = min(it, 255))
+                    changeCallback(newColorString)
+                }
+            }
+        })
+
+        binding.etBlue.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val red = p0.toString().toIntOrNull()
+                red?.let {
+                    val newColorString = changeBlue(blueInt = min(it, 255))
+                    changeCallback(newColorString)
+                }
+            }
+        })
+
+        binding.etTransparency.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {
+                val red = p0.toString().toIntOrNull()
+                red?.let {
+                    val newColorString = changeTransparency(transparencyInt = min(it, 100))
+                    changeCallback(newColorString)
+                }
+            }
+        })
     }
 
     private fun setRecyclerView(){
@@ -190,4 +217,47 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
         isInitSetting = false
     }
 
+    private fun changeRed(redInt : Int) : String {
+        var red = redInt.toString(16)
+        if (red.length == 1) red = "0$red"
+        val newColorString = if (currentColor.length == 7){
+            "#FF" + red + currentColor.substring(3)
+        } else {
+            "#" + currentColor.substring(1, 3) + red + currentColor.substring(5)
+        }
+        return newColorString
+    }
+
+    private fun changeGreen(greenInt : Int) : String {
+        var green = greenInt.toString(16)
+        if (green.length == 1) green = "0$green"
+        val newColorString = if (currentColor.length == 7){
+            "#FF" + currentColor.substring(1, 3) + green + currentColor.substring(5)
+        } else {
+            "#" + currentColor.substring(1, 5) + green + currentColor.substring(7)
+        }
+        return newColorString
+    }
+
+    private fun changeBlue(blueInt : Int) : String {
+        var blue = blueInt.toString(16)
+        if (blue.length == 1) blue = "0$blue"
+        val newColorString = if (currentColor.length == 7){
+            "#FF" + currentColor.substring(1, 5) + blue
+        } else {
+            "#" + currentColor.substring(1, 7) + blue
+        }
+        return newColorString
+    }
+
+    private fun changeTransparency(transparencyInt : Int) : String {
+        var transparency = (transparencyInt * 255 / 100f).roundToInt().toString(16)
+        if (transparency.length == 1) transparency = "0$transparency"
+        val newColorString = if (currentColor.length == 7) {
+            "#" + transparency + currentColor.substring(1)
+        } else {
+            "#" + transparency + currentColor.substring(3)
+        }
+        return newColorString
+    }
 }
