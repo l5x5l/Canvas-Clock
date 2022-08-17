@@ -40,4 +40,5 @@
     <string name="not_use">사용안함</string>
 
     <string name="message_cannot_change_time_range_when_multiple_part_selected">여러 부품을 한번에 수정할 때는 시간 범위를 조정할 수 없습니다.</string>
+    <string name="message_select_more_than_one_part">하나 이상의 부품을 선택해주세요</string>
 </resources>

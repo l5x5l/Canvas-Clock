@@ -42,9 +42,13 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
 
     override fun setButton() {
         binding.tvbtnModify.setOnClickListener {
-            ModifyClock.getInstance().setMiddleSaveClock(viewModel.clockData.value)
-            val intent = Intent(this, ClockModifySinglePartActivity::class.java)
-            startActivity(intent)
+            if (viewModel.getSelectedAmount() >= 1) {
+                ModifyClock.getInstance().setMiddleSaveClock(viewModel.clockData.value)
+                val intent = Intent(this, ClockModifySinglePartActivity::class.java)
+                startActivity(intent)
+            } else {
+                showSimpleToast(getString(R.string.message_select_more_than_one_part))
+            }
         }
     }
 

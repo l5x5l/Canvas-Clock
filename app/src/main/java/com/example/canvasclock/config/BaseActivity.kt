@@ -1,6 +1,7 @@
 package com.example.canvasclock.config
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -22,4 +23,8 @@ abstract class BaseActivity<B : ViewBinding> (@LayoutRes val layoutRes : Int) : 
     open fun setRecyclerView(){}
 
     open fun preLoad() {}
+
+    fun showSimpleToast(message : String) {
+        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
 }
