@@ -60,6 +60,7 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
 
 
         binding.viewClockShape.linkClockInfo(viewModel.getCurrentClockPart())
+        binding.viewClockShape.initModifyAction(setStartRadius = viewModel::setStartRadius, setMiddleRadius = viewModel::setMiddleRadius, setEndRadius = viewModel::setEndRadius)
     }
 
     private fun setObserver(){

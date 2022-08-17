@@ -7,6 +7,7 @@ import android.graphics.Path
 import com.example.domain.mapper.DomainLayerMapper
 import com.example.domain.models.ClockData
 import com.example.domain.models.ClockPartData
+import com.example.domain.models.CoordinateClockPartData
 import kotlin.collections.ArrayList
 import kotlin.math.cos
 import kotlin.math.sin
@@ -15,45 +16,49 @@ fun drawClock(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx : In
     for (clockPart in clockPartList) {
         val coordinateClockPart = DomainLayerMapper.toCoordinateClockPartData(clockPartData = clockPart, viewMx = mx, viewMy = my, viewRadius = radius)
 
-        val paint1 = Paint()
-        paint1.color = Color.parseColor(coordinateClockPart.firstColor)
-        paint1.style = Paint.Style.FILL
+        drawClockPart(canvas, coordinateClockPart)
+    }
+}
 
-        val path1 = Path()
-        path1.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
-        path1.lineTo(coordinateClockPart.endLeftCoordinate.x, coordinateClockPart.endLeftCoordinate.y)
-        path1.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
-        path1.close()
-        canvas.drawPath(path1, paint1)
+fun drawClockPart(canvas : Canvas, coordinateClockPart : CoordinateClockPartData) {
+    val paint1 = Paint()
+    paint1.color = Color.parseColor(coordinateClockPart.firstColor)
+    paint1.style = Paint.Style.FILL
 
-        val paint2 = Paint()
-        paint2.color = Color.parseColor(coordinateClockPart.secondColor)
-        paint2.style = Paint.Style.FILL
+    val path1 = Path()
+    path1.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
+    path1.lineTo(coordinateClockPart.endLeftCoordinate.x, coordinateClockPart.endLeftCoordinate.y)
+    path1.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
+    path1.close()
+    canvas.drawPath(path1, paint1)
 
-        val path2 = Path()
-        path2.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
-        path2.lineTo(coordinateClockPart.endRightCoordinate.x, coordinateClockPart.endRightCoordinate.y)
-        path2.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
-        path2.close()
-        canvas.drawPath(path2, paint2)
+    val paint2 = Paint()
+    paint2.color = Color.parseColor(coordinateClockPart.secondColor)
+    paint2.style = Paint.Style.FILL
 
-        if (coordinateClockPart.strokeWidth != 0) {
-            val strokePaint = Paint()
-            strokePaint.style = Paint.Style.STROKE
-            strokePaint.strokeWidth = coordinateClockPart.strokeWidth.toFloat()
-            strokePaint.color = Color.parseColor(coordinateClockPart.strokeColor)
+    val path2 = Path()
+    path2.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
+    path2.lineTo(coordinateClockPart.endRightCoordinate.x, coordinateClockPart.endRightCoordinate.y)
+    path2.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
+    path2.close()
+    canvas.drawPath(path2, paint2)
 
-            val strokePath = Path()
-            strokePath.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
-            strokePath.lineTo(coordinateClockPart.endLeftCoordinate.x, coordinateClockPart.endLeftCoordinate.y)
+    if (coordinateClockPart.strokeWidth != 0) {
+        val strokePaint = Paint()
+        strokePaint.style = Paint.Style.STROKE
+        strokePaint.strokeWidth = coordinateClockPart.strokeWidth.toFloat()
+        strokePaint.color = Color.parseColor(coordinateClockPart.strokeColor)
+
+        val strokePath = Path()
+        strokePath.moveTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
+        strokePath.lineTo(coordinateClockPart.endLeftCoordinate.x, coordinateClockPart.endLeftCoordinate.y)
+        strokePath.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
+        strokePath.lineTo(coordinateClockPart.endRightCoordinate.x, coordinateClockPart.endRightCoordinate.y)
+        strokePath.lineTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
+        if (coordinateClockPart.useMiddleLineStroke){
             strokePath.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
-            strokePath.lineTo(coordinateClockPart.endRightCoordinate.x, coordinateClockPart.endRightCoordinate.y)
-            strokePath.lineTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
-            if (coordinateClockPart.useMiddleLineStroke){
-                strokePath.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
-            }
-            canvas.drawPath(strokePath, strokePaint)
         }
+        canvas.drawPath(strokePath, strokePaint)
     }
 }
 
