@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog_background"
+        android:padding="@dimen/padding_middle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_dialog_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/iv_icon"
+            app:layout_constraintBottom_toBottomOf="@id/iv_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/message_confirm_cancel_modify"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="@dimen/margin_small"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_dialog_message"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvbtn_2"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:gravity="center"
+            android:text="@string/go_back"
+            android:background="@drawable/shape_button_normal"
+            android:padding="@dimen/padding_middle"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tvbtn_1"
+            app:layout_constraintStart_toEndOf="@id/tvbtn_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/margin_small"
+            android:gravity="center"
+            android:text="@string/cancel"
+            android:background="@drawable/shape_button_negative"
+            android:padding="@dimen/padding_middle"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

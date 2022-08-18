@@ -15,6 +15,7 @@
     <string name="cancel">취소하기</string>
     <string name="save">저장하기</string>
     <string name="add_with_plus">+ 추가하기</string>
+    <string name="go_back">돌아가기</string>
 
     <string name="complete">완료</string>
     <string name="cancellation">취소</string>
@@ -41,4 +42,5 @@
 
     <string name="message_cannot_change_time_range_when_multiple_part_selected">여러 부품을 한번에 수정할 때는 시간 범위를 조정할 수 없습니다.</string>
     <string name="message_select_more_than_one_part">하나 이상의 부품을 선택해주세요</string>
+    <string name="message_confirm_cancel_modify">수정된 내용이 있습니다.\n해당 내용을 반영하지 않고\n취소할까요?</string>
 </resources>
