@@ -19,6 +19,9 @@ class ClockDetailModifyFragment : BaseFragment<FragmentClockDetailModifyBinding>
         binding.layoutbtnModifyShape.setOnClickListener {
             (activity as ClockDetailActivity).moveToModifyShape()
         }
+        binding.layoutbtnModifyHandle.setOnClickListener {
+            (activity as ClockDetailActivity).moveToModifyHandle()
+        }
     }
 
     fun changeClockShape(clockPartList : ArrayList<ClockPartData>) {

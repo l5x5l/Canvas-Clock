@@ -15,6 +15,7 @@ import com.example.canvasclock.databinding.ActivityClockDetailBinding
 import com.example.canvasclock.models.ModifyClock
 import com.example.canvasclock.ui.page.clock_detail.modify.ClockDetailModifyFragment
 import com.example.canvasclock.ui.page.clock_detail.parts.ClockDetailPartsFragment
+import com.example.canvasclock.ui.page.clock_modify_handle.ClockModifyHandleActivity
 import com.example.canvasclock.ui.page.clock_modify_shape.ClockModifyShapeActivity
 import com.example.domain.models.ClockData
 import kotlinx.coroutines.launch
@@ -80,6 +81,12 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
 
     fun moveToModifyShape(){
         val intent = Intent(this, ClockModifyShapeActivity::class.java)
+        ModifyClock.getInstance().setOriginalClock(viewModel.mainClockState.value.value!!)
+        startActivity(intent)
+    }
+
+    fun moveToModifyHandle(){
+        val intent = Intent(this, ClockModifyHandleActivity::class.java)
         ModifyClock.getInstance().setOriginalClock(viewModel.mainClockState.value.value!!)
         startActivity(intent)
     }
