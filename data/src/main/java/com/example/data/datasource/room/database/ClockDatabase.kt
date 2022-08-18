@@ -66,6 +66,13 @@ abstract class ClockDatabase : RoomDatabase() {
         return clockDao().getClockPart(clockIdx = clockIdx)
     }
 
+    /**
+     * 수정한 시계 부품 리스트를 업데이트합니다.
+     */
+    suspend fun updateClockPartList(clockPartList : List<ClockPartEntity>) : List<Long> {
+        return clockDao().updateClockPartList(clockPartList = clockPartList)
+    }
+
     companion object {
         private var instance : ClockDatabase ?= null
 

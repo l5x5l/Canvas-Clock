@@ -3,6 +3,7 @@ package com.example.data.repository_impl
 import com.example.data.datasource.room.database.ClockDatabase
 import com.example.data.mapper.DataLayerMapper
 import com.example.domain.models.ClockData
+import com.example.domain.models.ClockPartData
 import com.example.domain.repository.ClockRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,5 +32,13 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
         }
 
         return clockList
+    }
+
+    override suspend fun updateClockPartList(clockPartList: ArrayList<ClockPartData>): List<Long> {
+        val changedClockPartEntityList =
+            clockPartList.filter { return@filter it.uiState.isSelected }.map {
+                DataLayerMapper.toClockPartEntity(it)
+            }
+        return ClockDatabase.getInstance().updateClockPartList(changedClockPartEntityList)
     }
 }

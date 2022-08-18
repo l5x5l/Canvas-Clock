@@ -2,6 +2,7 @@ package com.example.data.datasource.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.data.datasource.room.entities.ClockEntity
 import com.example.data.datasource.room.entities.ClockPartEntity
@@ -28,4 +29,7 @@ interface ClockDao {
 
     @Query("SELECT * FROM clock_part WHERE clockIdx = :clockIdx")
     suspend fun getClockPart(clockIdx : Int) : List<ClockPartEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateClockPartList(clockPartList : List<ClockPartEntity>) : List<Long>
 }

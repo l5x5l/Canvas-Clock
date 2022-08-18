@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,8 +18,10 @@ import com.example.canvasclock.ui.custom_components.TwoButtonDialog
 import com.example.canvasclock.ui.page.clock_modify_single_part.ClockModifySinglePartActivity
 import com.example.canvasclock.ui.recycler.adapter.ClockPartAdapter
 import com.example.canvasclock.ui.recycler.decoration.LinearVerticalDecoration
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R.layout.activity_clock_modify_shape) {
 
     private val viewModel : ClockModifyViewModel by viewModels()
@@ -36,10 +37,19 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.clockData.collect { clockData ->
-                    (binding.rvPartList.adapter as ClockPartAdapter).applyClockPartList(clockData.clockPartList)
-                    binding.viewClockShape.linkClockInfo(clockData.clockPartList)
-                    binding.viewClockTime.linkClock(clockData)
+                launch {
+                    viewModel.clockData.collect { clockData ->
+                        (binding.rvPartList.adapter as ClockPartAdapter).applyClockPartList(clockData.clockPartList)
+                        binding.viewClockShape.linkClockInfo(clockData.clockPartList)
+                        binding.viewClockTime.linkClock(clockData)
+                    }
+                }
+
+                launch {
+                    viewModel.saveModifiedClockResult.collect {
+                        showSimpleToast("완료되었습니다.")
+                        finish()
+                    }
                 }
             }
         }
@@ -73,6 +83,10 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
             } else {
                 finish()
             }
+        }
+
+        binding.tvbtnSave.setOnClickListener {
+            viewModel.saveModifiedClockParts()
         }
     }
 
