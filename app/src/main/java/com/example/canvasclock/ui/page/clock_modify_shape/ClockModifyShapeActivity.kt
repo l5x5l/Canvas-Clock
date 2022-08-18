@@ -3,6 +3,9 @@ package com.example.canvasclock.ui.page.clock_modify_shape
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +15,7 @@ import com.example.canvasclock.R
 import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.databinding.ActivityClockModifyShapeBinding
 import com.example.canvasclock.models.ModifyClock
+import com.example.canvasclock.ui.custom_components.TwoButtonDialog
 import com.example.canvasclock.ui.page.clock_modify_single_part.ClockModifySinglePartActivity
 import com.example.canvasclock.ui.recycler.adapter.ClockPartAdapter
 import com.example.canvasclock.ui.recycler.decoration.LinearVerticalDecoration
@@ -20,6 +24,8 @@ import kotlinx.coroutines.launch
 class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R.layout.activity_clock_modify_shape) {
 
     private val viewModel : ClockModifyViewModel by viewModels()
+    private val confirmDialog : TwoButtonDialog by lazy { TwoButtonDialog() }
+    private lateinit var modifyPartResult : ActivityResultLauncher<Intent>
 
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +44,16 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
             }
         }
 
+        confirmDialog.setFirstButton(buttonText = R.string.go_back)
+        confirmDialog.setSecondButton(buttonText = R.string.cancel, buttonClickEvent = {
+            finish()
+        })
+
+        modifyPartResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK) {
+                viewModel.applyChangedClockPart()
+            }
+        }
     }
 
     override fun setButton() {
@@ -45,9 +61,17 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
             if (viewModel.getSelectedAmount() >= 1) {
                 ModifyClock.getInstance().setMiddleSaveClock(viewModel.clockData.value)
                 val intent = Intent(this, ClockModifySinglePartActivity::class.java)
-                startActivity(intent)
+                modifyPartResult.launch(intent)
             } else {
                 showSimpleToast(getString(R.string.message_select_more_than_one_part))
+            }
+        }
+
+        binding.ivbtnBack.setOnClickListener {
+            if (viewModel.getIsChanged()) {
+                confirmDialog.show(supportFragmentManager, "ConfirmDialog")
+            } else {
+                finish()
             }
         }
     }

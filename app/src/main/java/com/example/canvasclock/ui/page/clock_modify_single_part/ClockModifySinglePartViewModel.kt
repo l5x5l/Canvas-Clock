@@ -259,4 +259,8 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
         _pickedColor.value = colorString
         _changedClockPartAttr.value = stateValue
     }
+
+    fun saveModifiedContent(){
+        ModifyClock.getInstance().setMiddleSaveClock(middleSaveClock)
+    }
 }

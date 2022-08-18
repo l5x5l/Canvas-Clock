@@ -1,6 +1,7 @@
 package com.example.canvasclock.ui.page.clock_modify_single_part
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -218,7 +219,14 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
 
     override fun setButton() {
         binding.ivbtnBack.setOnClickListener {
+            finish()
+        }
 
+        binding.tvbtnSave.setOnClickListener {
+            viewModel.saveModifiedContent()
+            val intent = Intent(this, BaseActivity::class.java)
+            setResult(RESULT_OK, intent)
+            finish()
         }
 
         binding.viewbtnColor1.root.setOnClickListener {

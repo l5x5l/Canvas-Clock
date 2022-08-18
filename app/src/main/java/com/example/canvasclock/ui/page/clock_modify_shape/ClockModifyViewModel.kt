@@ -13,7 +13,16 @@ class ClockModifyViewModel @Inject constructor() : ViewModel() {
     private val _clockData = MutableStateFlow(ModifyClock.getInstance().getOriginalClock())
     val clockData = _clockData.asStateFlow()
 
+    private var isChanged = false
+
     fun getSelectedAmount() : Int {
         return clockData.value.clockPartList.filter { it.uiState.isSelected }.size
     }
+
+    fun applyChangedClockPart() {
+        isChanged = true
+        _clockData.value = ModifyClock.getInstance().getMiddleSaveClock()
+    }
+
+    fun getIsChanged() = isChanged
 }
