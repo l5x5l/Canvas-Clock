@@ -5,12 +5,12 @@ import java.io.Serializable
 data class ClockData (
     val clockIdx : Int = 0,
     val clockPartList : ArrayList<ClockPartData> = arrayListOf(),
-    val hourHandColor : String = "#FF000000",
-    val hourHandWidth : Int = 12,
-    val minuteHandColor : String = "#FF000000",
-    val minuteHandWidth : Int = 6,
-    val secondHandColor : String = "#FF000000",
-    val secondHandWidth : Int = 6,
+    var hourHandColor : String = "#FF000000",
+    var hourHandWidth : Int = 12,
+    var minuteHandColor : String = "#FF000000",
+    var minuteHandWidth : Int = 6,
+    var secondHandColor : String = "#FF000000",
+    var secondHandWidth : Int = 6,
     val uiStateData: UiStateData = UiStateData(),
     val lastModifiedTime : String = "2201010000"
 ) : Serializable {

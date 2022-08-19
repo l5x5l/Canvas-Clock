@@ -11,3 +11,7 @@ enum class ClockPartColorComponent {
 enum class ClockPartPointAttr {
     START, MIDDLE, END, START_TIME, END_TIME, CENTER
 }
+
+enum class ClockHandAttr {
+    HOUR, MINUTE, SECOND
+}
