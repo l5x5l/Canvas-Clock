@@ -47,7 +47,8 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
 
                 launch {
                     viewModel.saveModifiedClockResult.collect {
-                        showSimpleToast("완료되었습니다.")
+                        val intent = Intent(this@ClockModifyShapeActivity, BaseActivity::class.java)
+                        setResult(RESULT_OK, intent)
                         finish()
                     }
                 }
@@ -69,6 +70,7 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
     override fun setButton() {
         binding.tvbtnModify.setOnClickListener {
             if (viewModel.getSelectedAmount() >= 1) {
+                // 사용 이유 : isSelected 의 변경으로 인해 다시 middleSaveClock 을 설정해야 함
                 ModifyClock.getInstance().setMiddleSaveClock(viewModel.clockData.value)
                 val intent = Intent(this, ClockModifySinglePartActivity::class.java)
                 modifyPartResult.launch(intent)

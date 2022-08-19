@@ -3,6 +3,8 @@ package com.example.canvasclock.ui.page.clock_detail
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,6 +28,8 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
     private val partsFragment : ClockDetailPartsFragment by lazy { ClockDetailPartsFragment() }
     private val modifyFragment : ClockDetailModifyFragment by lazy { ClockDetailModifyFragment() }
     private lateinit var currentFragment : BaseFragment<*>
+
+    private lateinit var modifyResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +58,17 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
                 }
             }
         }
+
+        modifyResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                viewModel.applyModifyClockData(ModifyClock.getInstance().getOriginalClock())
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ModifyClock.clearInstance()
     }
 
     override fun setButton() {
@@ -82,12 +97,14 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
     fun moveToModifyShape(){
         val intent = Intent(this, ClockModifyShapeActivity::class.java)
         ModifyClock.getInstance().setOriginalClock(viewModel.mainClockState.value.value!!)
-        startActivity(intent)
+        //startActivity(intent)
+        modifyResult.launch(intent)
     }
 
     fun moveToModifyHandle(){
         val intent = Intent(this, ClockModifyHandleActivity::class.java)
         ModifyClock.getInstance().setOriginalClock(viewModel.mainClockState.value.value!!)
-        startActivity(intent)
+        //startActivity(intent)
+        modifyResult.launch(intent)
     }
 }

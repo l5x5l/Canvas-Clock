@@ -1,5 +1,6 @@
 package com.example.canvasclock.ui.page.clock_modify_handle
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -119,7 +120,8 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
 
                 launch {
                     viewModel.saveModifiedClockResult.collect {
-                        showSimpleToast("완료되었습니다.")
+                        val intent = Intent(this@ClockModifyHandleActivity, BaseActivity::class.java)
+                        setResult(RESULT_OK, intent)
                         finish()
                     }
                 }

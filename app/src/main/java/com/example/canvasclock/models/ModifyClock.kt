@@ -22,8 +22,9 @@ class ModifyClock private constructor() {
     }
 
     fun initModifyClock(newClock : ClockData){
-        setOriginalClock(newClock)
-        setMiddleSaveClock(newClock)
+        val copyNewClock = ClockData.deepCopy(newClock)
+        setOriginalClock(copyNewClock)
+        setMiddleSaveClock(copyNewClock)
     }
 
     fun getOriginalClock() = originalClock
@@ -31,11 +32,15 @@ class ModifyClock private constructor() {
     fun getMiddleSaveClock() = middleSaveClock
 
     fun setOriginalClock(newClock : ClockData) {
-        originalClock = newClock
+        originalClock = ClockData.deepCopy(newClock)
     }
 
     fun setMiddleSaveClock(newClock : ClockData) {
-        middleSaveClock = newClock
+        middleSaveClock = ClockData.deepCopy(newClock)
+    }
+
+    fun save(){
+        originalClock = ClockData.deepCopy(middleSaveClock)
     }
 
 }

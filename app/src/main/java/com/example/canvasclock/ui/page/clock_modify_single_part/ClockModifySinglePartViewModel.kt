@@ -261,6 +261,6 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
     }
 
     fun saveModifiedContent(){
-        ModifyClock.getInstance().setMiddleSaveClock(middleSaveClock)
+        ModifyClock.getInstance().setMiddleSaveClock(currentClock)
     }
 }

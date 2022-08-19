@@ -39,6 +39,7 @@ class ClockModifyViewModel @Inject constructor(
     fun saveModifiedClockParts(){
         viewModelScope.launch {
             val result = useCaseUpdateClockPart.execute(clockData.value.clockPartList)
+            ModifyClock.getInstance().initModifyClock(clockData.value)
             _saveModifiedClockResult.emit(result.size)
         }
     }

@@ -20,4 +20,8 @@ class ClockDetailViewModel @Inject constructor() : ViewModel() {
         ModifyClock.getInstance().initModifyClock(clockData)
         _mainClockState.update { EventState.success(clockData) }
     }
+
+    fun applyModifyClockData(clockData: ClockData) {
+        _mainClockState.update { EventState.success(clockData) }
+    }
 }
