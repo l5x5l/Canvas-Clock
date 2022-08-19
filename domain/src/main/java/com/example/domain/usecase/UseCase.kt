@@ -1,5 +1,6 @@
 package com.example.domain.usecase
 
+import com.example.domain.models.ClockData
 import com.example.domain.models.ClockPartData
 import com.example.domain.repository.ClockRepository
 import javax.inject.Inject
@@ -14,4 +15,8 @@ class UseCaseGetRecentClock @Inject constructor(private val repository: ClockRep
 
 class UseCaseUpdateClockPart @Inject constructor(private val repository: ClockRepository) {
     suspend fun execute(clockPartList : ArrayList<ClockPartData>) = repository.updateClockPartList(clockPartList = clockPartList)
+}
+
+class UseCaseUpdateClock @Inject constructor(private val repository : ClockRepository) {
+    suspend fun execute(clock : ClockData) = repository.updateClock(clock)
 }

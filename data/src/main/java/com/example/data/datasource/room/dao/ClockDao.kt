@@ -1,9 +1,6 @@
 package com.example.data.datasource.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.data.datasource.room.entities.ClockEntity
 import com.example.data.datasource.room.entities.ClockPartEntity
 
@@ -32,4 +29,7 @@ interface ClockDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateClockPartList(clockPartList : List<ClockPartEntity>) : List<Long>
+
+    @Update(entity = ClockEntity::class)
+    suspend fun updateClock(clock: ClockEntity) : Int
 }

@@ -1,18 +1,23 @@
 package com.example.canvasclock.ui.page.clock_modify_handle
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.canvasclock.config.MutableEventFlow
 import com.example.canvasclock.config.asEventFlow
 import com.example.canvasclock.models.ClockHandAttr
 import com.example.canvasclock.models.ModifyClock
 import com.example.domain.models.ClockData
+import com.example.domain.usecase.UseCaseUpdateClock
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ClockModifyHandleViewModel @Inject constructor() : ViewModel() {
+class ClockModifyHandleViewModel @Inject constructor(
+    private val useCaseUpdateClock: UseCaseUpdateClock
+) : ViewModel() {
     private val _clockData = MutableStateFlow(ModifyClock.getInstance().getOriginalClock())
     val clockData = _clockData.asStateFlow()
 
@@ -109,6 +114,9 @@ class ClockModifyHandleViewModel @Inject constructor() : ViewModel() {
     }
 
     fun saveModifiedClockData() {
-
+        viewModelScope.launch {
+            val result = useCaseUpdateClock.execute(clockData.value)
+            _saveModifiedClockResult.emit(result)
+        }
     }
 }

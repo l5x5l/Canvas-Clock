@@ -73,6 +73,13 @@ abstract class ClockDatabase : RoomDatabase() {
         return clockDao().updateClockPartList(clockPartList = clockPartList)
     }
 
+    /**
+     * 시계 데이터를 업데이트합니다.
+     */
+    suspend fun updateClock(clock : ClockEntity) : Int {
+        return clockDao().updateClock(clock = clock)
+    }
+
     companion object {
         private var instance : ClockDatabase ?= null
 

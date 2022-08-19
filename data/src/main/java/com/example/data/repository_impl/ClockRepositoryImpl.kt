@@ -41,4 +41,9 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
             }
         return ClockDatabase.getInstance().updateClockPartList(changedClockPartEntityList)
     }
+
+    override suspend fun updateClock(clock: ClockData): Int {
+        val clockEntity = DataLayerMapper.toClockEntity(clock)
+        return ClockDatabase.getInstance().updateClock(clockEntity)
+    }
 }

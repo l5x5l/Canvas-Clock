@@ -9,4 +9,6 @@ interface ClockRepository {
     suspend fun getRandomClockList(amount : Int) : ArrayList<ClockData>
 
     suspend fun updateClockPartList(clockPartList : ArrayList<ClockPartData>) : List<Long>
+
+    suspend fun updateClock(clock : ClockData) : Int
 }
