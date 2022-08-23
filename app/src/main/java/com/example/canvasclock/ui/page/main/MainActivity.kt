@@ -3,6 +3,8 @@ package com.example.canvasclock.ui.page.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +24,7 @@ import kotlinx.coroutines.launch
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val viewModel : MainViewModel by viewModels()
+    private lateinit var modifyResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,32 +41,39 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.mainClockState.collect { eventState ->
-                    if (eventState.isLoading) {
-                        binding.progressLoadingMainClock.visibility = View.VISIBLE
-                    } else {
-                        binding.progressLoadingMainClock.visibility = View.GONE
-                        if (eventState.value != null) {
-                            binding.viewClockShape.linkClockInfo(eventState.value[0].clockPartList)
-                            binding.viewClockTime.linkClock(eventState.value[0])
-                            binding.viewClockShape.invalidateClock()
+                launch {
+                    viewModel.mainClockState.collect { eventState ->
+                        if (eventState.isLoading) {
+                            binding.progressLoadingMainClock.visibility = View.VISIBLE
+                        } else {
+                            binding.progressLoadingMainClock.visibility = View.GONE
+                            if (eventState.value != null) {
+                                binding.viewClockShape.linkClockInfo(eventState.value[0].clockPartList)
+                                binding.viewClockTime.linkClock(eventState.value[0])
+                                binding.viewClockShape.invalidateClock()
+                            }
                         }
-                    }
-                } // viewModel.mainClockState.collect
+                    } // viewModel.mainClockState.collect
+                }
+
+                launch {
+                    viewModel.clockListState.collect { eventState ->
+                        if (!eventState.isLoading) {
+                            if (eventState.value != null) {
+                                (binding.rvClockList.adapter as MainClockAdapter).setClockList(eventState.value)
+                            }
+                        }
+                    } // viewModel.clockListState.collect
+                }
             } // repeatOnLifecycle
         } // lifecycleScope
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.clockListState.collect { eventState ->
-                    if (!eventState.isLoading) {
-                        if (eventState.value != null) {
-                            (binding.rvClockList.adapter as MainClockAdapter).setClockList(eventState.value)
-                        }
-                    }
-                } // viewModel.clockListState.collect
-            } // repeatOnLifecycle
-        } // lifecycleScope
+        modifyResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK) {
+                viewModel.tryGetRandomClock(1)
+                viewModel.tryGetRecentModifyClock(5)
+            }
+        }
     }
 
     override fun onStop() {
@@ -81,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.viewClockShape.setOnClickListener {
             val intent = Intent(this, ClockDetailActivity::class.java)
             intent.putExtra(INTENT_KEY_CLOCK, viewModel.mainClockState.value.value?.get(0))
-            startActivity(intent)
+            modifyResult.launch(intent)
         }
     }
 
