@@ -140,7 +140,7 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val center = pointMap[ClockPartPointAttr.CENTER]!!
-                    val radian = atan2((view.y + motionEvent.y - relativeXPositionInViewStartTimePoint - center.y), (view.x + motionEvent.x - relativeYPositionInViewStartTimePoint - center.x))
+                    val radian = atan2((view.y + motionEvent.y + (view.height / 2) - relativeXPositionInViewStartTimePoint - center.y), (view.x + motionEvent.x + (view.width / 2) - relativeYPositionInViewStartTimePoint - center.x))
                     val degree = (radian * 180 / Math.PI + 90).mod(360.0)
 
                     setTimeAngle(degree.toFloat(), ClockPartTimeComponent.START)
@@ -162,7 +162,7 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val center = pointMap[ClockPartPointAttr.CENTER]!!
-                    val radian = atan2((view.y + motionEvent.y - relativeXPositionInViewEndTimePoint - center.y), (view.x + motionEvent.x - relativeYPositionInViewEndTimePoint - center.x))
+                    val radian = atan2((view.y + motionEvent.y + (view.height / 2) - relativeXPositionInViewEndTimePoint - center.y), (view.x + motionEvent.x + (view.width / 2) - relativeYPositionInViewEndTimePoint - center.x))
                     val degree = (radian * 180 / Math.PI + 90).mod(360.0)
 
                     setTimeAngle(degree.toFloat(), ClockPartTimeComponent.END)
