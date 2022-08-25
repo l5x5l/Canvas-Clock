@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.canvasclock.R
 import com.example.canvasclock.config.BaseActivity
+import com.example.canvasclock.config.GlobalApplication
 import com.example.canvasclock.databinding.ActivityClockModifyShapeBinding
 import com.example.canvasclock.models.ModifyClock
 import com.example.canvasclock.ui.custom_components.TwoButtonDialog
@@ -46,7 +47,8 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
                 }
 
                 launch {
-                    viewModel.saveModifiedClockResult.collect {
+                    viewModel.saveModifiedClockResult.collect { _ ->
+                        GlobalApplication.isClockDBModified = true
                         val intent = Intent(this@ClockModifyShapeActivity, BaseActivity::class.java)
                         setResult(RESULT_OK, intent)
                         finish()

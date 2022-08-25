@@ -7,6 +7,11 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class GlobalApplication : Application() {
+
+    companion object {
+        var isClockDBModified : Boolean = false
+    }
+
     override fun onCreate() {
         super.onCreate()
         ClockDatabase.initDB(this)

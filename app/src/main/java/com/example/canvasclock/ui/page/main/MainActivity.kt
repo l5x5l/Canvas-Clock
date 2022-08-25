@@ -3,8 +3,6 @@ package com.example.canvasclock.ui.page.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.canvasclock.R
 import com.example.canvasclock.config.BaseActivity
+import com.example.canvasclock.config.GlobalApplication
 import com.example.canvasclock.config.INTENT_KEY_CLOCK
 import com.example.canvasclock.databinding.ActivityMainBinding
 import com.example.canvasclock.ui.page.clock_detail.ClockDetailActivity
@@ -19,12 +18,12 @@ import com.example.canvasclock.ui.recycler.adapter.MainClockAdapter
 import com.example.canvasclock.ui.recycler.decoration.Grid3Decoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private val viewModel : MainViewModel by viewModels()
-    private lateinit var modifyResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +66,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 }
             } // repeatOnLifecycle
         } // lifecycleScope
-
-        modifyResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if (result.resultCode == RESULT_OK) {
-                viewModel.tryGetRandomClock(1)
-                viewModel.tryGetRecentModifyClock(5)
-            }
-        }
     }
 
     override fun onStop() {
@@ -83,15 +75,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun onRestart() {
         super.onRestart()
+
+        if (GlobalApplication.isClockDBModified) {
+            GlobalApplication.isClockDBModified = false
+            viewModel.tryGetRandomClock(1)
+            viewModel.tryGetRecentModifyClock(5)
+        }
+
         viewModel.startTimer()
     }
 
 
     override fun setButton() {
+        // 이 부분 다시 수정 필요
         binding.viewClockShape.setOnClickListener {
-            val intent = Intent(this, ClockDetailActivity::class.java)
-            intent.putExtra(INTENT_KEY_CLOCK, viewModel.mainClockState.value.value?.get(0))
-            modifyResult.launch(intent)
+            try {
+                val intent = Intent(this, ClockDetailActivity::class.java)
+                intent.putExtra(INTENT_KEY_CLOCK, viewModel.mainClockState.value.value?.get(0))
+                startActivity(intent)
+            } catch (e : Exception) { // mainClockState 가 아직 로딩되지 않은 경우에 버튼 클릭 (room db 라 발생확률 낮음)
+                showSimpleToast(getString(R.string.message_not_loading_yet))
+            }
         }
     }
 

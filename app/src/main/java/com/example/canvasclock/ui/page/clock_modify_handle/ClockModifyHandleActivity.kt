@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.activity.viewModels
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.canvasclock.R
 import com.example.canvasclock.config.BaseActivity
+import com.example.canvasclock.config.GlobalApplication
 import com.example.canvasclock.databinding.ActivityClockModifyHandleBinding
 import com.example.canvasclock.models.ClockHandAttr
 import com.example.canvasclock.ui.custom_components.TwoButtonDialog
@@ -105,7 +105,6 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.clockData.collect { clockData ->
-                        //binding.viewClockShape.linkClockInfo(clockData.clockPartList)
                         binding.viewClockTime.linkClock(clockData)
                         binding.viewbtnHourHandleColor.ivColor.setBackgroundColor(Color.parseColor(clockData.hourHandColor))
                         binding.viewbtnMinuteHandleColor.ivColor.setBackgroundColor(Color.parseColor(clockData.minuteHandColor))
@@ -119,7 +118,8 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
                 }
 
                 launch {
-                    viewModel.saveModifiedClockResult.collect {
+                    viewModel.saveModifiedClockResult.collect { _ ->
+                        GlobalApplication.isClockDBModified = true
                         val intent = Intent(this@ClockModifyHandleActivity, BaseActivity::class.java)
                         setResult(RESULT_OK, intent)
                         finish()
