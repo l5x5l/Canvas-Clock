@@ -46,4 +46,15 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
         val clockEntity = DataLayerMapper.toClockEntity(clock)
         return ClockDatabase.getInstance().updateClock(clockEntity)
     }
+
+    override suspend fun getRecentClockPage(pageIdx: Int, pageSize: Int): ArrayList<ClockData> {
+        val clockList = arrayListOf<ClockData>()
+
+        val clockEntities = ClockDatabase.getInstance().getRecentClockPage(pageIdx = pageIdx, pageSize = pageSize)
+        for (clockEntity in clockEntities) {
+            val clockPartEntities = ClockDatabase.getInstance().getClockPartList(clockIdx = clockEntity.clockIdx)
+            clockList.add(DataLayerMapper.toClockData(clockEntity = clockEntity, clockPartEntityList = clockPartEntities))
+        }
+        return clockList
+    }
 }

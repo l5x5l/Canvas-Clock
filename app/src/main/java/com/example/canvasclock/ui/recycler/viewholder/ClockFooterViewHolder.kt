@@ -1,13 +1,15 @@
 package com.example.canvasclock.ui.recycler.viewholder
 
-import android.util.Log
+import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import com.example.canvasclock.databinding.ItemClockFooterBinding
+import com.example.canvasclock.ui.page.clock_list.ClockListActivity
 
 class ClockFooterViewHolder(binding : ItemClockFooterBinding) : RecyclerView.ViewHolder(binding.root) {
     init {
         binding.root.setOnClickListener {
-            Log.d("ClockFooter", "곧 페이지 이동 로직이 추가됩니다!")
+            val intent = Intent(binding.root.context, ClockListActivity::class.java)
+            binding.root.context.startActivity(intent)
         }
     }
 }

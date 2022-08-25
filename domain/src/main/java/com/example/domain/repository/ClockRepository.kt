@@ -11,4 +11,6 @@ interface ClockRepository {
     suspend fun updateClockPartList(clockPartList : ArrayList<ClockPartData>) : List<Long>
 
     suspend fun updateClock(clock : ClockData) : Int
+
+    suspend fun getRecentClockPage(pageIdx : Int, pageSize : Int) : ArrayList<ClockData>
 }

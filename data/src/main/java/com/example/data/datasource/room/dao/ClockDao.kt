@@ -18,7 +18,7 @@ interface ClockDao {
     @Query("SELECT clockIdx FROM clock")
     suspend fun getClockIdxList() : List<Int>
 
-    @Query("SELECT * FROM clock ORDER BY lastModifiedTime LIMIT :amount")
+    @Query("SELECT * FROM clock ORDER BY lastModifiedTime DESC LIMIT :amount")
     suspend fun getRecentClock(amount : Int) : List<ClockEntity>
 
     @Query("SELECT * FROM clock ORDER BY lastModifiedTime")
@@ -32,4 +32,7 @@ interface ClockDao {
 
     @Update(entity = ClockEntity::class)
     suspend fun updateClock(clock: ClockEntity) : Int
+
+    @Query("SELECT * FROM clock ORDER BY lastModifiedTime DESC LIMIT :pageSize OFFSET :pageIdx * :pageSize")
+    suspend fun getRecentClockPage(pageIdx : Int, pageSize : Int) : List<ClockEntity>
 }

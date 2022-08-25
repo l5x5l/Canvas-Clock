@@ -20,3 +20,7 @@ class UseCaseUpdateClockPart @Inject constructor(private val repository: ClockRe
 class UseCaseUpdateClock @Inject constructor(private val repository : ClockRepository) {
     suspend fun execute(clock : ClockData) = repository.updateClock(clock)
 }
+
+class UseCaseGetRecentClockPage @Inject constructor(private val repository: ClockRepository) {
+    suspend fun execute(pageIdx : Int, pageSize : Int) = repository.getRecentClockPage(pageIdx = pageIdx, pageSize = pageSize)
+}

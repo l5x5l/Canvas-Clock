@@ -80,6 +80,13 @@ abstract class ClockDatabase : RoomDatabase() {
         return clockDao().updateClock(clock = clock)
     }
 
+    /**
+     * 시계 리스트를 특정 페이지를 기점으로 가져옵니다
+     */
+    suspend fun getRecentClockPage(pageIdx : Int, pageSize : Int) : List<ClockEntity> {
+        return clockDao().getRecentClockPage(pageIdx = pageIdx, pageSize = pageSize)
+    }
+
     companion object {
         private var instance : ClockDatabase ?= null
 
