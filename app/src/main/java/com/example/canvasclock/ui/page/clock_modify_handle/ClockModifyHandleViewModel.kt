@@ -8,6 +8,7 @@ import com.example.canvasclock.models.ClockHandAttr
 import com.example.canvasclock.models.ModifyClock
 import com.example.domain.models.ClockData
 import com.example.domain.usecase.UseCaseUpdateClock
+import com.example.domain.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -115,6 +116,7 @@ class ClockModifyHandleViewModel @Inject constructor(
 
     fun saveModifiedClockData() {
         viewModelScope.launch {
+            clockData.value.lastModifiedTime = getCurrentTime()
             val result = useCaseUpdateClock.execute(clockData.value)
             ModifyClock.getInstance().initModifyClock(clockData.value)
             _saveModifiedClockResult.emit(result)
