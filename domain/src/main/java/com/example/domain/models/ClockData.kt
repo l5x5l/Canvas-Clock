@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class ClockData (
     val clockIdx : Int = 0,
-    val clockPartList : ArrayList<ClockPartData> = arrayListOf(),
+    var clockPartList : ArrayList<ClockPartData> = arrayListOf(),
     var hourHandColor : String = "#FF000000",
     var hourHandWidth : Int = 12,
     var minuteHandColor : String = "#FF000000",
@@ -12,7 +12,7 @@ data class ClockData (
     var secondHandColor : String = "#FF000000",
     var secondHandWidth : Int = 6,
     val uiStateData: UiStateData = UiStateData(),
-    val lastModifiedTime : String = "2201010000"
+    var lastModifiedTime : String = "20220101000000"
 ) : Serializable {
     companion object {
         fun getDefaultClockList() : ArrayList<ClockData> {
@@ -32,7 +32,7 @@ data class ClockData (
                     minuteHandWidth = 12,
                     secondHandColor = "#FFF06060",
                     secondHandWidth = 8,
-                    lastModifiedTime = "2207221430"
+                    lastModifiedTime = "20220722143000"
                 )
             )
             defaultClockList.add(
@@ -45,7 +45,7 @@ data class ClockData (
                     minuteHandWidth = 12,
                     secondHandColor = "#FFF06060",
                     secondHandWidth = 8,
-                    lastModifiedTime = "2207221430"
+                    lastModifiedTime = "20220722143000"
                 )
             )
             defaultClockList.add(
@@ -58,7 +58,7 @@ data class ClockData (
                     minuteHandWidth = 12,
                     secondHandColor = "#FFF06060",
                     secondHandWidth = 8,
-                    lastModifiedTime = "2207221430"
+                    lastModifiedTime = "20220722143000"
                 )
             )
 
