@@ -1,5 +1,6 @@
 package com.example.domain.models
 
+import com.example.domain.utils.angleInterval
 import java.io.Serializable
 
 data class ClockPartData (
@@ -41,7 +42,7 @@ data class ClockPartData (
                 val lastClockPart = clockData.clockPartList[clockData.clockPartList.size - 1]
                 ClockPartData(
                     clockIdx = clockData.clockIdx, clockPartIdx = lastClockPart.clockPartIdx + 1,
-                    startAngle = lastClockPart.endAngle, endAngle = lastClockPart.endAngle + 45,
+                    startAngle = lastClockPart.endAngle, endAngle = (lastClockPart.endAngle + angleInterval(lastClockPart.startAngle, lastClockPart.endAngle)) % 360,
                     firstColor = lastClockPart.firstColor, secondColor = lastClockPart.secondColor,
                     strokeColor = lastClockPart.strokeColor, strokeWidth = lastClockPart.strokeWidth,
                     startRadius = lastClockPart.startRadius, middleRadius = lastClockPart.middleRadius, endRadius = lastClockPart.endRadius, priority = lastClockPart.priority + 1,

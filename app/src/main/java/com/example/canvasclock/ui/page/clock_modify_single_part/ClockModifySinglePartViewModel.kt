@@ -42,14 +42,19 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
     // currentClock 에 시계 부품을 추가합니다.
     fun initViewModel(isAddMode : Boolean){
         if (isAddMode) {
+            // 부품을 추가하고자 하는 경우, 기존에 선택되었던 부품들은 선택 해제합니다.
+            for (clockPart in currentClock.clockPartList) {
+                clockPart.uiState.isSelected = false
+            }
+
             val newClockPart = ClockPartData.getClockPartByClock(currentClock)
             selectedClockPartAmount = 1
             newClockPart.uiState.isSelected = true
-            selectedClockPartPosition = currentClock.clockPartList.size - 1
+            selectedClockPartPosition = currentClock.clockPartList.size
             initClock.clockPartList.add(newClockPart)
             middleSaveClock.clockPartList.add(newClockPart)
             currentClock.clockPartList.add(newClockPart)
-            _changedClockPartAttr.value = newClockPart
+            _changedClockPartAttr.value = ClockPartData.deepCopy(newClockPart) // 이걸 그냥 newClockPart 로 사용하면 변경이 안된다.
         } else {
             selectedClockPartAmount = currentClock.clockPartList.filter { it.uiState.isSelected }.size
             for (i in 0 until currentClock.clockPartList.size) {

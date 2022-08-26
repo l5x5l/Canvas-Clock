@@ -2,7 +2,6 @@ package com.example.canvasclock.ui.page.clock_modify_shape
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -11,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.canvasclock.R
+import com.example.canvasclock.config.ADD_MODE
 import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.config.GlobalApplication
 import com.example.canvasclock.databinding.ActivityClockModifyShapeBinding
@@ -101,6 +101,8 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
     }
 
     private fun moveToClockPartModify() {
-        Log.d("!!!!", viewModel.clockData.value.clockPartList.toString())
+        val intent = Intent(this, ClockModifySinglePartActivity::class.java)
+        intent.putExtra(ADD_MODE, true)
+        modifyPartResult.launch(intent)
     }
 }

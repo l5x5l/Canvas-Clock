@@ -23,3 +23,11 @@ fun timeToAngle(is24Mode: Boolean = false, hour : Int, minute : Int) : Float {
         (hour % 12) * 30 + (minute * 0.5f)
     }
 }
+
+fun angleInterval(startAngle : Float, endAngle : Float) : Float {
+    return if (startAngle < endAngle) {
+        endAngle - startAngle
+    } else {
+        endAngle + 360 - startAngle
+    }
+}
