@@ -35,4 +35,7 @@ interface ClockDao {
 
     @Query("SELECT * FROM clock ORDER BY lastModifiedTime DESC LIMIT :pageSize OFFSET :pageIdx * :pageSize")
     suspend fun getRecentClockPage(pageIdx : Int, pageSize : Int) : List<ClockEntity>
+
+    @Delete
+    suspend fun deleteClockPartList(clockParts : List<ClockPartEntity>) : Int
 }

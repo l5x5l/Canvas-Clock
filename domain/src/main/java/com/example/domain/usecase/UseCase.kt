@@ -24,3 +24,7 @@ class UseCaseUpdateClock @Inject constructor(private val repository : ClockRepos
 class UseCaseGetRecentClockPage @Inject constructor(private val repository: ClockRepository) {
     suspend fun execute(pageIdx : Int, pageSize : Int) = repository.getRecentClockPage(pageIdx = pageIdx, pageSize = pageSize)
 }
+
+class UseCaseDeleteClockParts @Inject constructor(private val repository: ClockRepository) {
+    suspend fun execute(clockParts : ArrayList<ClockPartData>) = repository.deleteClockParts(clockParts = clockParts)
+}

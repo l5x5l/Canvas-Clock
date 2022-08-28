@@ -13,4 +13,6 @@ interface ClockRepository {
     suspend fun updateClock(clock : ClockData) : Int
 
     suspend fun getRecentClockPage(pageIdx : Int, pageSize : Int) : ArrayList<ClockData>
+
+    suspend fun deleteClockParts(clockParts : ArrayList<ClockPartData>) : Int
 }

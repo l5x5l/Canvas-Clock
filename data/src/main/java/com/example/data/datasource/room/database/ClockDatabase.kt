@@ -87,6 +87,13 @@ abstract class ClockDatabase : RoomDatabase() {
         return clockDao().getRecentClockPage(pageIdx = pageIdx, pageSize = pageSize)
     }
 
+    /**
+     * 시계 부품을 삭제합니다.
+     */
+    suspend fun deleteClockPart(clockParts : List<ClockPartEntity>) : Int {
+        return clockDao().deleteClockPartList(clockParts = clockParts)
+    }
+
     companion object {
         private var instance : ClockDatabase ?= null
 

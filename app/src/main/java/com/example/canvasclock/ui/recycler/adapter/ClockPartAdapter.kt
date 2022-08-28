@@ -1,5 +1,6 @@
 package com.example.canvasclock.ui.recycler.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -37,9 +38,11 @@ class ClockPartAdapter(private val addClickEvent : () -> Unit) : RecyclerView.Ad
 
     override fun getItemCount(): Int = clockPartList.size + 1
 
+    @SuppressLint("NotifyDataSetChanged")
     fun applyClockPartList(clockPartList : ArrayList<ClockPartData>) {
         this.clockPartList.clear()
         this.clockPartList.addAll(clockPartList)
-        notifyItemRangeChanged(1, clockPartList.size)
+        //notifyItemRangeChanged(1, clockPartList.size) // Inconsistency detected.
+        notifyDataSetChanged()
     }
 }

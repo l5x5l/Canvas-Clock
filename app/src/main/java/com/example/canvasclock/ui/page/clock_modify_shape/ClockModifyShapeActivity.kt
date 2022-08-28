@@ -43,6 +43,8 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
                         (binding.rvPartList.adapter as ClockPartAdapter).applyClockPartList(clockData.clockPartList)
                         binding.viewClockShape.linkClockInfo(clockData.clockPartList)
                         binding.viewClockTime.linkClock(clockData)
+
+                        binding.viewClockShape.invalidateClock()
                     }
                 }
 
@@ -91,6 +93,15 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
 
         binding.tvbtnSave.setOnClickListener {
             viewModel.saveModifiedClockParts()
+        }
+
+        binding.tvbtnDelete.setOnClickListener {
+            if (viewModel.getSelectedAmount() >= 1) {
+                viewModel.removeSelectParts()
+                viewModel.applyChangedClockPart()
+            } else {
+                showSimpleToast(getString(R.string.message_select_more_than_one_part))
+            }
         }
     }
 
