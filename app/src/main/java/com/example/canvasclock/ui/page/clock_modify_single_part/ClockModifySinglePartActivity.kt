@@ -264,15 +264,19 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
 
     // 함수 분리 필요
     private fun showColorPicker() {
+        binding.tvbtnSave.isEnabled = false
+        binding.ivbtnBack.isEnabled = false
         binding.viewColorPicker.setColorInUse(ClockData.getColorSet(viewModel.getCurrentClock()))
-        binding.nestedColorPicker.visibility = View.VISIBLE
+        binding.viewColorPicker.visibility = View.VISIBLE
         binding.viewColorPicker.setIsInit()
         viewModel.setColorPickerInitColor()
         binding.viewColorPicker.removeIsInit()
     }
 
     private fun hideColorPicker() {
-        binding.nestedColorPicker.visibility = View.GONE
+        binding.tvbtnSave.isEnabled = true
+        binding.ivbtnBack.isEnabled = true
+        binding.viewColorPicker.visibility = View.GONE
     }
 
     private fun changeColor(colorString : String) {
