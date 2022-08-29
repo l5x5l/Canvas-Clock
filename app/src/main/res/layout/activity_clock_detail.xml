@@ -30,7 +30,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivbtn_back"
             app:layout_constraintBottom_toBottomOf="@id/ivbtn_back"
+            android:textColor="@color/color_selector_press"
             android:text="@string/modify"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_middle"
+            app:layout_constraintEnd_toStartOf="@id/tvbtn_modify"
+            app:layout_constraintTop_toTopOf="@id/ivbtn_back"
+            app:layout_constraintBottom_toBottomOf="@id/ivbtn_back"
+            android:textColor="@color/color_negative"
+            android:text="@string/delete"/>
 
         <FrameLayout
             android:id="@+id/layout_clock"

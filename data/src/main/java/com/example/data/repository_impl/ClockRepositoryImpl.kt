@@ -62,4 +62,12 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
         val clockPartEntities = clockParts.map { DataLayerMapper.toClockPartEntity(it) }
         return ClockDatabase.getInstance().deleteClockPart(clockParts = clockPartEntities)
     }
+
+    override suspend fun getClockCount(): Int {
+        return ClockDatabase.getInstance().getClockCount()
+    }
+
+    override suspend fun deleteClock(clockIdx: Int): Int {
+        return ClockDatabase.getInstance().deleteClock(clockIdx = clockIdx)
+    }
 }

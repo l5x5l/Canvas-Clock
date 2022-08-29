@@ -49,4 +49,8 @@
     <string name="message_select_more_than_one_part">하나 이상의 부품을 선택해주세요</string>
     <string name="message_confirm_cancel_modify">수정된 내용이 있습니다.\n해당 내용을 반영하지 않고\n취소할까요?</string>
     <string name="message_not_loading_yet">로딩중입니다, 잠시후에 다시 실행해주세요</string>
+    <string name="message_can_delete_clock_only_more_than_one">2개 이상의 시계가 있는 경우에만 삭제할 수 있습니다.</string>
+    <string name="message_confirm_delete_clock">삭제된 시계는 되돌릴 수 없습니다.\n이 시계를 삭제할까요?</string>
+    <string name="message_deletion_success">삭제되었습니다.</string>
+    <string name="message_deletion_failure">삭제에 실패했습니다. 잠시 후에 다시 시도해주세요.</string>
 </resources>

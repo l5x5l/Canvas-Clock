@@ -38,4 +38,10 @@ interface ClockDao {
 
     @Delete
     suspend fun deleteClockPartList(clockParts : List<ClockPartEntity>) : Int
+
+    @Query("SELECT COUNT(clockIdx) FROM clock")
+    suspend fun getClockCount() : Int
+
+    @Query("DELETE FROM clock WHERE clockIdx = :clockIdx")
+    suspend fun deleteClock(clockIdx : Int) : Int
 }

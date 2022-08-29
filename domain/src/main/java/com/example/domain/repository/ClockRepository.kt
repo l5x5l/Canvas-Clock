@@ -15,4 +15,8 @@ interface ClockRepository {
     suspend fun getRecentClockPage(pageIdx : Int, pageSize : Int) : ArrayList<ClockData>
 
     suspend fun deleteClockParts(clockParts : ArrayList<ClockPartData>) : Int
+
+    suspend fun getClockCount() : Int
+
+    suspend fun deleteClock(clockIdx : Int) : Int
 }

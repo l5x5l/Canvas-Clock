@@ -22,6 +22,7 @@ class TwoButtonDialog : DialogFragment() {
 
     @StringRes private var button1Text : Int? = null
     @StringRes private var button2Text : Int? = null
+    @StringRes private var mainMessageText : Int? = null
 
     @DrawableRes private var button1Background : Int? = null
     @DrawableRes private var button2Background : Int? = null
@@ -47,8 +48,9 @@ class TwoButtonDialog : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button1Text?.let { binding.tvbtn1.text = getString(it)}
+        button1Text?.let { binding.tvbtn1.text = getString(it) }
         button2Text?.let { binding.tvbtn2.text = getString(it) }
+        mainMessageText?.let { binding.tvDialogMessage.text = getString(it) }
 
         button1Background?.let { binding.tvbtn1.background = ContextCompat.getDrawable(requireContext(), it) }
         button2Background?.let { binding.tvbtn2.background = ContextCompat.getDrawable(requireContext(), it) }
@@ -74,5 +76,9 @@ class TwoButtonDialog : DialogFragment() {
         button2Text = buttonText
         button2Event = buttonClickEvent
         button2Background = buttonStyle
+    }
+
+    fun setMainMessage(@StringRes messageText : Int) {
+        mainMessageText = messageText
     }
 }

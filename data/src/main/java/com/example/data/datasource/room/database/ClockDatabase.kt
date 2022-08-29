@@ -94,6 +94,20 @@ abstract class ClockDatabase : RoomDatabase() {
         return clockDao().deleteClockPartList(clockParts = clockParts)
     }
 
+    /**
+     * 현재 존재하는 시계의 개수를 리턴합니다.
+     */
+    suspend fun getClockCount() : Int {
+        return clockDao().getClockCount()
+    }
+
+    /**
+     * 시계를 삭제합니다.
+     */
+    suspend fun deleteClock(clockIdx : Int) : Int {
+        return clockDao().deleteClock(clockIdx = clockIdx)
+    }
+
     companion object {
         private var instance : ClockDatabase ?= null
 
