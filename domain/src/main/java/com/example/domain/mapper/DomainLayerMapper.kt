@@ -10,6 +10,7 @@ import kotlin.math.sin
 object DomainLayerMapper {
     fun toCoordinateClockPartData(clockPartData: ClockPartData, viewRadius : Int, viewMx : Int, viewMy : Int) : CoordinateClockPartData {
         val toRadian = Math.PI / 180
+        val maximumStrokeWidth = viewRadius * 0.05f
 
         val endRadius = (viewRadius * clockPartData.endRadius / 100f)
         val startRadius = (viewRadius * clockPartData.startRadius / 100f)
@@ -50,7 +51,7 @@ object DomainLayerMapper {
             firstColor = clockPartData.firstColor,
             secondColor = clockPartData.secondColor,
             strokeColor = clockPartData.strokeColor,
-            strokeWidth = clockPartData.strokeWidth,
+            strokeWidth = (clockPartData.strokeWidth * maximumStrokeWidth * 0.01f),
             useMiddleLineStroke = clockPartData.useMiddleLineStroke,
             uiStateData = UiStateData()
         )

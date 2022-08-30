@@ -9,6 +9,6 @@ data class CoordinateClockPartData(
     val secondColor : String,
     val uiStateData: UiStateData,
     val strokeColor : String,
-    val strokeWidth : Int,
+    val strokeWidth : Float,
     val useMiddleLineStroke : Boolean
 )

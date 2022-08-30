@@ -43,10 +43,10 @@ fun drawClockPart(canvas : Canvas, coordinateClockPart : CoordinateClockPartData
     path2.close()
     canvas.drawPath(path2, paint2)
 
-    if (coordinateClockPart.strokeWidth != 0) {
+    if (coordinateClockPart.strokeWidth != 0f) {
         val strokePaint = Paint()
         strokePaint.style = Paint.Style.STROKE
-        strokePaint.strokeWidth = coordinateClockPart.strokeWidth.toFloat()
+        strokePaint.strokeWidth = coordinateClockPart.strokeWidth
         strokePaint.color = Color.parseColor(coordinateClockPart.strokeColor)
 
         val strokePath = Path()
@@ -99,6 +99,8 @@ fun drawClockIcon(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx 
 fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius : Int, is24HourMode : Boolean = true, hour : Int, minute : Int, second : Int){
     val toRadian = (Math.PI / 180).toFloat()
 
+    val maximumWidth = radius * 0.05f
+
     val secondAngle = (second * 6 - 90) * toRadian
     val minuteAngle = (minute * 6 - 90) * toRadian
     val hourAngle = if (is24HourMode){
@@ -115,7 +117,7 @@ fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius 
     secondPaint.color = Color.parseColor(clock.secondHandColor)
     secondPaint.strokeCap = Paint.Cap.ROUND
     secondPaint.strokeJoin = Paint.Join.ROUND
-    secondPaint.strokeWidth = clock.secondHandWidth.toFloat()
+    secondPaint.strokeWidth = clock.secondHandWidth.toFloat() * 0.05f * maximumWidth
     canvas.drawLine(mx.toFloat(), my.toFloat(), secondX, secondY, secondPaint)
 
     val minuteX = (mx + (radius * 0.8f) * cos(minuteAngle))
@@ -126,7 +128,7 @@ fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius 
     minutePaint.color = Color.parseColor(clock.minuteHandColor)
     minutePaint.strokeCap = Paint.Cap.ROUND
     minutePaint.strokeJoin = Paint.Join.ROUND
-    minutePaint.strokeWidth = clock.minuteHandWidth.toFloat()
+    minutePaint.strokeWidth = clock.minuteHandWidth.toFloat() * 0.05f * maximumWidth
     canvas.drawLine(mx.toFloat(), my.toFloat(), minuteX, minuteY, minutePaint)
 
     val hourX = (mx + (radius * 0.5f) * cos(hourAngle))
@@ -137,6 +139,6 @@ fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius 
     hourPaint.color = Color.parseColor(clock.hourHandColor)
     hourPaint.strokeCap = Paint.Cap.ROUND
     hourPaint.strokeJoin = Paint.Join.ROUND
-    hourPaint.strokeWidth = clock.hourHandWidth.toFloat()
+    hourPaint.strokeWidth = clock.hourHandWidth.toFloat() * 0.05f * maximumWidth
     canvas.drawLine(mx.toFloat(), my.toFloat(), hourX, hourY, hourPaint)
 }
