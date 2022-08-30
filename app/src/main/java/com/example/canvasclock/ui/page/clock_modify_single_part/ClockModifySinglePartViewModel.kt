@@ -179,6 +179,18 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun setUseMiddleLineStroke(isUse : Boolean) {
+        val stateValue = ClockPartData.deepCopy(changedClockPartAttr.value)
+        if (stateValue.useMiddleLineStroke != isUse){
+            for (clockPart in currentClock.clockPartList) {
+                if (clockPart.uiState.isSelected) {
+                    clockPart.useMiddleLineStroke = isUse
+                }
+            }
+            stateValue.useMiddleLineStroke = isUse
+            _changedClockPartAttr.value = stateValue
+        }
+    }
 
     fun setColorPickerInitColor() {
         val colorString = when(pickedColorComponent) {

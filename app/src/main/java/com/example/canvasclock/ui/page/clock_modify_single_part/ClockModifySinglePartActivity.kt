@@ -96,6 +96,8 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
                             changeProgressText(binding.etMiddlePoint, clockPartAttr.middleRadius)
                         }
 
+                        binding.cbUseMiddleLine.isChecked = clockPartAttr.useMiddleLineStroke
+
                         binding.tvbtnStartTime.text = angleToTime(is24Mode = true, clockPartAttr.startAngle)
                         binding.tvbtnEndTime.text = angleToTime(is24Mode = true, clockPartAttr.endAngle)
 
@@ -259,6 +261,11 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
         binding.cbNotUseMiddlePoint.setOnClickListener { checkBox ->
             checkBox as AppCompatCheckBox
             viewModel.setUseMiddleRadius(!checkBox.isChecked)
+        }
+
+        binding.cbUseMiddleLine.setOnClickListener { checkBox ->
+            checkBox as AppCompatCheckBox
+            viewModel.setUseMiddleLineStroke(checkBox.isChecked)
         }
     }
 
