@@ -3,7 +3,7 @@ package com.example.domain.models
 import java.io.Serializable
 
 data class ClockData (
-    val clockIdx : Int = 0,
+    val clockIdx : Int = -1,
     var clockPartList : ArrayList<ClockPartData> = arrayListOf(),
     var hourHandColor : String = "#FF000000",
     var hourHandWidth : Int = 12,
