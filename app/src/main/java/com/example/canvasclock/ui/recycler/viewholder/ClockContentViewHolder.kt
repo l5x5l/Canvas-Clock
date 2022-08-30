@@ -7,15 +7,21 @@ import com.example.canvasclock.databinding.ItemClockContentBinding
 import com.example.canvasclock.ui.page.clock_detail.ClockDetailActivity
 import com.example.domain.models.ClockData
 
-class ClockContentViewHolder(private val binding : ItemClockContentBinding) : RecyclerView.ViewHolder(binding.root) {
+class ClockContentViewHolder(private val binding : ItemClockContentBinding, private val onClick : ((ClockData) -> Unit) ?= null) : RecyclerView.ViewHolder(binding.root) {
 
     private var clockData = ClockData()
 
     init {
-        binding.viewClockShape.setOnClickListener {
-            val intent = Intent(binding.root.context, ClockDetailActivity::class.java)
-            intent.putExtra(INTENT_KEY_CLOCK, clockData)
-            (binding.root.context).startActivity(intent)
+        if (onClick == null) {
+            binding.viewClockShape.setOnClickListener {
+                val intent = Intent(binding.root.context, ClockDetailActivity::class.java)
+                intent.putExtra(INTENT_KEY_CLOCK, clockData)
+                (binding.root.context).startActivity(intent)
+            }
+        } else {
+            binding.viewClockShape.setOnClickListener {
+                onClick.invoke(clockData)
+            }
         }
     }
 

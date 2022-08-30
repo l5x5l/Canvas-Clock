@@ -32,6 +32,8 @@ class ClockDetailViewModel @Inject constructor(
     private val _deleteClockEvent : MutableEventFlow<Boolean> = MutableEventFlow()
     val deleteClockEvent = _deleteClockEvent.asEventFlow()
 
+    private var isUpdated = false
+
     fun setClockData(clockData: ClockData) {
         ModifyClock.getInstance().initModifyClock(clockData)
         _mainClockState.update { EventState.success(clockData) }
@@ -56,4 +58,10 @@ class ClockDetailViewModel @Inject constructor(
             }
         }
     }
+
+    fun setIsUpdated(value : Boolean) {
+        isUpdated = value
+    }
+
+    fun getIsUpdated() = isUpdated
 }

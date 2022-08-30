@@ -15,3 +15,7 @@ enum class ClockPartPointAttr {
 enum class ClockHandAttr {
     HOUR, MINUTE, SECOND
 }
+
+enum class Crud {
+    UPDATE, DELETE
+}

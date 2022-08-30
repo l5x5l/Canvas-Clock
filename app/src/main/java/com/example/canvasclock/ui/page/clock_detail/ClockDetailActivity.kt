@@ -10,11 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.canvasclock.R
-import com.example.canvasclock.config.BaseActivity
-import com.example.canvasclock.config.BaseFragment
-import com.example.canvasclock.config.GlobalApplication
-import com.example.canvasclock.config.INTENT_KEY_CLOCK
+import com.example.canvasclock.config.*
 import com.example.canvasclock.databinding.ActivityClockDetailBinding
+import com.example.canvasclock.models.Crud
 import com.example.canvasclock.models.ModifyClock
 import com.example.canvasclock.ui.custom_components.TwoButtonDialog
 import com.example.canvasclock.ui.page.clock_detail.modify.ClockDetailModifyFragment
@@ -80,6 +78,10 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
                         if (deleteSuccess) {
                             showSimpleToast(getString(R.string.message_deletion_success))
                             GlobalApplication.isClockDBModified = true
+                            val intent = Intent(this@ClockDetailActivity, BaseActivity::class.java)
+                            intent.putExtra(INTENT_KEY_CLOCK, ModifyClock.getInstance().getOriginalClock())
+                            intent.putExtra(INTENT_KEY_CHANGED, Crud.DELETE)
+                            setResult(RESULT_OK, intent)
                             finish()
                         } else {
                             showSimpleToast(getString(R.string.message_deletion_failure))
@@ -98,6 +100,7 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
         modifyResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 viewModel.applyModifyClockData(ModifyClock.getInstance().getOriginalClock())
+                viewModel.setIsUpdated(value = true)
             }
         }
     }
@@ -128,6 +131,18 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
 
         binding.tvbtnDelete.setOnClickListener {
             viewModel.checkClockCount()
+        }
+    }
+
+    override fun finish() {
+        if (viewModel.getIsUpdated()) {
+            val intent = Intent(this@ClockDetailActivity, BaseActivity::class.java)
+            intent.putExtra(INTENT_KEY_CLOCK, ModifyClock.getInstance().getOriginalClock())
+            intent.putExtra(INTENT_KEY_CHANGED, Crud.UPDATE)
+            setResult(RESULT_OK, intent)
+            super.finish()
+        } else {
+            super.finish()
         }
     }
 
