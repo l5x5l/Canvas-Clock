@@ -137,14 +137,14 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
 
     private fun showColorPicker() {
         binding.viewColorPicker.setColorInUse(ClockData.getColorSet(viewModel.getCurrentClock()))
-        binding.nestedColorPicker.visibility = View.VISIBLE
+        binding.viewColorPicker.visibility = View.VISIBLE
         binding.viewColorPicker.setIsInit()
         viewModel.setColorPickerInitColor()
         binding.viewColorPicker.removeIsInit()
     }
 
     private fun hideColorPicker() {
-        binding.nestedColorPicker.visibility = View.GONE
+        binding.viewColorPicker.visibility = View.GONE
     }
 
     private fun changeProgress(seekbar : AppCompatSeekBar, newProgress : Int){
