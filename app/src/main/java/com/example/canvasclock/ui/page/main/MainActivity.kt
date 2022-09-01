@@ -50,6 +50,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                                 binding.viewClockShape.linkClockInfo(eventState.value[0].clockPartList)
                                 binding.viewClockTime.linkClock(eventState.value[0])
                                 binding.viewClockShape.invalidateClock()
+                                binding.viewIconClock.linkClockInfo(eventState.value[0].clockPartList)
+                                binding.viewIconClock.invalidateClock()
                             }
                         }
                     } // viewModel.mainClockState.collect
@@ -96,6 +98,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             } catch (e : Exception) { // mainClockState 가 아직 로딩되지 않은 경우에 버튼 클릭 (room db 라 발생확률 낮음)
                 showSimpleToast(getString(R.string.message_not_loading_yet))
             }
+        }
+
+        binding.layoutbtnAddClock.setOnClickListener {
+
+        }
+
+        binding.layoutbtnClockMode.setOnClickListener {
+
         }
     }
 
