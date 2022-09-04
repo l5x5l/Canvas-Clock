@@ -54,7 +54,7 @@ fun drawClockPart(canvas : Canvas, coordinateClockPart : CoordinateClockPartData
         strokePath.lineTo(coordinateClockPart.endLeftCoordinate.x, coordinateClockPart.endLeftCoordinate.y)
         strokePath.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
         strokePath.lineTo(coordinateClockPart.endRightCoordinate.x, coordinateClockPart.endRightCoordinate.y)
-        strokePath.lineTo(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y)
+        strokePath.close()
         if (coordinateClockPart.useMiddleLineStroke){
             strokePath.lineTo(coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y)
         }
