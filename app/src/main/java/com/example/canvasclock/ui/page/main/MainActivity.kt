@@ -12,10 +12,14 @@ import com.example.canvasclock.R
 import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.config.GlobalApplication
 import com.example.canvasclock.config.INTENT_KEY_CLOCK
+import com.example.canvasclock.config.INTENT_KEY_CREATE_CLOCK
 import com.example.canvasclock.databinding.ActivityMainBinding
+import com.example.canvasclock.models.ModifyClock
 import com.example.canvasclock.ui.page.clock_detail.ClockDetailActivity
+import com.example.canvasclock.ui.page.clock_modify_shape.ClockModifyShapeActivity
 import com.example.canvasclock.ui.recycler.adapter.MainClockAdapter
 import com.example.canvasclock.ui.recycler.decoration.Grid3Decoration
+import com.example.domain.models.ClockData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -101,7 +105,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
 
         binding.layoutbtnAddClock.setOnClickListener {
-
+            val intent = Intent(this, ClockModifyShapeActivity::class.java)
+            intent.putExtra(INTENT_KEY_CREATE_CLOCK, true)
+            ModifyClock.getInstance().initModifyClock(ClockData())
+            startActivity(intent)
         }
 
         binding.layoutbtnClockMode.setOnClickListener {

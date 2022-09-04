@@ -7,6 +7,7 @@ import com.example.canvasclock.config.asEventFlow
 import com.example.canvasclock.models.ClockHandAttr
 import com.example.canvasclock.models.ModifyClock
 import com.example.domain.models.ClockData
+import com.example.domain.usecase.UseCaseInsertClock
 import com.example.domain.usecase.UseCaseUpdateClock
 import com.example.domain.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,12 +18,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClockModifyHandleViewModel @Inject constructor(
-    private val useCaseUpdateClock: UseCaseUpdateClock
+    private val useCaseUpdateClock: UseCaseUpdateClock,
+    private val useCaseInsertClock: UseCaseInsertClock
 ) : ViewModel() {
     private val _clockData = MutableStateFlow(ModifyClock.getInstance().getOriginalClock())
     val clockData = _clockData.asStateFlow()
 
-    private val _saveModifiedClockResult = MutableEventFlow<Int>()
+    private val _saveModifiedClockResult = MutableEventFlow<Boolean>()
     val saveModifiedClockResult = _saveModifiedClockResult.asEventFlow()
 
     private val initClock = ClockData.deepCopy(ModifyClock.getInstance().getMiddleSaveClock())
@@ -119,6 +121,14 @@ class ClockModifyHandleViewModel @Inject constructor(
             clockData.value.lastModifiedTime = getCurrentTime()
             val result = useCaseUpdateClock.execute(clockData.value)
             ModifyClock.getInstance().initModifyClock(clockData.value)
+            _saveModifiedClockResult.emit(result >= 0)
+        }
+    }
+
+    fun tryInsertClock() {
+        viewModelScope.launch {
+            clockData.value.lastModifiedTime = getCurrentTime()
+            val result = useCaseInsertClock.execute(clockData.value)
             _saveModifiedClockResult.emit(result)
         }
     }

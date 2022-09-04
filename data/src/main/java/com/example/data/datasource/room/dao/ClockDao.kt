@@ -44,4 +44,7 @@ interface ClockDao {
 
     @Query("DELETE FROM clock WHERE clockIdx = :clockIdx")
     suspend fun deleteClock(clockIdx : Int) : Int
+
+    @Query("SELECT clockIdx FROM clock ORDER BY clockIdx DESC LIMIT 1")
+    suspend fun getLargestClockIdx() : Int
 }

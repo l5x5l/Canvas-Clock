@@ -36,3 +36,7 @@ class UseCaseGetClockCount @Inject constructor(private val repository : ClockRep
 class UseCaseDeleteClock @Inject constructor(private val repository : ClockRepository) {
     suspend fun execute(clockIdx : Int) = repository.deleteClock(clockIdx = clockIdx)
 }
+
+class UseCaseInsertClock @Inject constructor(private val repository: ClockRepository) {
+    suspend fun execute(clock : ClockData) = repository.insertClock(clock)
+}

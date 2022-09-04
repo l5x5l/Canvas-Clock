@@ -18,6 +18,8 @@
     <string name="save">저장하기</string>
     <string name="add_with_plus">+ 추가하기</string>
     <string name="go_back">돌아가기</string>
+    <string name="set_time_handle">시/분/초침 설정하기</string>
+    <string name="create">생성하기</string>
 
     <string name="complete">완료</string>
     <string name="cancellation">취소</string>
@@ -55,4 +57,5 @@
     <string name="message_confirm_delete_clock">삭제된 시계는 되돌릴 수 없습니다.\n이 시계를 삭제할까요?</string>
     <string name="message_deletion_success">삭제되었습니다.</string>
     <string name="message_deletion_failure">삭제에 실패했습니다. 잠시 후에 다시 시도해주세요.</string>
+    <string name="message_confirm_cancellation_create_clock">시계 추가 작업을\n취소할까요?</string>
 </resources>

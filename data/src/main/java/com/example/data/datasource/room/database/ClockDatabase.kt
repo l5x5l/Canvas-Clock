@@ -41,6 +41,23 @@ abstract class ClockDatabase : RoomDatabase() {
     }
 
     /**
+     * 새로운 시계 데이터를 db에 저장합니다.
+     * 시계 데이터를 저장하는 도중, 실패한 경우 추가중이던 시계 데이터를 삭제합니다.
+     */
+    suspend fun insertClock(clockEntity: ClockEntity, clockPartEntityList : List<ClockPartEntity>) : Boolean{
+        return try {
+            clockDao().insertClock(clockEntity)
+            for (clockPart in clockPartEntityList) {
+                clockDao().insertClockPart(clockPart)
+            }
+            true
+        } catch (e : Exception) {
+            clockDao().deleteClock(clockEntity.clockIdx)
+            false
+        }
+    }
+
+    /**
      * 저장된 시계 중 인자로 전달한 수만큼 랜덤하게 가져옵니다.
      */
     suspend fun getRandomClock(amount : Int) : List<ClockEntity> {
@@ -106,6 +123,14 @@ abstract class ClockDatabase : RoomDatabase() {
      */
     suspend fun deleteClock(clockIdx : Int) : Int {
         return clockDao().deleteClock(clockIdx = clockIdx)
+    }
+
+    /**
+     * 새로 추가할 시계의 idx 로 사용할 수 있는 값을 리턴합니다.
+     * (시계 목록 중 가장 큰 idx 에 +1 한 값)
+     */
+    suspend fun getAvailableClockIdx() : Int {
+        return clockDao().getLargestClockIdx() + 1
     }
 
     companion object {

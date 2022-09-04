@@ -19,4 +19,6 @@ interface ClockRepository {
     suspend fun getClockCount() : Int
 
     suspend fun deleteClock(clockIdx : Int) : Int
+
+    suspend fun insertClock(clock: ClockData) : Boolean
 }

@@ -10,12 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.canvasclock.R
-import com.example.canvasclock.config.ADD_MODE
-import com.example.canvasclock.config.BaseActivity
-import com.example.canvasclock.config.GlobalApplication
+import com.example.canvasclock.config.*
 import com.example.canvasclock.databinding.ActivityClockModifyShapeBinding
 import com.example.canvasclock.models.ModifyClock
 import com.example.canvasclock.ui.custom_components.TwoButtonDialog
+import com.example.canvasclock.ui.page.clock_modify_handle.ClockModifyHandleActivity
 import com.example.canvasclock.ui.page.clock_modify_single_part.ClockModifySinglePartActivity
 import com.example.canvasclock.ui.recycler.adapter.ClockPartAdapter
 import com.example.canvasclock.ui.recycler.decoration.LinearVerticalDecoration
@@ -29,12 +28,20 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
     private val confirmDialog : TwoButtonDialog by lazy { TwoButtonDialog() }
     private lateinit var modifyPartResult : ActivityResultLauncher<Intent>
 
+    private var isCreateMode = false
+
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setRecyclerView()
         setButton()
+
+        isCreateMode = intent.getBooleanExtra(INTENT_KEY_CREATE_CLOCK, false)
+        if (isCreateMode) {
+            binding.tvbtnSave.text = getString(R.string.set_time_handle)
+            confirmDialog.setMainMessage(R.string.message_confirm_cancellation_create_clock)
+        }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -83,16 +90,30 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
             }
         }
 
+        // 시계를 수정할 때와 시계를 생성할 때가 다름
         binding.ivbtnBack.setOnClickListener {
-            if (viewModel.getIsChanged()) {
+            if (isCreateMode) {
                 confirmDialog.show(supportFragmentManager, "ConfirmDialog")
-            } else {
-                finish()
+            }
+            else {
+                if (viewModel.getIsChanged()) {
+                    confirmDialog.show(supportFragmentManager, "ConfirmDialog")
+                } else {
+                    finish()
+                }
             }
         }
 
+        // 시계를 수정할 때와 시계를 생성할 때가 다름
         binding.tvbtnSave.setOnClickListener {
-            viewModel.saveModifiedClockParts()
+            if (isCreateMode){
+                ModifyClock.getInstance().initModifyClock(viewModel.clockData.value)
+                val intent = Intent(this, ClockModifyHandleActivity::class.java)
+                intent.putExtra(INTENT_KEY_CLOCK, isCreateMode)
+                startActivity(intent)
+            } else {
+                viewModel.saveModifiedClockParts()
+            }
         }
 
         binding.tvbtnDelete.setOnClickListener {

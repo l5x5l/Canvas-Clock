@@ -6,9 +6,13 @@ import com.example.domain.models.ClockData
 import com.example.domain.models.ClockPartData
 
 object DataLayerMapper {
-    fun toClockEntity(clock : ClockData) : ClockEntity {
+    /**
+     * ClockData 를 ClockEntity 로 전환합니다.
+     * 만약 기존 clockIdx 가 아닌, 새로운 clockIdx 값을 사용하고자 한다면, clockIdx 인자를 특정하면 됩니다.
+     */
+    fun toClockEntity(clock : ClockData, clockIdx : Int ?= null) : ClockEntity {
         return ClockEntity(
-            clockIdx = clock.clockIdx,
+            clockIdx = clockIdx ?: clock.clockIdx,
             hourHandColor = clock.hourHandColor, hourHandWidth = clock.hourHandWidth,
             minuteHandColor = clock.minuteHandColor, minuteHandWidth = clock.minuteHandWidth,
             secondHandColor = clock.secondHandColor, secondHandWidth = clock.secondHandWidth,
@@ -32,9 +36,13 @@ object DataLayerMapper {
         )
     }
 
-    fun toClockPartEntity(clockPart : ClockPartData) : ClockPartEntity {
+    /**
+     * ClockPartData 를 ClockPartEntity 로 전환합니다.
+     * 만약 기존 clockIdx 가 아닌, 새로운 clockIdx 값을 사용하고자 한다면, clockIdx 인자를 특정하면 됩니다.
+     */
+    fun toClockPartEntity(clockPart : ClockPartData, clockIdx : Int ?= null) : ClockPartEntity {
         return ClockPartEntity(
-            clockIdx = clockPart.clockIdx,
+            clockIdx = clockIdx ?: clockPart.clockIdx,
             clockPartIdx = clockPart.clockPartIdx,
             startAngle = clockPart.startAngle,
             endAngle = clockPart.endAngle,

@@ -13,9 +13,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.canvasclock.R
 import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.config.GlobalApplication
+import com.example.canvasclock.config.INTENT_KEY_CLOCK
 import com.example.canvasclock.databinding.ActivityClockModifyHandleBinding
 import com.example.canvasclock.models.ClockHandAttr
 import com.example.canvasclock.ui.custom_components.TwoButtonDialog
+import com.example.canvasclock.ui.page.main.MainActivity
 import com.example.domain.models.ClockData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,12 +27,19 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
     private val viewModel : ClockModifyHandleViewModel by viewModels()
     private val confirmDialog : TwoButtonDialog by lazy { TwoButtonDialog() }
 
+    private var isCreateMode = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setButton()
         setObserver()
         setSeekbar()
+
+        isCreateMode = intent.getBooleanExtra(INTENT_KEY_CLOCK, false)
+        if (isCreateMode) {
+            binding.tvbtnSave.text = getString(R.string.create)
+        }
 
         binding.viewClockShape.linkClockInfo(viewModel.clockData.value.clockPartList)
 
@@ -65,16 +74,26 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
             showColorPicker()
         }
 
+        // 시계를 수정할 때와 시계를 생성할 때가 다름
         binding.ivbtnBack.setOnClickListener {
-            if (viewModel.isChanged()) {
-                confirmDialog.show(supportFragmentManager, "ConfirmDialog")
-            } else {
+            if (isCreateMode) {
                 finish()
+            } else {
+                if (viewModel.isChanged()) {
+                    confirmDialog.show(supportFragmentManager, "ConfirmDialog")
+                } else {
+                    finish()
+                }
             }
         }
 
+        // 시계를 수정할 때와 시계를 생성할 때가 다름
         binding.tvbtnSave.setOnClickListener {
-            viewModel.saveModifiedClockData()
+            if (isCreateMode) {
+                viewModel.tryInsertClock()
+            } else {
+                viewModel.saveModifiedClockData()
+            }
         }
     }
 
@@ -120,9 +139,15 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
                 launch {
                     viewModel.saveModifiedClockResult.collect { _ ->
                         GlobalApplication.isClockDBModified = true
-                        val intent = Intent(this@ClockModifyHandleActivity, BaseActivity::class.java)
-                        setResult(RESULT_OK, intent)
-                        finish()
+                        if (isCreateMode) {
+                            val intent = Intent(this@ClockModifyHandleActivity, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            startActivity(intent)
+                        } else {
+                            val intent = Intent(this@ClockModifyHandleActivity, BaseActivity::class.java)
+                            setResult(RESULT_OK, intent)
+                            finish()
+                        }
                     }
                 }
 
