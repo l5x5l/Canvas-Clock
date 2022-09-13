@@ -10,6 +10,7 @@
             android:src="@drawable/ic_baseline_arrow_back_24"
             style="@style/iconButton"
             android:layout_margin="@dimen/margin_very_small"
+            android:tint="@color/color_selector_press"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
