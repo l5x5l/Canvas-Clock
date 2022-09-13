@@ -19,3 +19,8 @@ enum class ClockHandAttr {
 enum class Crud {
     UPDATE, DELETE
 }
+
+// 시계 모드에서 색상변경이 가능한 요소들을 의미합니다.
+enum class ClockModeEditableComponent {
+    TEXT, BACKGROUND
+}

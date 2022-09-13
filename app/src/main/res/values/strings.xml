@@ -20,6 +20,8 @@
     <string name="go_back">돌아가기</string>
     <string name="set_time_handle">시/분/초침 설정하기</string>
     <string name="create">생성하기</string>
+    <string name="choose_clock">시계 선택</string>
+    <string name="back_to_home">홈으로 돌아가기</string>
 
     <string name="complete">완료</string>
     <string name="cancellation">취소</string>
@@ -30,7 +32,6 @@
     <string name="transparency">투명도</string>
     <string name="color_in_use">사용중인 색상</string>
     <string name="selection">선택</string>
-
 
     <string name="start_time">시작 시각</string>
     <string name="end_time">종료 시각</string>
@@ -48,6 +49,9 @@
     <string name="second_handle">초침</string>께
     <string name="thickness">두께</string>
     <string name="color">색상</string>
+
+    <string name="change_background_color">배경색상 변경</string>
+    <string name="change_text_color">글자색상 변경</string>
 
     <string name="message_cannot_change_time_range_when_multiple_part_selected">여러 부품을 한번에 수정할 때는 시간 범위를 조정할 수 없습니다.</string>
     <string name="message_select_more_than_one_part">하나 이상의 부품을 선택해주세요</string>
