@@ -117,9 +117,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun setRecyclerView() {
-        binding.rvClockList.layoutManager = GridLayoutManager(this, 3)
         binding.rvClockList.adapter = MainClockAdapter()
-        binding.rvClockList.addItemDecoration(Grid3Decoration(this))
     }
 
     override fun preLoad() {
