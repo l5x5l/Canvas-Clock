@@ -32,6 +32,10 @@ class ColorPickerView(context : Context, attrs : AttributeSet) : ConstraintLayou
         binding.tvbtnSelect.setOnClickListener {
             selectCallback()
         }
+
+        binding.root.setOnClickListener {
+            /* 특정 화면에서 화면을 클릭하면 해당 view 가 종료되는 경우가 있는데, 그 경우를 막기 위함 */
+        }
     }
 
     fun attachChangeCallbackFunction(callback : (String) -> Unit) {
