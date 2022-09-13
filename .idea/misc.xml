@@ -25,9 +25,14 @@
         <entry key="app/src/main/res/drawable/thumb_blue.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/thumb_green.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/thumb_red.xml" value="0.1415" />
+        <entry key="app/src/main/res/layout-land/activity_clock_detail.xml" value="0.22" />
         <entry key="app/src/main/res/layout-land/activity_clock_list.xml" value="0.125" />
         <entry key="app/src/main/res/layout-land/activity_clock_mode.xml" value="0.43795620437956206" />
+        <entry key="app/src/main/res/layout-land/activity_clock_modify_handle.xml" value="0.31746031746031744" />
+        <entry key="app/src/main/res/layout-land/activity_clock_modify_shape.xml" value="0.22" />
+        <entry key="app/src/main/res/layout-land/activity_clock_modify_single_part.xml" value="0.2" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.16" />
+        <entry key="app/src/main/res/layout-land/activity_modify_handle.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_clock_detail.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_clock_list.xml" value="0.11" />
         <entry key="app/src/main/res/layout/activity_clock_mode.xml" value="0.33" />

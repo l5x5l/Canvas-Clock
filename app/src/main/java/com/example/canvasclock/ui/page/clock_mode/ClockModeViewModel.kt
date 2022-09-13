@@ -19,6 +19,8 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
     private val _time = MutableStateFlow(Time())
     val time = _time.asStateFlow()
 
+    private var isInit = false
+
     private lateinit var timerJob : Job
 
     var targetComponent = ClockModeEditableComponent.BACKGROUND
@@ -62,8 +64,13 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
 
     // 초기 배경/텍스트 색상을 변경합니다. (다크모드 관련)
     fun setDarkMode() {
-        _backgroundColor.value = "#FF1B1D1F"
-        _textColor.value = "#FFFFFFFF"
+        if (!isInit) {
+            isInit = true
+            _backgroundColor.value = "#FF1B1D1F"
+            middleSaveBackgroundColor = "#FF1B1D1F"
+            _textColor.value = "#FFFFFFFF"
+            middleSaveTextColor = "#FFFFFFFF"
+        }
     }
 
     fun stopTimer(){

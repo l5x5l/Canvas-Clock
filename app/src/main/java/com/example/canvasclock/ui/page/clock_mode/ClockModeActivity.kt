@@ -27,6 +27,7 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
 
     private val viewModel : ClockModeViewModel by viewModels()
     private var isShowSettingLayout = false
+    private var isShowColorPicker = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,10 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
 
         // 화면을 터치하면 상세 수정 화면 표시여부가 변경됩니다.
         binding.root.setOnClickListener {
+            if (isShowColorPicker) { // 현재 색상선택 view 가 보이고 있다면 화면터치 이벤트를 호출하지 않습니다
+                return@setOnClickListener
+            }
+
             if (isShowSettingLayout) {
                 hideSettingLayout()
                 setFullScreenMode()
@@ -170,6 +175,7 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
     }
 
     private fun showColorPicker() {
+        isShowColorPicker = true
         binding.viewColorPicker.setColorInUse(ClockData.getColorSet(viewModel.getClockData()))
         binding.viewColorPicker.visibility = View.VISIBLE
         binding.viewColorPicker.setIsInit()
@@ -178,6 +184,7 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
     }
 
     private fun hideColorPicker() {
+        isShowColorPicker = false
         binding.viewColorPicker.visibility = View.GONE
     }
 }
