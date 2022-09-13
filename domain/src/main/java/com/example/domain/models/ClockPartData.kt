@@ -46,12 +46,12 @@ data class ClockPartData (
                     firstColor = lastClockPart.firstColor, secondColor = lastClockPart.secondColor,
                     strokeColor = lastClockPart.strokeColor, strokeWidth = lastClockPart.strokeWidth,
                     startRadius = lastClockPart.startRadius, middleRadius = lastClockPart.middleRadius, endRadius = lastClockPart.endRadius, priority = lastClockPart.priority + 1,
-                    useMiddleRadius = lastClockPart.useMiddleRadius, useMiddleLineStroke = lastClockPart.useMiddleLineStroke
+                    useMiddleRadius = lastClockPart.useMiddleRadius, useMiddleLineStroke = lastClockPart.useMiddleLineStroke, uiState = UiStateData(isSelected = false, isNew = true)
                 )
             } else {
                 ClockPartData(
                     clockIdx = clockData.clockIdx, clockPartIdx = 1,
-                    startAngle = 0f, endAngle = 45f, firstColor = "#FF47B5FF", secondColor = "#FFDFF6FF"
+                    startAngle = 0f, endAngle = 45f, firstColor = "#FF47B5FF", secondColor = "#FFDFF6FF", uiState = UiStateData(isSelected = false, isNew = true)
                 )
             }
         }

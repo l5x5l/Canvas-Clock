@@ -36,7 +36,7 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
 
     override suspend fun updateClockPartList(clockPartList: ArrayList<ClockPartData>): List<Long> {
         val changedClockPartEntityList =
-            clockPartList.filter { return@filter it.uiState.isSelected }.map {
+            clockPartList.filter { return@filter it.uiState.isSelected || it.uiState.isNew }.map {
                 DataLayerMapper.toClockPartEntity(it)
             }
         return ClockDatabase.getInstance().updateClockPartList(changedClockPartEntityList)

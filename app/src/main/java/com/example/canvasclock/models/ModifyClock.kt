@@ -23,6 +23,9 @@ class ModifyClock private constructor() {
 
     fun initModifyClock(newClock : ClockData){
         val copyNewClock = ClockData.deepCopy(newClock)
+        for(clockPart in copyNewClock.clockPartList) { // 부품 추가에 대한 isNew 변수값을 false 로 전환
+            clockPart.uiState.isNew = false
+        }
         setOriginalClock(copyNewClock)
         setMiddleSaveClock(copyNewClock)
     }
