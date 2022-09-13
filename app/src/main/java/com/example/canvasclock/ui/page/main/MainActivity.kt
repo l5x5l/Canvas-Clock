@@ -9,13 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.canvasclock.R
-import com.example.canvasclock.config.BaseActivity
-import com.example.canvasclock.config.GlobalApplication
-import com.example.canvasclock.config.INTENT_KEY_CLOCK
-import com.example.canvasclock.config.INTENT_KEY_CREATE_CLOCK
+import com.example.canvasclock.config.*
 import com.example.canvasclock.databinding.ActivityMainBinding
 import com.example.canvasclock.models.ModifyClock
 import com.example.canvasclock.ui.page.clock_detail.ClockDetailActivity
+import com.example.canvasclock.ui.page.clock_list.ClockListActivity
 import com.example.canvasclock.ui.page.clock_modify_shape.ClockModifyShapeActivity
 import com.example.canvasclock.ui.recycler.adapter.MainClockAdapter
 import com.example.canvasclock.ui.recycler.decoration.Grid3Decoration
@@ -112,7 +110,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
 
         binding.layoutbtnClockMode.setOnClickListener {
-
+            val intent = Intent(this, ClockListActivity::class.java)
+            intent.putExtra(INTENT_KEY_CLOCK_MODE, true)
+            startActivity(intent)
         }
     }
 

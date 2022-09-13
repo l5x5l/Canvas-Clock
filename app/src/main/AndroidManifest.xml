@@ -28,6 +28,7 @@
         <activity android:name=".ui.page.clock_modify_single_part.ClockModifySinglePartActivity"/>
         <activity android:name=".ui.page.clock_modify_handle.ClockModifyHandleActivity"/>
         <activity android:name=".ui.page.clock_list.ClockListActivity"/>
+        <activity android:name=".ui.page.clock_mode.ClockModeActivity"/>
     </application>
 
 </manifest>
