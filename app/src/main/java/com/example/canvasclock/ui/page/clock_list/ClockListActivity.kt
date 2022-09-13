@@ -41,7 +41,7 @@ class ClockListActivity : BaseActivity<ActivityClockListBinding>(R.layout.activi
 
         isClockMode = intent.getBooleanExtra(INTENT_KEY_CLOCK_MODE, false)
         if (isClockMode) {  // 시계모드에 사용될 시계를 선택하는 케이스의 경우, 타이틀 텍스트를 "시계 목록"에서 "시계 선택"으로 변경합니다.
-            binding.tvTitle?.text = getString(R.string.choose_clock)
+            binding.tvTitle.text = getString(R.string.choose_clock)
         }
 
         // 이 다음 페이지(시계 상세 화면)에서 시계를 삭제하거나 수정한 경우, 해당 내용을 시계 목록에 반영하기 위한 부분입니다.
