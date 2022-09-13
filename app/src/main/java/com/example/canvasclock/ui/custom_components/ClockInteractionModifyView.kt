@@ -12,6 +12,7 @@ import android.widget.FrameLayout
 import com.example.canvasclock.databinding.ViewClockInteractionModifyBinding
 import com.example.canvasclock.models.ClockPartPointAttr
 import com.example.canvasclock.models.ClockPartTimeComponent
+import com.example.canvasclock.util.dpToPx
 import com.example.canvasclock.util.drawClockPart
 import com.example.domain.mapper.DomainLayerMapper
 import com.example.domain.models.ClockPartData
@@ -46,7 +47,8 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
-        radius = min(measuredHeight, measuredWidth) / 2
+        // 수정할 때 사용되는 View 가 ClockInteractionModifyView 를 벗어나는것을 막기 위함입니다.
+        radius = min(measuredHeight, measuredWidth) / 2 - dpToPx(context, 20)
     }
 
     init {
