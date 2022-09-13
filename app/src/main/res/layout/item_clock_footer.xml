@@ -24,6 +24,7 @@
                 android:layout_weight="1"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_round_arrow_forward_24"
+                android:tint="?colorOnPrimary"
                 android:scaleType="fitCenter"/>
 
             <androidx.appcompat.widget.AppCompatTextView
