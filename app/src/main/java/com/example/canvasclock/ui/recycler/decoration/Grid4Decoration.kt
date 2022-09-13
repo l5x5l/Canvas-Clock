@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.canvasclock.util.dpToPx
 
-class Grid3Decoration(context : Context) : RecyclerView.ItemDecoration() {
+class Grid4Decoration(context : Context) : RecyclerView.ItemDecoration() {
     private val interval = dpToPx(context = context, 10)
 
     override fun getItemOffsets(
@@ -19,13 +19,13 @@ class Grid3Decoration(context : Context) : RecyclerView.ItemDecoration() {
 
         val position = parent.getChildLayoutPosition(view)
 
-        if (position % 3 == 0) {
+        if (position % 4 == 0) {
             outRect.right = interval
-        } else if (position % 3 == 1) {
+        } else if (position % 4 == 3) {
+            outRect.left = interval
+        } else {
             outRect.right = interval / 2
             outRect.left = interval / 2
-        } else {
-            outRect.left = interval
         }
         outRect.bottom = interval
     }
