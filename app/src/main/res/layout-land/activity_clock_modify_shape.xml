@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.5"
+            android:orientation="vertical"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivbtn_back"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="@dimen/margin_very_small"
+            android:tint="@color/color_selector_press"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:scaleType="center"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ivbtn_back"
+            app:layout_constraintBottom_toBottomOf="@id/ivbtn_back"
+            android:text="@string/save"/>
+
+        <FrameLayout
+            android:id="@+id/layout_clock"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toBottomOf="@id/ivbtn_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_horizontal_center"
+            android:layout_margin="@dimen/margin_small">
+
+            <com.example.canvasclock.ui.custom_components.ClockShapeView
+                android:id="@+id/view_clock_shape"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.example.canvasclock.ui.custom_components.ClockTimerView
+                android:id="@+id/view_clock_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvbtn_modify"
+            app:layout_constraintTop_toTopOf="@id/ivbtn_back"
+            app:layout_constraintBottom_toBottomOf="@id/ivbtn_back"
+            android:padding="@dimen/padding_middle"
+            android:text="@string/delete"
+            android:textColor="@color/pastel_red"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/ivbtn_back"
+            app:layout_constraintBottom_toBottomOf="@id/ivbtn_back"
+            app:layout_constraintStart_toStartOf="@id/guideline_horizontal_center"
+            android:padding="@dimen/padding_middle"
+            android:text="@string/modify"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_part_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/tvbtn_delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_horizontal_center"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
