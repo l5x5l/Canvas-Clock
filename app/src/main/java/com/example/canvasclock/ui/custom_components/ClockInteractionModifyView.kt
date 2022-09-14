@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
+import com.example.canvasclock.R
 import com.example.canvasclock.databinding.ViewClockInteractionModifyBinding
 import com.example.canvasclock.models.ClockPartPointAttr
 import com.example.canvasclock.models.ClockPartTimeComponent
@@ -217,7 +219,7 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
             if (!isMultipleModify) {
                 val linePaint = Paint()
                 linePaint.style = Paint.Style.STROKE
-                linePaint.color = Color.parseColor("#3c000000")
+                linePaint.color = ContextCompat.getColor(context, R.color.guideline_color)//Color.parseColor("#3c000000")
                 linePaint.strokeCap = Paint.Cap.ROUND
                 linePaint.strokeJoin = Paint.Join.ROUND
                 linePaint.strokeWidth = 6f
@@ -227,7 +229,7 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
 
             val circlePaint = Paint()
             circlePaint.style = Paint.Style.STROKE
-            circlePaint.color = Color.parseColor("#3c000000")
+            circlePaint.color = ContextCompat.getColor(context, R.color.guideline_color)//Color.parseColor("#3c000000")
             circlePaint.strokeWidth = 6f
             canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.startRadius / 100f * radius, circlePaint)
             if (tempClockPart.useMiddleRadius) {

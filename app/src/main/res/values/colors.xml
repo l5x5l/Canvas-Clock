@@ -27,4 +27,8 @@
     <color name="pastel_red">#F06060</color>
     <color name="pastel_green">#75DC79</color>
     <color name="pastel_blue">#5D90DE</color>
+
+    <color name="background_color">#FFFFFFFF</color>
+    <color name="border_color">#FF121212</color>
+    <color name="guideline_color">#FFC9CDD2</color>
 </resources>

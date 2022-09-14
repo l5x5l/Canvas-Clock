@@ -7,6 +7,6 @@
             android:height="18dp"
             android:width="18dp"/>
         <solid
-            android:color="@color/black"/>
+            android:color="@color/border_color"/>
     </shape>
 </inset>
