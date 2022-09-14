@@ -18,6 +18,10 @@ import com.example.canvasclock.config.INTENT_KEY_CLOCK
 import com.example.canvasclock.databinding.ActivityClockModeBinding
 import com.example.canvasclock.models.ClockModeEditableComponent
 import com.example.canvasclock.ui.page.main.MainActivity
+import com.example.canvasclock.util.getBottomSheetEnterAnimation
+import com.example.canvasclock.util.getBottomSheetExitAnimation
+import com.example.canvasclock.util.getFadeInAnimation
+import com.example.canvasclock.util.getFadeOutAnimation
 import com.example.domain.models.ClockData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -165,11 +169,13 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
     }
 
     private fun showSettingLayout(){
+        binding.layoutSettings.animation = getFadeInAnimation()
         binding.layoutSettings.visibility = View.VISIBLE
         isShowSettingLayout = true
     }
 
     private fun hideSettingLayout() {
+        binding.layoutSettings.animation = getFadeOutAnimation()
         binding.layoutSettings.visibility = View.INVISIBLE
         isShowSettingLayout = false
     }
@@ -177,7 +183,9 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
     private fun showColorPicker() {
         isShowColorPicker = true
         binding.viewColorPicker.setColorInUse(ClockData.getColorSet(viewModel.getClockData()))
+        binding.viewColorPicker.animation = getBottomSheetEnterAnimation(binding.viewColorPicker.height.toFloat())
         binding.viewColorPicker.visibility = View.VISIBLE
+        // colorPicker 가 보여졌을 때 처음으로 표시될 색상 설정
         binding.viewColorPicker.setIsInit()
         viewModel.setColorPickerInitColor()
         binding.viewColorPicker.removeIsInit()
@@ -185,6 +193,7 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
 
     private fun hideColorPicker() {
         isShowColorPicker = false
+        binding.viewColorPicker.animation = getBottomSheetExitAnimation(binding.viewColorPicker.height.toFloat())
         binding.viewColorPicker.visibility = View.GONE
     }
 }

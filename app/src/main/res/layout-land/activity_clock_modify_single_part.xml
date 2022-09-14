@@ -414,7 +414,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline_horizontal_center"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="?attr/colorPrimary"
+            android:layout_marginHorizontal="@dimen/margin_very_small"
+            android:background="@drawable/shape_bottomsheet_background"
             android:visibility="invisible"
             tools:visibility="gone">
 

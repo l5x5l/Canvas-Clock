@@ -7,8 +7,10 @@
         android:id="@+id/layout_color_picker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/margin_very_small"
         android:padding="16dp"
-        android:background="?attr/colorPrimary">
+        android:background="@drawable/shape_bottomsheet_background"
+        >
 
        <androidx.appcompat.widget.AppCompatTextView
            android:id="@+id/tvbtn_cancel"

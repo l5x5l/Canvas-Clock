@@ -18,6 +18,8 @@ import com.example.canvasclock.databinding.ActivityClockModifyHandleBinding
 import com.example.canvasclock.models.ClockHandAttr
 import com.example.canvasclock.ui.custom_components.TwoButtonDialog
 import com.example.canvasclock.ui.page.main.MainActivity
+import com.example.canvasclock.util.getBottomSheetEnterAnimation
+import com.example.canvasclock.util.getBottomSheetExitAnimation
 import com.example.domain.models.ClockData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -163,12 +165,15 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
     private fun showColorPicker() {
         binding.viewColorPicker.setColorInUse(ClockData.getColorSet(viewModel.getCurrentClock()))
         binding.viewColorPicker.visibility = View.VISIBLE
+        binding.viewColorPicker.animation = getBottomSheetEnterAnimation(binding.viewColorPicker.height.toFloat())
+        // colorPicker 가 보여졌을 때 처음으로 표시될 색상 설정
         binding.viewColorPicker.setIsInit()
         viewModel.setColorPickerInitColor()
         binding.viewColorPicker.removeIsInit()
     }
 
     private fun hideColorPicker() {
+        binding.viewColorPicker.animation = getBottomSheetExitAnimation(binding.viewColorPicker.height.toFloat())
         binding.viewColorPicker.visibility = View.GONE
     }
 

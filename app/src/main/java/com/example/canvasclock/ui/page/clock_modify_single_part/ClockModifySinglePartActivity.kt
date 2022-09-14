@@ -21,6 +21,8 @@ import com.example.canvasclock.config.BaseActivity
 import com.example.canvasclock.databinding.ActivityClockModifySinglePartBinding
 import com.example.canvasclock.models.ClockPartColorComponent
 import com.example.canvasclock.models.ClockPartTimeComponent
+import com.example.canvasclock.util.getBottomSheetEnterAnimation
+import com.example.canvasclock.util.getBottomSheetExitAnimation
 import com.example.domain.models.ClockData
 import com.example.domain.utils.angleToTime
 import kotlinx.coroutines.launch
@@ -275,6 +277,8 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
         binding.ivbtnBack.isEnabled = false
         binding.viewColorPicker.setColorInUse(ClockData.getColorSet(viewModel.getCurrentClock()))
         binding.viewColorPicker.visibility = View.VISIBLE
+        binding.viewColorPicker.animation = getBottomSheetEnterAnimation(binding.viewColorPicker.height.toFloat())
+        // colorPicker 가 보여졌을 때 처음으로 표시될 색상 설정
         binding.viewColorPicker.setIsInit()
         viewModel.setColorPickerInitColor()
         binding.viewColorPicker.removeIsInit()
@@ -283,6 +287,7 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
     private fun hideColorPicker() {
         binding.tvbtnSave.isEnabled = true
         binding.ivbtnBack.isEnabled = true
+        binding.viewColorPicker.animation = getBottomSheetExitAnimation(binding.viewColorPicker.height.toFloat())
         binding.viewColorPicker.visibility = View.GONE
     }
 
@@ -291,11 +296,13 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
     }
 
     private fun showTimePicker(){
+        binding.nestedTimePicker.animation = getBottomSheetEnterAnimation(binding.nestedTimePicker.height.toFloat())
         binding.nestedTimePicker.visibility = View.VISIBLE
         binding.viewClockShape.setTimeIntervalChangeButtonEnable(enabled = false)
     }
 
     private fun hideTimePicker(){
+        binding.nestedTimePicker.animation = getBottomSheetExitAnimation(binding.nestedTimePicker.height.toFloat())
         binding.nestedTimePicker.visibility = View.GONE
         binding.viewClockShape.setTimeIntervalChangeButtonEnable(enabled = true)
     }
