@@ -1,5 +1,6 @@
 package com.example.canvasclock.config
 
+import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,15 @@ object BindingAdapter {
             6 -> {
                 view.addItemDecoration(Grid6Decoration(view.context))
             }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("ViewportHeight")
+    fun setViewportHeight(view : View, height : Float) {
+        view.layoutParams = view.layoutParams.apply {
+            val windowMetrics = view.context.resources.displayMetrics
+            this.height = (windowMetrics.heightPixels * height).toInt()
         }
     }
 }
