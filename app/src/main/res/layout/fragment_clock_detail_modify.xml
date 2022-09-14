@@ -5,7 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/padding_middle"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="?attr/colorPrimary">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutbtn_modify_handle"

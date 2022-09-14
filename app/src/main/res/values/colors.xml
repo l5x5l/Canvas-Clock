@@ -9,6 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="black_t60">#99000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_grey">#121212</color>
 
     <!-- custom colors -->
     <color name="gray_900">#1B1D1F</color>

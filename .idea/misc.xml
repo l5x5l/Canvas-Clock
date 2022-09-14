@@ -35,14 +35,14 @@
         <entry key="app/src/main/res/layout-land/activity_modify_handle.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_clock_detail.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_clock_list.xml" value="0.11" />
-        <entry key="app/src/main/res/layout/activity_clock_mode.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_clock_mode.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_clock_modify_handle.xml" value="0.16802536231884058" />
         <entry key="app/src/main/res/layout/activity_clock_modify_shape.xml" value="0.18342391304347827" />
         <entry key="app/src/main/res/layout/activity_clock_modify_single_part.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/dialog_2_buttons.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_clock_detail_modify.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_clock_detail_parts.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_clock_detail_parts.xml" value="0.165" />
         <entry key="app/src/main/res/layout/item_add_clock_part.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_clock_content.xml" value="0.23596014492753623" />
         <entry key="app/src/main/res/layout/item_clock_footer.xml" value="0.33" />
