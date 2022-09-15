@@ -33,6 +33,7 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
     private var radius = 0
     private var pointMapSet = false
     private var isMultipleModify = false
+    private var isShowGuideline = true
 
     // 인터렉션 view mount_down 시 view 내의 position 저장
     private var relativeXPositionInViewStartPoint = 0f
@@ -62,6 +63,10 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
 
         mx = (x + measuredWidth / 2).toInt()
         my = (y + measuredHeight / 2).toInt()
+
+        binding.ivbtnShowGuideline.setOnClickListener {
+            toggleVisibilityOfInteractionViews()
+        }
     }
 
     fun setMultipleModifyMode() {
@@ -78,6 +83,26 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
 
     fun linkClockInfo(newClockPartData : ArrayList<ClockPartData>) {
         clockPartList = newClockPartData
+    }
+
+    // 시계부품을 수정하는 View 의 visibility 를 표시합니다.
+    private fun toggleVisibilityOfInteractionViews() {
+        isShowGuideline = !isShowGuideline
+        val visibility = if (isShowGuideline) {
+            binding.ivbtnShowGuideline.setImageResource(R.drawable.ic_eye_visible)
+            View.VISIBLE
+        } else {
+            binding.ivbtnShowGuideline.setImageResource(R.drawable.ic_eye_invisible)
+            View.GONE
+        }
+
+        binding.viewbtnStartPoint.visibility = visibility
+        binding.viewbtnMiddlePoint.visibility = visibility
+        binding.viewbtnEndPoint.visibility = visibility
+        if (!isMultipleModify) {
+            binding.viewbtnStartTimePoint.visibility = visibility
+            binding.viewbtnEndTimePoint.visibility = visibility
+        }
     }
 
 
@@ -215,27 +240,31 @@ class ClockInteractionModifyView(context : Context, attrs : AttributeSet) : Fram
                 }
             }
 
-            // draw 순서 때문에 이곳에 배치
-            if (!isMultipleModify) {
-                val linePaint = Paint()
-                linePaint.style = Paint.Style.STROKE
-                linePaint.color = ContextCompat.getColor(context, R.color.guideline_color)//Color.parseColor("#3c000000")
-                linePaint.strokeCap = Paint.Cap.ROUND
-                linePaint.strokeJoin = Paint.Join.ROUND
-                linePaint.strokeWidth = 6f
-                canvas.drawLine(mx.toFloat(), my.toFloat(), pointMap[ClockPartPointAttr.START_TIME]!!.x, pointMap[ClockPartPointAttr.START_TIME]!!.y, linePaint)
-                canvas.drawLine(mx.toFloat(), my.toFloat(), pointMap[ClockPartPointAttr.END_TIME]!!.x, pointMap[ClockPartPointAttr.END_TIME]!!.y, linePaint)
+            // draw 순서 때문에 이곳에 배치, 가이드라인 작성부분
+            if (isShowGuideline) {
+                if (!isMultipleModify) {
+                    val linePaint = Paint()
+                    linePaint.style = Paint.Style.STROKE
+                    linePaint.color = ContextCompat.getColor(context, R.color.guideline_color)//Color.parseColor("#3c000000")
+                    linePaint.strokeCap = Paint.Cap.ROUND
+                    linePaint.strokeJoin = Paint.Join.ROUND
+                    linePaint.strokeWidth = 6f
+                    canvas.drawLine(mx.toFloat(), my.toFloat(), pointMap[ClockPartPointAttr.START_TIME]!!.x, pointMap[ClockPartPointAttr.START_TIME]!!.y, linePaint)
+                    canvas.drawLine(mx.toFloat(), my.toFloat(), pointMap[ClockPartPointAttr.END_TIME]!!.x, pointMap[ClockPartPointAttr.END_TIME]!!.y, linePaint)
+                }
+
+                val circlePaint = Paint()
+                circlePaint.style = Paint.Style.STROKE
+                circlePaint.color = ContextCompat.getColor(context, R.color.guideline_color)//Color.parseColor("#3c000000")
+                circlePaint.strokeWidth = 6f
+                canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.startRadius / 100f * radius, circlePaint)
+                if (tempClockPart.useMiddleRadius) {
+                    canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.middleRadius / 100f * radius, circlePaint)
+                }
+                canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.endRadius / 100f * radius, circlePaint)
             }
 
-            val circlePaint = Paint()
-            circlePaint.style = Paint.Style.STROKE
-            circlePaint.color = ContextCompat.getColor(context, R.color.guideline_color)//Color.parseColor("#3c000000")
-            circlePaint.strokeWidth = 6f
-            canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.startRadius / 100f * radius, circlePaint)
-            if (tempClockPart.useMiddleRadius) {
-                canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.middleRadius / 100f * radius, circlePaint)
-            }
-            canvas.drawCircle(mx.toFloat(), my.toFloat(), tempClockPart.endRadius / 100f * radius, circlePaint)
+
 
         }
 
