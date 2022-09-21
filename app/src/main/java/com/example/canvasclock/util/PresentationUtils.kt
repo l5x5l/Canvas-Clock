@@ -43,6 +43,13 @@ fun drawClockPart(canvas : Canvas, coordinateClockPart : CoordinateClockPartData
     path2.close()
     canvas.drawPath(path2, paint2)
 
+    // middlePaint 부분이 없다면, 왼쪽과 오른쪽 부품 사이에 1픽셀 정도의 빈 라인이 생기게 된다.
+    // 해당 라인을 오른쪽 부품의 색상으로 채우기 위해 middlePaint 를 사용한다.
+    val middlePaint = Paint()
+    middlePaint.style = Paint.Style.STROKE
+    middlePaint.color = Color.parseColor(coordinateClockPart.secondColor)
+    canvas.drawLine(coordinateClockPart.startCoordinate.x, coordinateClockPart.startCoordinate.y, coordinateClockPart.middleCoordinate.x, coordinateClockPart.middleCoordinate.y, middlePaint)
+
     if (coordinateClockPart.strokeWidth != 0f) {
         val strokePaint = Paint()
         strokePaint.style = Paint.Style.STROKE
