@@ -133,6 +133,13 @@ abstract class ClockDatabase : RoomDatabase() {
         return clockDao().getLargestClockIdx() + 1
     }
 
+    /**
+     * 시계 idx 에 해당하는 시계 데이터를 불러옵니다
+     */
+    suspend fun getClockByIdx(clockIdx : Int) : ClockEntity{
+        return clockDao().getClockByIdx(clockIdx)
+    }
+
     companion object {
         private var instance : ClockDatabase ?= null
 
