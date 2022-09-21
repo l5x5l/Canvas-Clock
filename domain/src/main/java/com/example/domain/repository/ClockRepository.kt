@@ -8,6 +8,8 @@ interface ClockRepository {
 
     suspend fun getRandomClockList(amount : Int) : ArrayList<ClockData>
 
+    suspend fun getClockById(clockIdx : Int) : ClockData
+
     suspend fun updateClockPartList(clockPartList : ArrayList<ClockPartData>) : List<Long>
 
     suspend fun updateClock(clock : ClockData) : Int
@@ -21,4 +23,8 @@ interface ClockRepository {
     suspend fun deleteClock(clockIdx : Int) : Int
 
     suspend fun insertClock(clock: ClockData) : Boolean
+
+    suspend fun getWidgetClockId(widgetId : Int) : Int
+
+    suspend fun setWidgetClockId(widgetId : Int, clockId : Int)
 }

@@ -29,6 +29,19 @@
         <activity android:name=".ui.page.clock_modify_handle.ClockModifyHandleActivity"/>
         <activity android:name=".ui.page.clock_list.ClockListActivity"/>
         <activity android:name=".ui.page.clock_mode.ClockModeActivity"/>
+        <activity android:name=".ui.page.widget.WidgetActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".ui.widget.ClockWidgetProvider" android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/clock_widget_provider"/>
+        </receiver>
     </application>
 
 </manifest>

@@ -13,6 +13,10 @@ class UseCaseGetRecentClock @Inject constructor(private val repository: ClockRep
     suspend fun execute(amount : Int?) = repository.getRecentClockList(amount = amount)
 }
 
+class UseCaseGetClock @Inject constructor(private val repository: ClockRepository) {
+    suspend fun execute(clockIdx : Int) = repository.getClockById(clockIdx)
+}
+
 class UseCaseUpdateClockPart @Inject constructor(private val repository: ClockRepository) {
     suspend fun execute(clockPartList : ArrayList<ClockPartData>) = repository.updateClockPartList(clockPartList = clockPartList)
 }
@@ -39,4 +43,10 @@ class UseCaseDeleteClock @Inject constructor(private val repository : ClockRepos
 
 class UseCaseInsertClock @Inject constructor(private val repository: ClockRepository) {
     suspend fun execute(clock : ClockData) = repository.insertClock(clock)
+}
+
+class UseCaseWidgetClock @Inject constructor(private val repository : ClockRepository) {
+    suspend fun getWidgetClock(widgetId : Int) = repository.getWidgetClockId(widgetId)
+
+    suspend fun setWidgetClock(widgetId : Int, clockId : Int) = repository.setWidgetClockId(widgetId = widgetId, clockId = clockId)
 }

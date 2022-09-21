@@ -24,6 +24,9 @@ interface ClockDao {
     @Query("SELECT * FROM clock ORDER BY lastModifiedTime")
     suspend fun getRecentClockAll() : List<ClockEntity>
 
+    @Query("SELECT * FROM clock WHERE clockIdx = :clockIdx")
+    suspend fun getClockByIdx(clockIdx : Int) : ClockEntity
+
     @Query("SELECT * FROM clock_part WHERE clockIdx = :clockIdx")
     suspend fun getClockPart(clockIdx : Int) : List<ClockPartEntity>
 

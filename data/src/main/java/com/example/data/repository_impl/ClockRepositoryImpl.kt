@@ -1,6 +1,7 @@
 package com.example.data.repository_impl
 
 import com.example.data.datasource.room.database.ClockDatabase
+import com.example.data.datasource.shared_preference.SharedPreference
 import com.example.data.mapper.DataLayerMapper
 import com.example.domain.models.ClockData
 import com.example.domain.models.ClockPartData
@@ -32,6 +33,12 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
         }
 
         return clockList
+    }
+
+    override suspend fun getClockById(clockIdx: Int): ClockData {
+        val clockEntity = ClockDatabase.getInstance().getClockByIdx(clockIdx)
+        val clockPartEntities = ClockDatabase.getInstance().getClockPartList(clockIdx = clockIdx)
+        return DataLayerMapper.toClockData(clockEntity = clockEntity, clockPartEntityList = clockPartEntities)
     }
 
     override suspend fun updateClockPartList(clockPartList: ArrayList<ClockPartData>): List<Long> {
@@ -78,5 +85,13 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
         val clockEntity = DataLayerMapper.toClockEntity(clock, clockIdx)
 
         return ClockDatabase.getInstance().insertClock(clockEntity = clockEntity, clockPartEntityList = clockPartEntityList)
+    }
+
+    override suspend fun getWidgetClockId(widgetId: Int): Int {
+        return SharedPreference.getInstance().getInt("clock_${widgetId}", -1)
+    }
+
+    override suspend fun setWidgetClockId(widgetId: Int, clockId : Int) {
+        SharedPreference.getInstance().edit().putInt("clock_${widgetId}", clockId).apply()
     }
 }
