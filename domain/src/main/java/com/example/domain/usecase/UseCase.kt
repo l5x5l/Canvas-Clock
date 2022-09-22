@@ -49,4 +49,6 @@ class UseCaseWidgetClock @Inject constructor(private val repository : ClockRepos
     suspend fun getWidgetClock(widgetId : Int) = repository.getWidgetClockId(widgetId)
 
     suspend fun setWidgetClock(widgetId : Int, clockId : Int) = repository.setWidgetClockId(widgetId = widgetId, clockId = clockId)
+
+    suspend fun removeWidgetClock(widgetId : Int) = repository.removeWidgetClockIdx(widgetId = widgetId)
 }

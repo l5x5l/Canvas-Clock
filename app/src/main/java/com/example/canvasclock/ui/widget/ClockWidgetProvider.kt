@@ -92,6 +92,18 @@ class ClockWidgetProvider : AppWidgetProvider() {
         }
     }
 
+    override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
+        super.onDeleted(context, appWidgetIds)
+
+        if (context != null && appWidgetIds != null) {
+            coroutineScope.launch {
+                for (appWidgetId in appWidgetIds) {
+                    useCaseWidgetClock.removeWidgetClock(widgetId = appWidgetId)
+                }
+            }
+        }
+    }
+
     private fun callRepeatAlarm(context : Context, intent : Intent) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = PendingIntent.getBroadcast(context, firstAlarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE )

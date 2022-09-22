@@ -94,4 +94,8 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
     override suspend fun setWidgetClockId(widgetId: Int, clockId : Int) {
         SharedPreference.getInstance().edit().putInt("clock_${widgetId}", clockId).apply()
     }
+
+    override suspend fun removeWidgetClockIdx(widgetId: Int) {
+        SharedPreference.getInstance().edit().remove("clock_${widgetId}").apply()
+    }
 }
