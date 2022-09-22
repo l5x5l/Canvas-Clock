@@ -108,7 +108,7 @@ class WidgetActivity : BaseActivity<ActivityClockListBinding>(R.layout.activity_
         val calendar = Calendar.getInstance()
         val handleBitmap = Bitmap.createBitmap(widgetSize, widgetSize, Bitmap.Config.ARGB_8888)
         val handleCanvas = Canvas(handleBitmap)
-        drawTimeHand(canvas = handleCanvas, clock = clockData, mx = widgetSize / 2, my = widgetSize / 2, radius = radius, is24HourMode = false, hour = calendar.get(Calendar.HOUR), minute = calendar.get(Calendar.MINUTE), second = calendar.get(Calendar.SECOND) )
+        drawTimeHand(canvas = handleCanvas, clock = clockData, mx = widgetSize / 2, my = widgetSize / 2, radius = radius, is24HourMode = false, hour = calendar.get(Calendar.HOUR), minute = calendar.get(Calendar.MINUTE), second = null )
 
         remoteView?.let {
             it.setImageViewBitmap(R.id.iv_widget_clock_handle, handleBitmap)

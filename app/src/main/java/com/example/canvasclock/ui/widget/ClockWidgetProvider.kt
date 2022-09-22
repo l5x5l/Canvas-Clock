@@ -70,7 +70,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
                             val remoteView = RemoteViews(context.packageName, R.layout.widget_clock)
 
                             drawTimeHand(canvas = handleCanvas, clock = clock, mx = widgetSize.first / 2, my = widgetSize.second / 2, radius = radius,
-                                hour = calendar.get(Calendar.HOUR_OF_DAY), minute = calendar.get(Calendar.MINUTE), second = calendar.get(Calendar.SECOND) )
+                                hour = calendar.get(Calendar.HOUR_OF_DAY), minute = calendar.get(Calendar.MINUTE), second = null )
                             remoteView.setImageViewBitmap(R.id.iv_widget_clock_handle, handleBitmap)
                             appWidgetManager.partiallyUpdateAppWidget(id, remoteView)
 

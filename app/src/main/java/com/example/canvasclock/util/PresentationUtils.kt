@@ -103,30 +103,29 @@ fun drawClockIcon(canvas : Canvas, clockPartList : ArrayList<ClockPartData>, mx 
     }
 }
 
-fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius : Int, is24HourMode : Boolean = true, hour : Int, minute : Int, second : Int){
+fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius : Int, is24HourMode : Boolean = true, hour : Int, minute : Int, second : Int?){
     val toRadian = (Math.PI / 180).toFloat()
 
+    // 시/분/초침의 최대 두께는 본 View 의 반지름 (=너비/2) 의 0.05배
     val maximumWidth = radius * 0.05f
 
-    val secondAngle = (second * 6 - 90) * toRadian
-    val minuteAngle = (minute * 6 - 90) * toRadian
-    val hourAngle = if (is24HourMode){
-        ((hour * 15 + minute * 0.25f - 90) * toRadian)
-    } else {
-        ((hour * 30 + minute * 0.5f - 90) * toRadian)
+    // 초침 표시는 선택사항
+    if (second != null) {
+        val secondAngle = (second * 6 - 90) * toRadian
+        val secondX = (mx + (radius * 1f) * cos(secondAngle))
+        val secondY = (my + (radius * 1f) * sin(secondAngle))
+
+        val secondPaint = Paint()
+        secondPaint.style = Paint.Style.STROKE
+        secondPaint.color = Color.parseColor(clock.secondHandColor)
+        secondPaint.strokeCap = Paint.Cap.ROUND
+        secondPaint.strokeJoin = Paint.Join.ROUND
+        secondPaint.strokeWidth = clock.secondHandWidth.toFloat() * 0.05f * maximumWidth
+        canvas.drawLine(mx.toFloat(), my.toFloat(), secondX, secondY, secondPaint)
     }
 
-    val secondX = (mx + (radius * 1f) * cos(secondAngle))
-    val secondY = (my + (radius * 1f) * sin(secondAngle))
-
-    val secondPaint = Paint()
-    secondPaint.style = Paint.Style.STROKE
-    secondPaint.color = Color.parseColor(clock.secondHandColor)
-    secondPaint.strokeCap = Paint.Cap.ROUND
-    secondPaint.strokeJoin = Paint.Join.ROUND
-    secondPaint.strokeWidth = clock.secondHandWidth.toFloat() * 0.05f * maximumWidth
-    canvas.drawLine(mx.toFloat(), my.toFloat(), secondX, secondY, secondPaint)
-
+    // 분침 계산 및 표시
+    val minuteAngle = (minute * 6 - 90) * toRadian
     val minuteX = (mx + (radius * 0.8f) * cos(minuteAngle))
     val minuteY = (my + (radius * 0.8f) * sin(minuteAngle))
 
@@ -138,6 +137,12 @@ fun drawTimeHand(canvas : Canvas, clock : ClockData, mx : Int, my : Int, radius 
     minutePaint.strokeWidth = clock.minuteHandWidth.toFloat() * 0.05f * maximumWidth
     canvas.drawLine(mx.toFloat(), my.toFloat(), minuteX, minuteY, minutePaint)
 
+    // 시침 계산 및 표시
+    val hourAngle = if (is24HourMode){
+        ((hour * 15 + minute * 0.25f - 90) * toRadian)
+    } else {
+        ((hour * 30 + minute * 0.5f - 90) * toRadian)
+    }
     val hourX = (mx + (radius * 0.5f) * cos(hourAngle))
     val hourY = (my + (radius * 0.5f) * sin(hourAngle))
 
