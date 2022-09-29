@@ -6,5 +6,5 @@
     android:targetCellWidth="3"
     android:updatePeriodMillis="0"
     android:resizeMode="vertical|horizontal"
-    android:configure="com.example.canvasclock.ui.page.widget.WidgetActivity"
+    android:configure="com.strayAlpaca.canvasclock.ui.page.widget.WidgetActivity"
     />

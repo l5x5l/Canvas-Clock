@@ -6,7 +6,7 @@
     <data>
         <variable
             name="clockPart"
-            type="com.example.domain.models.ClockPartData" />
+            type="com.strayAlpaca.domain.models.ClockPartData" />
     </data>
 
     <LinearLayout

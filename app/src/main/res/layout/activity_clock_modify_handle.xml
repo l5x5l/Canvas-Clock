@@ -44,12 +44,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/margin_small">
 
-            <com.example.canvasclock.ui.custom_components.ClockShapeView
+            <com.strayAlpaca.canvasclock.ui.custom_components.ClockShapeView
                 android:id="@+id/view_clock_shape"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <com.example.canvasclock.ui.custom_components.ClockTimerView
+            <com.strayAlpaca.canvasclock.ui.custom_components.ClockTimerView
                 android:id="@+id/view_clock_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
@@ -230,7 +230,7 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <com.example.canvasclock.ui.custom_components.ColorPickerView
+        <com.strayAlpaca.canvasclock.ui.custom_components.ColorPickerView
             android:id="@+id/view_color_picker"
             android:layout_width="match_parent"
             android:layout_height="0dp"
