@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/ivbtn_back"
             app:layout_constraintBottom_toBottomOf="@id/ivbtn_back"
-            android:text="@string/save"/>
+            android:text="@string/complete_modify_part"/>
 
         <FrameLayout
             android:id="@+id/layout_clock"
