@@ -23,6 +23,9 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
 
     private lateinit var timerJob : Job
 
+    private var _is24HourMode = MutableStateFlow(true)
+    var is24HourMode = _is24HourMode.asStateFlow()
+
     var targetComponent = ClockModeEditableComponent.BACKGROUND
 
     private val _backgroundColor = MutableStateFlow("#FFFFFFFF")
@@ -51,12 +54,7 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
         }
         timerJob = viewModelScope.launch {
             while (true) {
-                val calendar = Calendar.getInstance()
-                _time.value = Time(
-                    hour = calendar.get(Calendar.HOUR_OF_DAY), minute = calendar.get(Calendar.MINUTE), second = calendar.get(
-                        Calendar.SECOND),
-                    day = calendar.get(Calendar.DAY_OF_MONTH), month = calendar.get(Calendar.MONTH) + 1
-                )
+                setTime()
                 delay(1000L)
             }
         }
@@ -121,5 +119,20 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
                 middleSaveTextColor = textColor.value
             }
         }
+    }
+
+    fun toggle24HourMode() {
+        _is24HourMode.value = !is24HourMode.value
+        setTime()
+    }
+
+    private fun setTime() {
+        val calendar = Calendar.getInstance()
+        val hour = if (is24HourMode.value) calendar.get(Calendar.HOUR_OF_DAY) else calendar.get(Calendar.HOUR)
+        _time.value = Time(
+            hour = hour, minute = calendar.get(Calendar.MINUTE), second = calendar.get(
+                Calendar.SECOND),
+            day = calendar.get(Calendar.DAY_OF_MONTH), month = calendar.get(Calendar.MONTH) + 1
+        )
     }
 }

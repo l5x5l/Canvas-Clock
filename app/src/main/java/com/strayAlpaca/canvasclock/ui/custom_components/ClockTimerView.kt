@@ -44,8 +44,8 @@ class ClockTimerView(context : Context, attrs : AttributeSet) : View(context, at
         this.second = second
     }
 
-    fun invalidateTimerHand(){
-        invalidate()
+    fun change24HourMode(use24HourMode : Boolean) {
+        is24HourMode = use24HourMode
     }
 
     override fun draw(canvas: Canvas?) {

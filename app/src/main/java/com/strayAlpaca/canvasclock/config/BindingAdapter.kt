@@ -21,6 +21,15 @@ object BindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("use24HourMode")
+    fun set24HourMode(view : ClockTimerView, is24HourMode : Boolean?){
+        if (is24HourMode !== null) {
+            view.change24HourMode(is24HourMode)
+            view.invalidate()
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("gridLayoutManager")
     fun setGridLayoutManager(view : RecyclerView, grid : Int) {
         view.layoutManager = GridLayoutManager(view.context, grid)

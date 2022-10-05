@@ -53,6 +53,8 @@
     <string name="change_background_color">배경색상 변경</string>
     <string name="change_text_color">글자색상 변경</string>
 
+    <string name="use_24_hour_mode">24시간 형식 사용</string>
+
     <string name="message_cannot_change_time_range_when_multiple_part_selected">여러 부품을 한번에 수정할 때는 시간 범위를 조정할 수 없습니다.</string>
     <string name="message_select_more_than_one_part">하나 이상의 부품을 선택해주세요</string>
     <string name="message_confirm_cancel_modify">수정된 내용이 있습니다.\n해당 내용을 반영하지 않고\n취소할까요?</string>

@@ -166,6 +166,10 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
             showColorPicker()
             hideSettingLayout()
         }
+
+        binding.layoutbtnChange24HourMode.setOnClickListener {
+            viewModel.toggle24HourMode()
+        }
     }
 
     private fun showSettingLayout(){
