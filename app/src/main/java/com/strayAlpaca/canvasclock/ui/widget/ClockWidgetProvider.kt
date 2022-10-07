@@ -4,10 +4,12 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.os.SystemClock
 import android.widget.RemoteViews
 import com.strayAlpaca.canvasclock.R
 import com.strayAlpaca.canvasclock.util.WidgetSizeProvider
@@ -35,11 +37,19 @@ class ClockWidgetProvider : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
 
-        val action = intent?.action ?: return
+        if (intent?.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE && context != null) {
+//            cancelAlarm(context)
+//            callAlarm(context, intent)
+            val appwidgetManager = AppWidgetManager.getInstance(context)
+            val widgetIds = appwidgetManager.getAppWidgetIds(ComponentName(context.packageName, ClockWidgetProvider::class.java.name))
+            onUpdate(context, appwidgetManager, widgetIds)
+        }
+    }
 
-        if (action == AppWidgetManager.ACTION_APPWIDGET_UPDATE && context != null) {
-            cancelRepeatAlarm(context)
-            callRepeatAlarm(context, intent)
+    override fun onEnabled(context: Context?) {
+        super.onEnabled(context)
+        context?.let {
+            callRepeatAlarm(it)
         }
     }
 
@@ -70,7 +80,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
                             val remoteView = RemoteViews(context.packageName, R.layout.widget_clock)
 
                             drawTimeHand(canvas = handleCanvas, clock = clock, mx = widgetSize.first / 2, my = widgetSize.second / 2, radius = radius,
-                                hour = calendar.get(Calendar.HOUR_OF_DAY), minute = calendar.get(Calendar.MINUTE), second = null )
+                                hour = calendar.get(Calendar.HOUR_OF_DAY), minute = calendar.get(Calendar.MINUTE), second = null, is24HourMode = false )
                             remoteView.setImageViewBitmap(R.id.iv_widget_clock_handle, handleBitmap)
                             appWidgetManager.partiallyUpdateAppWidget(id, remoteView)
 
@@ -87,8 +97,9 @@ class ClockWidgetProvider : AppWidgetProvider() {
     override fun onDisabled(context: Context?) {
         super.onDisabled(context)
 
-        if (context != null){
-            cancelRepeatAlarm(context)
+        context?.let {
+            //cancelAlarm(context)
+            cancelRepeatAlarm(it)
         }
     }
 
@@ -104,7 +115,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
         }
     }
 
-    private fun callRepeatAlarm(context : Context, intent : Intent) {
+    private fun callAlarm(context : Context, intent : Intent) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = PendingIntent.getBroadcast(context, firstAlarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE )
 
@@ -114,7 +125,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
         alarmManager.set(AlarmManager.RTC, nextTime, pendingIntent)
     }
 
-    private fun cancelRepeatAlarm(context : Context) {
+    private fun cancelAlarm(context : Context) {
         val intent = Intent(context, ClockWidgetProvider::class.java)
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -122,6 +133,27 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
         pendingIntent?.let {
             alarmManager.cancel(it)
+        }
+    }
+
+    private fun callRepeatAlarm(context : Context) {
+        val intent = Intent(context, ClockWidgetProvider::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent = PendingIntent.getBroadcast(context, firstAlarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE )
+
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 60000 ,60000, pendingIntent)
+    }
+
+    private fun cancelRepeatAlarm(context : Context) {
+        val intent = Intent(context, ClockWidgetProvider::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val pendingIntent = PendingIntent.getBroadcast(context, firstAlarmId, intent, PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE )
+
+        pendingIntent?.let{
+            alarmManager.cancel(it)
+            it.cancel()
         }
     }
 
