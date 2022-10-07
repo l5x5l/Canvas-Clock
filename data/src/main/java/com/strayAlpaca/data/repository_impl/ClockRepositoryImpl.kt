@@ -1,7 +1,7 @@
 package com.strayAlpaca.data.repository_impl
 
 import com.strayAlpaca.data.datasource.room.database.ClockDatabase
-import com.strayAlpaca.data.datasource.shared_preference.SharedPreference
+import com.strayAlpaca.data.datasource.room.entities.ClockWidgetEntity
 import com.strayAlpaca.data.mapper.DataLayerMapper
 import com.strayAlpaca.domain.models.ClockData
 import com.strayAlpaca.domain.models.ClockPartData
@@ -88,14 +88,19 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
     }
 
     override suspend fun getWidgetClockId(widgetId: Int): Int {
-        return SharedPreference.getInstance().getInt("clock_${widgetId}", -1)
+        //return SharedPreference.getInstance().getInt("clock_${widgetId}", -1)
+        return ClockDatabase.getInstance().getWidgetClockIdx(widgetIdx = widgetId)
     }
 
     override suspend fun setWidgetClockId(widgetId: Int, clockId : Int) {
-        SharedPreference.getInstance().edit().putInt("clock_${widgetId}", clockId).apply()
+        //SharedPreference.getInstance().edit().putInt("clock_${widgetId}", clockId).apply()
+        val clockWidgetEntity = ClockWidgetEntity(clockWidgetIdx = widgetId, clockIdx = clockId)
+        ClockDatabase.getInstance().setWidgetClock(clockWidgetEntity)
     }
 
     override suspend fun removeWidgetClockIdx(widgetId: Int) {
-        SharedPreference.getInstance().edit().remove("clock_${widgetId}").apply()
+        //SharedPreference.getInstance().edit().remove("clock_${widgetId}").apply()
+        val clockWidgetEntity = ClockWidgetEntity(clockWidgetIdx = widgetId, clockIdx = 0)
+        ClockDatabase.getInstance().deleteWidgetClock(clockWidgetEntity)
     }
 }

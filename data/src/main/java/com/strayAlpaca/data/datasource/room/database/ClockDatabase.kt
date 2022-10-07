@@ -1,20 +1,26 @@
 package com.strayAlpaca.data.datasource.room.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.strayAlpaca.data.datasource.room.dao.ClockDao
 import com.strayAlpaca.data.datasource.room.entities.ClockEntity
 import com.strayAlpaca.data.datasource.room.entities.ClockPartEntity
+import com.strayAlpaca.data.datasource.room.entities.ClockWidgetEntity
 import com.strayAlpaca.data.mapper.DataLayerMapper
 import com.strayAlpaca.domain.models.ClockData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 @Database(
-    entities = [ ClockEntity::class, ClockPartEntity::class ],
-    version = 1
+    entities = [ ClockEntity::class, ClockPartEntity::class, ClockWidgetEntity::class],
+    version = 2,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ]
 )
 abstract class ClockDatabase : RoomDatabase() {
     abstract fun clockDao() : ClockDao
@@ -138,6 +144,31 @@ abstract class ClockDatabase : RoomDatabase() {
      */
     suspend fun getClockByIdx(clockIdx : Int) : ClockEntity{
         return clockDao().getClockByIdx(clockIdx)
+    }
+
+    /**
+     * 해당 idx 를 가진 위젯에서 사용하고 있는 시계 idx 를 불러옵니다.
+     */
+    suspend fun getWidgetClockIdx(widgetIdx : Int) : Int {
+        val clockIdx = clockDao().getWidgetUseClock(widgetIdx = widgetIdx)
+        return if (clockIdx.isEmpty())
+            -1
+        else
+            clockDao().getWidgetUseClock(widgetIdx = widgetIdx)[0]
+    }
+
+    /**
+     * 해당 idx 를 가진 위젯이 사용하고 있는 시계의 idx 를 저장합니다.
+     */
+    suspend fun setWidgetClock(clockWidgetEntity: ClockWidgetEntity) {
+        return clockDao().insertWidgetClock(clockWidgetEntity)
+    }
+
+    /**
+     * 해당 idx 를 가진 위젯이 삭제될 때 해당 데이터롤 room db 에서 제거합니다.
+     */
+    suspend fun deleteWidgetClock(clockWidgetEntity: ClockWidgetEntity) : Int {
+        return clockDao().deleteWidgetClock(clockWidgetEntity)
     }
 
     companion object {

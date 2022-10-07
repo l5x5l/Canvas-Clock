@@ -3,6 +3,7 @@ package com.strayAlpaca.data.datasource.room.dao
 import androidx.room.*
 import com.strayAlpaca.data.datasource.room.entities.ClockEntity
 import com.strayAlpaca.data.datasource.room.entities.ClockPartEntity
+import com.strayAlpaca.data.datasource.room.entities.ClockWidgetEntity
 
 @Dao
 interface ClockDao {
@@ -50,4 +51,16 @@ interface ClockDao {
 
     @Query("SELECT clockIdx FROM clock ORDER BY clockIdx DESC LIMIT 1")
     suspend fun getLargestClockIdx() : Int
+
+    @Query("SELECT clockIdx FROM clock_widget WHERE clockWidgetIdx = :widgetIdx")
+    suspend fun getWidgetUseClock(widgetIdx : Int) : List<Int>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWidgetClock(widgetClockPair : ClockWidgetEntity)
+
+    @Update(entity = ClockWidgetEntity::class)
+    suspend fun updateWidgetClock(widgetClockPair : ClockWidgetEntity) : Int
+
+    @Delete
+    suspend fun deleteWidgetClock(widgetClockPair: ClockWidgetEntity) : Int
 }

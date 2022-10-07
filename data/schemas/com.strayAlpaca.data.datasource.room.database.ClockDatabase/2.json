@@ -1,0 +1,213 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "38b81bbc139f776c79fed01cafeae96d",
+    "entities": [
+      {
+        "tableName": "clock",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clockIdx` INTEGER NOT NULL, `hourHandColor` TEXT NOT NULL, `hourHandWidth` INTEGER NOT NULL, `minuteHandColor` TEXT NOT NULL, `minuteHandWidth` INTEGER NOT NULL, `secondHandColor` TEXT NOT NULL, `secondHandWidth` INTEGER NOT NULL, `lastModifiedTime` TEXT NOT NULL, PRIMARY KEY(`clockIdx`))",
+        "fields": [
+          {
+            "fieldPath": "clockIdx",
+            "columnName": "clockIdx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hourHandColor",
+            "columnName": "hourHandColor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hourHandWidth",
+            "columnName": "hourHandWidth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minuteHandColor",
+            "columnName": "minuteHandColor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minuteHandWidth",
+            "columnName": "minuteHandWidth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondHandColor",
+            "columnName": "secondHandColor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondHandWidth",
+            "columnName": "secondHandWidth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastModifiedTime",
+            "columnName": "lastModifiedTime",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "clockIdx"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "clock_part",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clockIdx` INTEGER NOT NULL, `clockPartIdx` INTEGER NOT NULL, `startAngle` REAL NOT NULL, `endAngle` REAL NOT NULL, `firstColor` TEXT NOT NULL, `secondColor` TEXT NOT NULL, `startRadius` INTEGER NOT NULL, `middleRadius` INTEGER NOT NULL, `useMiddleRadius` INTEGER NOT NULL, `endRadius` INTEGER NOT NULL, `useMiddleLineStroke` INTEGER NOT NULL, `strokeColor` TEXT NOT NULL, `strokeWidth` INTEGER NOT NULL, `priority` INTEGER NOT NULL, PRIMARY KEY(`clockIdx`, `clockPartIdx`), FOREIGN KEY(`clockIdx`) REFERENCES `clock`(`clockIdx`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "clockIdx",
+            "columnName": "clockIdx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clockPartIdx",
+            "columnName": "clockPartIdx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startAngle",
+            "columnName": "startAngle",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endAngle",
+            "columnName": "endAngle",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "firstColor",
+            "columnName": "firstColor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondColor",
+            "columnName": "secondColor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startRadius",
+            "columnName": "startRadius",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "middleRadius",
+            "columnName": "middleRadius",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "useMiddleRadius",
+            "columnName": "useMiddleRadius",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endRadius",
+            "columnName": "endRadius",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "useMiddleLineStroke",
+            "columnName": "useMiddleLineStroke",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "strokeColor",
+            "columnName": "strokeColor",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "strokeWidth",
+            "columnName": "strokeWidth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "priority",
+            "columnName": "priority",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "clockIdx",
+            "clockPartIdx"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "clock",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "clockIdx"
+            ],
+            "referencedColumns": [
+              "clockIdx"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "clock_widget",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`clockWidgetIdx` INTEGER NOT NULL, `clockIdx` INTEGER NOT NULL, PRIMARY KEY(`clockWidgetIdx`))",
+        "fields": [
+          {
+            "fieldPath": "clockWidgetIdx",
+            "columnName": "clockWidgetIdx",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clockIdx",
+            "columnName": "clockIdx",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "clockWidgetIdx"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '38b81bbc139f776c79fed01cafeae96d')"
+    ]
+  }
+}
