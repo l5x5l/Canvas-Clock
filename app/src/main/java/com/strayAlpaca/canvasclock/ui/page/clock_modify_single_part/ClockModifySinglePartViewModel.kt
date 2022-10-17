@@ -81,7 +81,7 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
 
     // 시간값을 수정합니다.
     fun setTimeAngle(hour : Int, minute : Int, timeComponent: ClockPartTimeComponent) {
-        val angle = timeToAngle(is24Mode = true ,hour = hour, minute = minute)
+        val angle = timeToAngle(is24Mode = false ,hour = hour, minute = minute)
         setTimeAngle(angle, timeComponent)
     }
 

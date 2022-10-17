@@ -29,7 +29,7 @@ class TimePickerView(context : Context, attrs : AttributeSet) : ConstraintLayout
 
     fun setDate(angle : Float) {
         isInitSetting = true
-        val time = angleToTime(is24Mode = true, angle).split(":")
+        val time = angleToTime(is24Mode = false, angle).split(":")
         binding.viewTimePicker.hour = time[0].toInt()
         binding.viewTimePicker.minute = time[1].toInt()
         isInitSetting = false

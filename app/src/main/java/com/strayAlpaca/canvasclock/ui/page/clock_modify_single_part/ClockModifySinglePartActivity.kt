@@ -100,8 +100,8 @@ class ClockModifySinglePartActivity : BaseActivity<ActivityClockModifySinglePart
 
                         binding.cbUseMiddleLine.isChecked = clockPartAttr.useMiddleLineStroke
 
-                        binding.tvbtnStartTime.text = angleToTime(is24Mode = true, clockPartAttr.startAngle)
-                        binding.tvbtnEndTime.text = angleToTime(is24Mode = true, clockPartAttr.endAngle)
+                        binding.tvbtnStartTime.text = angleToTime(is24Mode = false, clockPartAttr.startAngle)
+                        binding.tvbtnEndTime.text = angleToTime(is24Mode = false, clockPartAttr.endAngle)
 
                         binding.viewbtnColor1.ivColor.setBackgroundColor(Color.parseColor(clockPartAttr.firstColor))
                         binding.viewbtnColor2.ivColor.setBackgroundColor(Color.parseColor(clockPartAttr.secondColor))

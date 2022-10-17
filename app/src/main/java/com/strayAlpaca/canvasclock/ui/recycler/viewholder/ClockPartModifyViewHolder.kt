@@ -25,7 +25,7 @@ class ClockPartModifyViewHolder(private val binding: ItemClockPartModifyBinding)
         binding.cb.isChecked = clockPart.uiState.isSelected
         binding.viewColor1.ivColor.setBackgroundColor(Color.parseColor(clockPart.firstColor))
         binding.viewColor2.ivColor.setBackgroundColor(Color.parseColor(clockPart.secondColor))
-        binding.tvTime.text = angleToTime(is24Mode = true, angle = clockPart.startAngle) + " ~ " + angleToTime(true, clockPart.endAngle)
+        binding.tvTime.text = angleToTime(is24Mode = false, angle = clockPart.startAngle) + " ~ " + angleToTime(false, clockPart.endAngle)
     }
 
 }
