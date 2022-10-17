@@ -24,6 +24,7 @@
     <string name="choose_clock">시계 선택</string>
     <string name="back_to_home">홈으로 돌아가기</string>
     <string name="complete_modify_part">파츠 수정 완료하기</string>
+    <string name="move_to_next_step">다음단계로 이동하기</string>
 
     <string name="complete">완료</string>
     <string name="cancellation">취소</string>

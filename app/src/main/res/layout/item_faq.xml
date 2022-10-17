@@ -23,7 +23,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="[갤럭시] 위젯이 멈추는 경우가 발생해요"
-            style="@style/textButton"
             android:text="@{faqData.title}"
             />
 

@@ -39,7 +39,7 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
 
         isCreateMode = intent.getBooleanExtra(INTENT_KEY_CREATE_CLOCK, false)
         if (isCreateMode) {
-            binding.tvbtnSave.text = getString(R.string.set_time_handle)
+            binding.tvbtnSave.text = getString(R.string.move_to_next_step)
             confirmDialog.setMainMessage(R.string.message_confirm_cancellation_create_clock)
         }
 
