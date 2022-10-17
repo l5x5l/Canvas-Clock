@@ -23,7 +23,7 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
 
     private lateinit var timerJob : Job
 
-    private var _is24HourMode = MutableStateFlow(true)
+    private var _is24HourMode = MutableStateFlow(false)
     var is24HourMode = _is24HourMode.asStateFlow()
 
     var targetComponent = ClockModeEditableComponent.BACKGROUND
@@ -110,6 +110,7 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
+
     fun saveToMiddle() {
         when (targetComponent) {
             ClockModeEditableComponent.BACKGROUND -> {
@@ -128,7 +129,7 @@ class ClockModeViewModel @Inject constructor() : ViewModel() {
 
     private fun setTime() {
         val calendar = Calendar.getInstance()
-        val hour = if (is24HourMode.value) calendar.get(Calendar.HOUR_OF_DAY) else calendar.get(Calendar.HOUR)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
         _time.value = Time(
             hour = hour, minute = calendar.get(Calendar.MINUTE), second = calendar.get(
                 Calendar.SECOND),
