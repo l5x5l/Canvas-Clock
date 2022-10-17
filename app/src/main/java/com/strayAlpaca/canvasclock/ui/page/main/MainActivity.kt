@@ -14,6 +14,7 @@ import com.strayAlpaca.canvasclock.models.ModifyClock
 import com.strayAlpaca.canvasclock.ui.page.clock_detail.ClockDetailActivity
 import com.strayAlpaca.canvasclock.ui.page.clock_list.ClockListActivity
 import com.strayAlpaca.canvasclock.ui.page.clock_modify_shape.ClockModifyShapeActivity
+import com.strayAlpaca.canvasclock.ui.page.faq.FaqActivity
 import com.strayAlpaca.canvasclock.ui.recycler.adapter.MainClockAdapter
 import com.strayAlpaca.domain.models.ClockData
 import dagger.hilt.android.AndroidEntryPoint
@@ -111,6 +112,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             val intent = Intent(this, ClockListActivity::class.java)
             intent.putExtra(INTENT_KEY_CLOCK_MODE, true)
             startActivity(intent)
+        }
+
+        binding.ivbtnFaq.setOnClickListener {
+            startActivity(Intent(this, FaqActivity::class.java))
         }
     }
 

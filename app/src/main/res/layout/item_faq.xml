@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="faqData"
+            type="com.strayAlpaca.domain.models.FaqData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/margin_large">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_faq_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/padding_middle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="[갤럭시] 위젯이 멈추는 경우가 발생해요"
+            style="@style/textButton"
+            android:text="@{faqData.title}"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout_answer_area"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/padding_middle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_faq_title"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_faq_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_faq_title"
+                android:text="@{faqData.answer}"
+                style="@style/caption"
+                tools:text="설정-애플리케이션-CanvasClock-배터리 항목을 '제한 없음'으로 변경해주세요"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvbtn_shortcut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                app:layout_constraintTop_toBottomOf="@id/tv_faq_answer"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/margin_normal"
+                tools:text="설정으로 이동하기 >"
+                style="@style/caption"
+                android:textColor="@color/color_selector_press"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_answer_area"
+            android:background="@color/guideline_color"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

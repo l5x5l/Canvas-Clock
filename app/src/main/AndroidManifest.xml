@@ -34,6 +34,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.page.faq.FaqActivity"/>
 
         <receiver android:name="com.strayAlpaca.canvasclock.ui.widget.ClockWidgetProvider" android:exported="true">
             <intent-filter>

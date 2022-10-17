@@ -25,6 +25,19 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="84dp"
                 android:paddingHorizontal="16dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivbtn_faq"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:src="@drawable/ic_baseline_help_24"
+                    android:scaleType="center"
+                    style="@style/iconButton"
+                    />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"

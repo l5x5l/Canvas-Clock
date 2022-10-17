@@ -3,6 +3,7 @@ package com.strayAlpaca.domain.usecase
 import com.strayAlpaca.domain.models.ClockData
 import com.strayAlpaca.domain.models.ClockPartData
 import com.strayAlpaca.domain.repository.ClockRepository
+import com.strayAlpaca.domain.repository.FaqRepository
 import javax.inject.Inject
 
 class UseCaseGetMainClock @Inject constructor(private val repository : ClockRepository) {
@@ -51,4 +52,8 @@ class UseCaseWidgetClock @Inject constructor(private val repository : ClockRepos
     suspend fun setWidgetClock(widgetId : Int, clockId : Int) = repository.setWidgetClockId(widgetId = widgetId, clockId = clockId)
 
     suspend fun removeWidgetClock(widgetId : Int) = repository.removeWidgetClockIdx(widgetId = widgetId)
+}
+
+class UseCaseFaq @Inject constructor(private val repository : FaqRepository) {
+    suspend fun getFaqList() = repository.getFaqList()
 }
