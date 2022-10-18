@@ -106,13 +106,18 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
 
         // 시계를 수정할 때와 시계를 생성할 때가 다름
         binding.tvbtnSave.setOnClickListener {
-            if (isCreateMode){
-                ModifyClock.getInstance().initModifyClock(viewModel.clockData.value)
-                val intent = Intent(this, ClockModifyHandleActivity::class.java)
-                intent.putExtra(INTENT_KEY_CLOCK, isCreateMode)
-                startActivity(intent)
+            val numberOfParts = viewModel.clockData.value.clockPartList.size
+            if (numberOfParts == 0) {
+                showSimpleToast(getString(R.string.message_clock_must_have_at_least_one_part))
             } else {
-                viewModel.saveModifiedClockParts()
+                if (isCreateMode){
+                    ModifyClock.getInstance().initModifyClock(viewModel.clockData.value)
+                    val intent = Intent(this, ClockModifyHandleActivity::class.java)
+                    intent.putExtra(INTENT_KEY_CLOCK, isCreateMode)
+                    startActivity(intent)
+                } else {
+                    viewModel.saveModifiedClockParts()
+                }
             }
         }
 
