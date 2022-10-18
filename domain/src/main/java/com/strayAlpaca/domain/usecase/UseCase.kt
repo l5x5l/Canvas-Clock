@@ -4,6 +4,7 @@ import com.strayAlpaca.domain.models.ClockData
 import com.strayAlpaca.domain.models.ClockPartData
 import com.strayAlpaca.domain.repository.ClockRepository
 import com.strayAlpaca.domain.repository.FaqRepository
+import com.strayAlpaca.domain.repository.WidgetRepository
 import javax.inject.Inject
 
 class UseCaseGetMainClock @Inject constructor(private val repository : ClockRepository) {
@@ -46,7 +47,7 @@ class UseCaseInsertClock @Inject constructor(private val repository: ClockReposi
     suspend fun execute(clock : ClockData) = repository.insertClock(clock)
 }
 
-class UseCaseWidgetClock @Inject constructor(private val repository : ClockRepository) {
+class UseCaseWidgetClock @Inject constructor(private val repository : WidgetRepository) {
     suspend fun getWidgetClock(widgetId : Int) = repository.getWidgetClockId(widgetId)
 
     suspend fun setWidgetClock(widgetId : Int, clockId : Int) = repository.setWidgetClockId(widgetId = widgetId, clockId = clockId)

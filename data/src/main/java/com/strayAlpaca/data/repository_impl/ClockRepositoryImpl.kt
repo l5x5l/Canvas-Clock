@@ -86,21 +86,4 @@ class ClockRepositoryImpl @Inject constructor() : ClockRepository {
 
         return ClockDatabase.getInstance().insertClock(clockEntity = clockEntity, clockPartEntityList = clockPartEntityList)
     }
-
-    override suspend fun getWidgetClockId(widgetId: Int): Int {
-        //return SharedPreference.getInstance().getInt("clock_${widgetId}", -1)
-        return ClockDatabase.getInstance().getWidgetClockIdx(widgetIdx = widgetId)
-    }
-
-    override suspend fun setWidgetClockId(widgetId: Int, clockId : Int) {
-        //SharedPreference.getInstance().edit().putInt("clock_${widgetId}", clockId).apply()
-        val clockWidgetEntity = ClockWidgetEntity(clockWidgetIdx = widgetId, clockIdx = clockId)
-        ClockDatabase.getInstance().setWidgetClock(clockWidgetEntity)
-    }
-
-    override suspend fun removeWidgetClockIdx(widgetId: Int) {
-        //SharedPreference.getInstance().edit().remove("clock_${widgetId}").apply()
-        val clockWidgetEntity = ClockWidgetEntity(clockWidgetIdx = widgetId, clockIdx = 0)
-        ClockDatabase.getInstance().deleteWidgetClock(clockWidgetEntity)
-    }
 }

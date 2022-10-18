@@ -23,10 +23,4 @@ interface ClockRepository {
     suspend fun deleteClock(clockIdx : Int) : Int
 
     suspend fun insertClock(clock: ClockData) : Boolean
-
-    suspend fun getWidgetClockId(widgetId : Int) : Int
-
-    suspend fun setWidgetClockId(widgetId : Int, clockId : Int)
-
-    suspend fun removeWidgetClockIdx(widgetId : Int)
 }
