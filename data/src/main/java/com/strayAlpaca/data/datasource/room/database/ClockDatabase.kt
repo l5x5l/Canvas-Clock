@@ -171,6 +171,20 @@ abstract class ClockDatabase : RoomDatabase() {
         return clockDao().deleteWidgetClock(clockWidgetEntity)
     }
 
+    /**
+     * 해당 clockIdx 를 사용하고 있는 위젯들의 id 목록을 불러옵니다.
+     */
+    suspend fun getWidgetIdsByClockIdx(clockIdx : Int) : List<Int> {
+        return clockDao().getClockIdByClockIdx(clockIdx = clockIdx)
+    }
+
+    /**
+     * prevClockIdx 를 인덱스로 가지고 있는 시계를 사용하고 있던 위젯들의 시계 데이터를 newClockIdx 를 인덱스로 하는 시계로 교체합니다.
+     */
+    suspend fun changeWidgetClock(prevClockIdx : Int, newClockIdx : Int) {
+        return clockDao().changeWidgetUseClock(prevClockIdx = prevClockIdx, newClockIdx =  newClockIdx)
+    }
+
     companion object {
         private var instance : ClockDatabase ?= null
 

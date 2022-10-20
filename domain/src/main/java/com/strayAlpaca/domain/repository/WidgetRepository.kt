@@ -6,4 +6,8 @@ interface WidgetRepository {
     suspend fun setWidgetClockId(widgetId : Int, clockId : Int)
 
     suspend fun removeWidgetClockIdx(widgetId : Int)
+
+    suspend fun getWidgetIdsByClockIdx(clockIdx : Int) : List<Int>
+
+    suspend fun changeWidgetClock(prevClockIdx : Int, newClockIdx : Int)
 }

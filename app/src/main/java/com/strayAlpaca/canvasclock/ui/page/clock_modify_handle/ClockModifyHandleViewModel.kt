@@ -6,9 +6,11 @@ import com.strayAlpaca.canvasclock.config.MutableEventFlow
 import com.strayAlpaca.canvasclock.config.asEventFlow
 import com.strayAlpaca.canvasclock.models.ClockHandAttr
 import com.strayAlpaca.canvasclock.models.ModifyClock
+import com.strayAlpaca.canvasclock.ui.widget.ClockWidgetManager
 import com.strayAlpaca.domain.models.ClockData
 import com.strayAlpaca.domain.usecase.UseCaseInsertClock
 import com.strayAlpaca.domain.usecase.UseCaseUpdateClock
+import com.strayAlpaca.domain.usecase.UseCaseWidgetClock
 import com.strayAlpaca.domain.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ClockModifyHandleViewModel @Inject constructor(
     private val useCaseUpdateClock: UseCaseUpdateClock,
-    private val useCaseInsertClock: UseCaseInsertClock
+    private val useCaseInsertClock: UseCaseInsertClock,
+    private val useCaseWidgetClock: UseCaseWidgetClock
 ) : ViewModel() {
     private val _clockData = MutableStateFlow(ModifyClock.getInstance().getOriginalClock())
     val clockData = _clockData.asStateFlow()
@@ -119,9 +122,15 @@ class ClockModifyHandleViewModel @Inject constructor(
     fun saveModifiedClockData() {
         viewModelScope.launch {
             clockData.value.lastModifiedTime = getCurrentTime()
-            val result = useCaseUpdateClock.execute(clockData.value)
+            val modifySuccess = useCaseUpdateClock.execute(clockData.value) >= 0
             ModifyClock.getInstance().initModifyClock(clockData.value)
-            _saveModifiedClockResult.emit(result >= 0)
+
+            if (modifySuccess) {
+                val changedWidgetIds = useCaseWidgetClock.getWidgetIdsByClockIdx(clockData.value.clockIdx)
+                ClockWidgetManager.getInstance().updateClockWidgetTimeHand(appWidgetIds = changedWidgetIds)
+            }
+
+            _saveModifiedClockResult.emit(modifySuccess)
         }
     }
 

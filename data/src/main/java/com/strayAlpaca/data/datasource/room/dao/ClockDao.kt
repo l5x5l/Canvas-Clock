@@ -63,4 +63,10 @@ interface ClockDao {
 
     @Delete
     suspend fun deleteWidgetClock(widgetClockPair: ClockWidgetEntity) : Int
+
+    @Query("SELECT clockWidgetIdx FROM clock_widget WHERE clockIdx = :clockIdx")
+    suspend fun getClockIdByClockIdx(clockIdx : Int) : List<Int>
+
+    @Query("UPDATE clock_widget SET clockIdx = :newClockIdx WHERE clockIdx = :prevClockIdx")
+    suspend fun changeWidgetUseClock(prevClockIdx : Int, newClockIdx : Int)
 }

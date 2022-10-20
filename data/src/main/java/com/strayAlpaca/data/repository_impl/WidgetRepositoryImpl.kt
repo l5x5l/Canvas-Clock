@@ -21,4 +21,12 @@ class WidgetRepositoryImpl @Inject constructor() : WidgetRepository {
         val clockWidgetEntity = ClockWidgetEntity(clockWidgetIdx = widgetId, clockIdx = 0)
         ClockDatabase.getInstance().deleteWidgetClock(clockWidgetEntity)
     }
+
+    override suspend fun getWidgetIdsByClockIdx(clockIdx: Int): List<Int> {
+        return ClockDatabase.getInstance().getWidgetIdsByClockIdx(clockIdx = clockIdx)
+    }
+
+    override suspend fun changeWidgetClock(prevClockIdx: Int, newClockIdx: Int) {
+        ClockDatabase.getInstance().changeWidgetClock(prevClockIdx = prevClockIdx, newClockIdx = newClockIdx)
+    }
 }

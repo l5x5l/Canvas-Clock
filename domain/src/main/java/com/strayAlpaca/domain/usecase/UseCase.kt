@@ -47,12 +47,19 @@ class UseCaseInsertClock @Inject constructor(private val repository: ClockReposi
     suspend fun execute(clock : ClockData) = repository.insertClock(clock)
 }
 
-class UseCaseWidgetClock @Inject constructor(private val repository : WidgetRepository) {
-    suspend fun getWidgetClock(widgetId : Int) = repository.getWidgetClockId(widgetId)
+class UseCaseWidgetClock @Inject constructor(private val widgetRepository : WidgetRepository, private val clockRepository: ClockRepository) {
+    suspend fun getWidgetClock(widgetId : Int) = widgetRepository.getWidgetClockId(widgetId)
 
-    suspend fun setWidgetClock(widgetId : Int, clockId : Int) = repository.setWidgetClockId(widgetId = widgetId, clockId = clockId)
+    suspend fun setWidgetClock(widgetId : Int, clockId : Int) = widgetRepository.setWidgetClockId(widgetId = widgetId, clockId = clockId)
 
-    suspend fun removeWidgetClock(widgetId : Int) = repository.removeWidgetClockIdx(widgetId = widgetId)
+    suspend fun removeWidgetClock(widgetId : Int) = widgetRepository.removeWidgetClockIdx(widgetId = widgetId)
+
+    suspend fun getWidgetIdsByClockIdx(clockIdx : Int) = widgetRepository.getWidgetIdsByClockIdx(clockIdx = clockIdx)
+
+    suspend fun setRandomClockToRemoveClockWidget(removedClockIdx : Int) {
+        val newClockIdx = clockRepository.getRandomClockList(1)[0].clockIdx
+        widgetRepository.changeWidgetClock(prevClockIdx = removedClockIdx, newClockIdx = newClockIdx)
+    }
 }
 
 class UseCaseFaq @Inject constructor(private val repository : FaqRepository) {

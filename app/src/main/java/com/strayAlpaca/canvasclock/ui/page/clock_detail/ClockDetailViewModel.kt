@@ -6,9 +6,11 @@ import com.strayAlpaca.canvasclock.config.MutableEventFlow
 import com.strayAlpaca.canvasclock.config.asEventFlow
 import com.strayAlpaca.canvasclock.models.EventState
 import com.strayAlpaca.canvasclock.models.ModifyClock
+import com.strayAlpaca.canvasclock.ui.widget.ClockWidgetManager
 import com.strayAlpaca.domain.models.ClockData
 import com.strayAlpaca.domain.usecase.UseCaseDeleteClock
 import com.strayAlpaca.domain.usecase.UseCaseGetClockCount
+import com.strayAlpaca.domain.usecase.UseCaseWidgetClock
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ClockDetailViewModel @Inject constructor(
     private val useCaseGetClockCount: UseCaseGetClockCount,
-    private val useCaseDeleteClock: UseCaseDeleteClock
+    private val useCaseDeleteClock: UseCaseDeleteClock,
+    private val useCaseWidgetClock: UseCaseWidgetClock
 ) : ViewModel() {
 
     private val _mainClockState : MutableStateFlow<EventState<ClockData>> = MutableStateFlow(EventState.loading())
@@ -54,6 +57,10 @@ class ClockDetailViewModel @Inject constructor(
             viewModelScope.launch {
                 val response = useCaseDeleteClock.execute(it.clockIdx)
                 _deleteClockEvent.emit(response == 1)
+
+                val changedWidgetIds = useCaseWidgetClock.getWidgetIdsByClockIdx(it.clockIdx)
+                useCaseWidgetClock.setRandomClockToRemoveClockWidget(it.clockIdx)
+                ClockWidgetManager.getInstance().updateClockWidget(changedWidgetIds)
             }
         }
     }

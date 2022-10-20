@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.util.Log
 import android.widget.RemoteViews
 import com.strayAlpaca.canvasclock.R
 import com.strayAlpaca.canvasclock.util.WidgetSizeProvider
@@ -54,6 +55,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
         if (intent?.action == clockWidgetUpdateShape && context != null) {
             val widgetIdx = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
+            Log.d("clockWidgetUpdateShape", "is call ${Arrays.toString(widgetIdx)}")
             if (widgetIdx?.isNotEmpty() == true) {
                 drawClockShape(context, appwidgetManager, widgetIdx)
             }

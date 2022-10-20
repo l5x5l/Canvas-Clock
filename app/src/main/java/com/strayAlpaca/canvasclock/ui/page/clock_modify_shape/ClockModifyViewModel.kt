@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.strayAlpaca.canvasclock.config.MutableEventFlow
 import com.strayAlpaca.canvasclock.config.asEventFlow
 import com.strayAlpaca.canvasclock.models.ModifyClock
+import com.strayAlpaca.canvasclock.ui.widget.ClockWidgetManager
 import com.strayAlpaca.domain.models.ClockData
 import com.strayAlpaca.domain.models.ClockPartData
 import com.strayAlpaca.domain.usecase.UseCaseDeleteClockParts
 import com.strayAlpaca.domain.usecase.UseCaseUpdateClock
 import com.strayAlpaca.domain.usecase.UseCaseUpdateClockPart
+import com.strayAlpaca.domain.usecase.UseCaseWidgetClock
 import com.strayAlpaca.domain.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class ClockModifyViewModel @Inject constructor(
     private val useCaseUpdateClockPart: UseCaseUpdateClockPart,
     private val useCaseUpdateClock: UseCaseUpdateClock,
-    private val useCaseDeleteClockParts: UseCaseDeleteClockParts
+    private val useCaseDeleteClockParts: UseCaseDeleteClockParts,
+    private val useCaseWidgetClock: UseCaseWidgetClock
 ) : ViewModel() {
 
     private val _clockData = MutableStateFlow(ModifyClock.getInstance().getOriginalClock())
@@ -60,6 +63,10 @@ class ClockModifyViewModel @Inject constructor(
                 if (removedClockPartList.isNotEmpty()) useCaseDeleteClockParts.execute(removedClockPartList)
                 useCaseUpdateClockPart.execute(clockData.value.clockPartList)
                 ModifyClock.getInstance().initModifyClock(clockData.value)
+
+                val changedWidgetIds = useCaseWidgetClock.getWidgetIdsByClockIdx(clockData.value.clockIdx)
+                ClockWidgetManager.getInstance().updateClockWidgetShape(changedWidgetIds)
+
                 _saveModifiedClockResult.emit(true)
             } catch (e : Exception) {
                 Log.e("update Clock", e.toString())
