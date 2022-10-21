@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.util.Log
 import android.widget.RemoteViews
 import com.strayAlpaca.canvasclock.R
 import com.strayAlpaca.canvasclock.util.WidgetSizeProvider
@@ -41,6 +40,7 @@ class ClockWidgetProvider : AppWidgetProvider() {
         super.onReceive(context, intent)
 
         val appwidgetManager = AppWidgetManager.getInstance(context)
+
         if (intent?.action == AppWidgetManager.ACTION_APPWIDGET_UPDATE && context != null) {
             callAlarm(context, intent)
             val widgetIds = appwidgetManager.getAppWidgetIds(ComponentName(context.packageName, ClockWidgetProvider::class.java.name))
@@ -55,7 +55,6 @@ class ClockWidgetProvider : AppWidgetProvider() {
 
         if (intent?.action == clockWidgetUpdateShape && context != null) {
             val widgetIdx = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS)
-            Log.d("clockWidgetUpdateShape", "is call ${Arrays.toString(widgetIdx)}")
             if (widgetIdx?.isNotEmpty() == true) {
                 drawClockShape(context, appwidgetManager, widgetIdx)
             }
@@ -68,6 +67,19 @@ class ClockWidgetProvider : AppWidgetProvider() {
             val intent = Intent(context, ClockWidgetProvider::class.java)
             intent.action = clockWidgetUpdateTimeHand
             callAlarm(context, intent)
+        }
+    }
+
+    override fun onUpdate(
+        context: Context?,
+        appWidgetManager: AppWidgetManager?,
+        appWidgetIds: IntArray?
+    ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+
+        if (context != null && appWidgetManager != null && appWidgetIds != null) {
+            drawClockShape(context, appWidgetManager, appWidgetIds)
+            drawClockTimeHand(context, appWidgetManager, appWidgetIds)
         }
     }
 
