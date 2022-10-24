@@ -83,4 +83,8 @@ class ClockModifyViewModel @Inject constructor(
         changedClock.clockPartList = ArrayList(tempList)
         ModifyClock.getInstance().setMiddleSaveClock(changedClock)
     }
+
+    fun getCurrentClockPartAmount() : Int {
+        return clockData.value.clockPartList.size
+    }
 }

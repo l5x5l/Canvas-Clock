@@ -57,11 +57,11 @@ class WidgetActivity : BaseActivity<ActivityClockListBinding>(R.layout.activity_
                 launch {
                     widgetViewModel.saveClockResult.collect { result ->
                         if (result) {
-
                             val intent = Intent().apply {
                                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
                                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
                             }
+                            firebaseAnalytics.logEvent("CREATE_WIDGET", null)
                             setResult(RESULT_OK, intent)
                             finish()
                         }

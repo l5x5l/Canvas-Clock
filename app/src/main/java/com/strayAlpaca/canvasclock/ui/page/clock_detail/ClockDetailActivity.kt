@@ -93,6 +93,7 @@ class ClockDetailActivity : BaseActivity<ActivityClockDetailBinding>(R.layout.ac
 
         confirmDialog.setFirstButton(R.string.go_back)
         confirmDialog.setSecondButton(R.string.delete, buttonClickEvent = {
+            firebaseAnalytics.logEvent("REMOVE_CLOCK", null)
             viewModel.deleteClockEvent()
         })
         confirmDialog.setMainMessage(R.string.message_confirm_delete_clock)

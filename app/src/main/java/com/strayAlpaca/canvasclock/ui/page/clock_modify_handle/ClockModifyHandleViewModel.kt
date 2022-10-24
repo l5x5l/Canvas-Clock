@@ -141,4 +141,8 @@ class ClockModifyHandleViewModel @Inject constructor(
             _saveModifiedClockResult.emit(result)
         }
     }
+
+    fun getCurrentClockPartAmount() : Int {
+        return clockData.value.clockPartList.size
+    }
 }
