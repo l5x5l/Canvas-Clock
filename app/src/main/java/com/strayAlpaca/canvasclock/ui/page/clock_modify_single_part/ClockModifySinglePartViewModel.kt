@@ -67,12 +67,6 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun rollbackAttr() {
-        currentClock = ClockData.deepCopy(initClock)
-        middleSaveClock = ClockData.deepCopy(initClock)
-        _changedClockPartAttr.value = currentClock.clockPartList[selectedClockPartPosition]
-    }
-
     fun getCurrentClockPart() = currentClock.clockPartList
 
     fun getCurrentClock() = currentClock
@@ -278,6 +272,10 @@ class ClockModifySinglePartViewModel @Inject constructor() : ViewModel() {
     }
 
     fun saveModifiedContent(){
+        for (clockPart in currentClock.clockPartList) {
+            if (clockPart.uiState.isSelected)
+                clockPart.uiState.isModified = true
+        }
         ModifyClock.getInstance().setMiddleSaveClock(currentClock)
     }
 }

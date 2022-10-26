@@ -4,5 +4,6 @@ import java.io.Serializable
 
 data class UiStateData(
     var isSelected : Boolean = false,
-    var isNew : Boolean = false
+    var isNew : Boolean = false,
+    var isModified : Boolean = false
 ) : Serializable
