@@ -95,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible"
+            tools:visibility="visible"
             android:background="@drawable/shape_background_gradient">
 
             <LinearLayout
@@ -210,6 +211,14 @@
                     android:text="@string/use_24_hour_mode"/>
 
             </LinearLayout>
+
+            <com.strayAlpaca.canvasclock.ui.custom_components.AdmobInClockModeView
+                android:id="@+id/view_ad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/margin_small"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

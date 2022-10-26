@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.analytics.ktx.logEvent
 import com.strayAlpaca.canvasclock.R
 import com.strayAlpaca.canvasclock.config.*
 import com.strayAlpaca.canvasclock.databinding.ActivityClockModifyShapeBinding
@@ -56,7 +57,7 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
                 }
 
                 launch {
-                    viewModel.saveModifiedClockResult.collect { _ ->
+                    viewModel.saveModifiedClockResult.collect {
                         GlobalApplication.isClockDBModified = true
                         val intent = Intent(this@ClockModifyShapeActivity, BaseActivity::class.java)
                         setResult(RESULT_OK, intent)
@@ -68,6 +69,7 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
 
         confirmDialog.setFirstButton(buttonText = R.string.go_back)
         confirmDialog.setSecondButton(buttonText = R.string.cancel, buttonClickEvent = {
+            logCancelEvent()
             finish()
         })
 
@@ -116,6 +118,9 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
                     intent.putExtra(INTENT_KEY_CLOCK, isCreateMode)
                     startActivity(intent)
                 } else {
+                    firebaseAnalytics.logEvent("MODIFY_SHAPE") {
+                        param("amount_of_clock_part", "${viewModel.getCurrentClockPartAmount()}")
+                    }
                     viewModel.saveModifiedClockParts()
                 }
             }
@@ -135,6 +140,13 @@ class ClockModifyShapeActivity : BaseActivity<ActivityClockModifyShapeBinding>(R
         binding.rvPartList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvPartList.adapter = ClockPartAdapter(addClickEvent = ::moveToClockPartModify)
         binding.rvPartList.addItemDecoration(LinearVerticalDecoration(this))
+    }
+
+    private fun logCancelEvent() {
+        val eventName = if (isCreateMode) "CANCEL_CREATE_CLOCK" else "CANCEL_MODIFY_SHAPE"
+        firebaseAnalytics.logEvent(eventName) {
+            param("amount_of_clock_part", "${viewModel.getCurrentClockPartAmount()}")
+        }
     }
 
     private fun moveToClockPartModify() {

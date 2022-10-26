@@ -2,10 +2,13 @@ package com.strayAlpaca.canvasclock.ui.page.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.view.ViewTreeObserver
+import android.widget.FrameLayout
 import android.widget.RemoteViews
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,11 +17,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strayAlpaca.canvasclock.R
 import com.strayAlpaca.canvasclock.config.BaseActivity
-import com.strayAlpaca.canvasclock.databinding.ActivityClockListBinding
+import com.strayAlpaca.canvasclock.databinding.ActivityWidgetBinding
 import com.strayAlpaca.canvasclock.ui.page.clock_list.ClockListViewModel
 import com.strayAlpaca.canvasclock.ui.recycler.adapter.ClockListPagingAdapter
 import com.strayAlpaca.canvasclock.ui.recycler.decoration.Grid2Decoration
 import com.strayAlpaca.canvasclock.util.WidgetSizeProvider
+import com.strayAlpaca.canvasclock.util.dpToPx
 import com.strayAlpaca.canvasclock.util.drawClock
 import com.strayAlpaca.canvasclock.util.drawTimeHand
 import com.strayAlpaca.domain.models.ClockData
@@ -27,7 +31,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class WidgetActivity : BaseActivity<ActivityClockListBinding>(R.layout.activity_clock_list) {
+class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_widget) {
     private val viewModel : ClockListViewModel by viewModels()
     private val widgetViewModel : WidgetClockViewModel by viewModels()
     var widgetId = -1
@@ -36,6 +40,10 @@ class WidgetActivity : BaseActivity<ActivityClockListBinding>(R.layout.activity_
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setAdViewMargin()
+        }
+
         setRecyclerView()
         setObserver()
         setButton()
@@ -43,6 +51,15 @@ class WidgetActivity : BaseActivity<ActivityClockListBinding>(R.layout.activity_
         widgetId = intent?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         binding.tvTitle.text = getString(R.string.choose_clock)
+
+        // real ca-app-pub-7971830421694549/3304008198
+        // test ca-app-pub-3940256099942544/2247696110
+        binding.viewAd.loadAd("ca-app-pub-3940256099942544/2247696110")
+    }
+
+    override fun onDestroy() {
+        binding.viewAd.removeAd()
+        super.onDestroy()
     }
 
     private fun setObserver() {
@@ -57,11 +74,11 @@ class WidgetActivity : BaseActivity<ActivityClockListBinding>(R.layout.activity_
                 launch {
                     widgetViewModel.saveClockResult.collect { result ->
                         if (result) {
-
                             val intent = Intent().apply {
                                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
                                 action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
                             }
+                            firebaseAnalytics.logEvent("CREATE_WIDGET", null)
                             setResult(RESULT_OK, intent)
                             finish()
                         }
@@ -82,6 +99,19 @@ class WidgetActivity : BaseActivity<ActivityClockListBinding>(R.layout.activity_
             finish()
         }
     }
+
+    private fun setAdViewMargin() {
+        binding.tvTitle.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                val adViewMarginTop = binding.tvTitle.bottom + dpToPx(this@WidgetActivity, 24)
+                val layoutParams = binding.viewAd.layoutParams as FrameLayout.LayoutParams
+                layoutParams.topMargin = adViewMarginTop
+
+                binding.tvTitle.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
+    }
+
 
     // 시계 목록 recyclerView 의 아이템 클릭 이벤트입니다.
     private fun itemClickEvent(clockData : ClockData){

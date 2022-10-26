@@ -87,6 +87,10 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
         setFullScreenMode()
         setObserver()
         setButton()
+
+        // real ca-app-pub-7971830421694549/3304008198
+        // test ca-app-pub-3940256099942544/2247696110
+        binding.viewAd.loadAd("ca-app-pub-3940256099942544/2247696110")
     }
 
     override fun onStop() {
@@ -97,6 +101,11 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
     override fun onRestart() {
         super.onRestart()
         viewModel.startTimer()
+    }
+
+    override fun onDestroy() {
+        binding.viewAd.removeAd()
+        super.onDestroy()
     }
 
     private fun setFullScreenMode(){

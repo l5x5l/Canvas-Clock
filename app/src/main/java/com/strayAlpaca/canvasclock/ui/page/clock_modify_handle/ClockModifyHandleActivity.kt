@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.firebase.analytics.ktx.logEvent
 import com.strayAlpaca.canvasclock.R
 import com.strayAlpaca.canvasclock.config.BaseActivity
 import com.strayAlpaca.canvasclock.config.GlobalApplication
@@ -47,6 +48,7 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
 
         confirmDialog.setFirstButton(buttonText = R.string.go_back)
         confirmDialog.setSecondButton(buttonText = R.string.cancel, buttonClickEvent = {
+            firebaseAnalytics.logEvent("CANCEL_MODIFY_HANDLE", null)
             finish()
         })
 
@@ -92,8 +94,12 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
         // 시계를 수정할 때와 시계를 생성할 때가 다름
         binding.tvbtnSave.setOnClickListener {
             if (isCreateMode) {
+                firebaseAnalytics.logEvent("CREATE_CLOCK") {
+                    param("amount_of_clock_part", "${viewModel.getCurrentClockPartAmount()}")
+                }
                 viewModel.tryInsertClock()
             } else {
+                firebaseAnalytics.logEvent("MODIFY_HANDLE", null)
                 viewModel.saveModifiedClockData()
             }
         }
@@ -139,7 +145,7 @@ class ClockModifyHandleActivity : BaseActivity<ActivityClockModifyHandleBinding>
                 }
 
                 launch {
-                    viewModel.saveModifiedClockResult.collect { _ ->
+                    viewModel.saveModifiedClockResult.collect {
                         GlobalApplication.isClockDBModified = true
                         if (isCreateMode) {
                             val intent = Intent(this@ClockModifyHandleActivity, MainActivity::class.java)
