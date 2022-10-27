@@ -56,7 +56,7 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
         noticeDialog.setDialogData(
             titleResId = R.string.message_battery_setting_for_widget_title,
             bodyResId = R.string.message_battery_setting_for_widget_body,
-            imageResId = R.drawable.ic_launcher_foreground
+            imageResId = R.mipmap.img_battery_setting_guide
         )
 
         widgetId = intent?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID) ?: AppWidgetManager.INVALID_APPWIDGET_ID
