@@ -28,6 +28,7 @@ class AdmobInClockModeView(context : Context, attrs : AttributeSet) : FrameLayou
             currentNativeAd?.destroy()
             currentNativeAd = nativeAd
 
+            binding.adMain.visibility = View.VISIBLE
             setAdUi(nativeAd)
         }
 
