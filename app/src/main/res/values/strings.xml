@@ -69,5 +69,8 @@
     <string name="message_deletion_failure">삭제에 실패했습니다. 잠시 후에 다시 시도해주세요.</string>
     <string name="message_confirm_cancellation_create_clock">시계 추가 작업을\n취소할까요?</string>
 
+    <string name="message_battery_setting_for_widget_title">위젯 사용을 위한 배터리 설정</string>
+    <string name="message_battery_setting_for_widget_body">만약 시계 위젯이 멈추거나 잘 동작하지 않는 경우\n설정-애플리케이션-CanvasClock-배터리 에서 "백그라운드 실행"을 키거나 혹은 배터리 사용 제한을 해제하는 방향으로 설정해주세요</string>
+
     <string name="move_to_native_setting">시스템 설정 화면으로 이동하기 >></string>
 </resources>

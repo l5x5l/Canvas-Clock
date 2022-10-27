@@ -17,7 +17,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strayAlpaca.canvasclock.R
 import com.strayAlpaca.canvasclock.config.BaseActivity
+import com.strayAlpaca.canvasclock.config.SP_KEY_FIRST_ENTER_WIDGET_ACTIVITY
 import com.strayAlpaca.canvasclock.databinding.ActivityWidgetBinding
+import com.strayAlpaca.canvasclock.ui.custom_components.NoticeDialog
 import com.strayAlpaca.canvasclock.ui.page.clock_list.ClockListViewModel
 import com.strayAlpaca.canvasclock.ui.recycler.adapter.ClockListPagingAdapter
 import com.strayAlpaca.canvasclock.ui.recycler.decoration.Grid2Decoration
@@ -25,6 +27,7 @@ import com.strayAlpaca.canvasclock.util.WidgetSizeProvider
 import com.strayAlpaca.canvasclock.util.dpToPx
 import com.strayAlpaca.canvasclock.util.drawClock
 import com.strayAlpaca.canvasclock.util.drawTimeHand
+import com.strayAlpaca.data.datasource.shared_preference.SharedPreference
 import com.strayAlpaca.domain.models.ClockData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -37,6 +40,8 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
     var widgetId = -1
     private var remoteView : RemoteViews ?= null
 
+    private val noticeDialog : NoticeDialog by lazy { NoticeDialog() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,6 +53,12 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
         setObserver()
         setButton()
 
+        noticeDialog.setDialogData(
+            titleResId = R.string.message_battery_setting_for_widget_title,
+            bodyResId = R.string.message_battery_setting_for_widget_body,
+            imageResId = R.drawable.ic_launcher_foreground
+        )
+
         widgetId = intent?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID) ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         binding.tvTitle.text = getString(R.string.choose_clock)
@@ -55,6 +66,10 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
         // real ca-app-pub-7971830421694549/3304008198
         // test ca-app-pub-3940256099942544/2247696110
         binding.viewAd.loadAd("ca-app-pub-3940256099942544/2247696110")
+
+        if (checkIsFirstWidgetActivityOpen()) {
+            noticeDialog.show(supportFragmentManager, "NoticeDialog")
+        }
     }
 
     override fun onDestroy() {
@@ -98,6 +113,10 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
         binding.ivbtnBack.setOnClickListener {
             finish()
         }
+
+        binding.ivbtnDialog.setOnClickListener {
+            noticeDialog.show(supportFragmentManager, "NoticeDialog")
+        }
     }
 
     private fun setAdViewMargin() {
@@ -112,6 +131,13 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
         })
     }
 
+    private fun checkIsFirstWidgetActivityOpen() : Boolean {
+        val isFirst = SharedPreference.getInstance().getBoolean(SP_KEY_FIRST_ENTER_WIDGET_ACTIVITY, true)
+        if (isFirst) {
+            SharedPreference.getInstance().edit().putBoolean(SP_KEY_FIRST_ENTER_WIDGET_ACTIVITY, false).apply()
+        }
+        return isFirst
+    }
 
     // 시계 목록 recyclerView 의 아이템 클릭 이벤트입니다.
     private fun itemClickEvent(clockData : ClockData){
