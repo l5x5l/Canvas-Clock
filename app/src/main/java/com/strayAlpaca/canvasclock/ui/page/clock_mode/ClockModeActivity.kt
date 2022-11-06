@@ -90,7 +90,7 @@ class ClockModeActivity : BaseActivity<ActivityClockModeBinding>(R.layout.activi
 
         // real ca-app-pub-7971830421694549/3304008198
         // test ca-app-pub-3940256099942544/2247696110
-        binding.viewAd.loadAd("ca-app-pub-3940256099942544/2247696110")
+        binding.viewAd.loadAd("ca-app-pub-7971830421694549/3304008198")
     }
 
     override fun onStop() {
