@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.strayAlpaca.canvasclock.models.Time
 import com.strayAlpaca.canvasclock.ui.custom_components.ClockTimerView
-import com.strayAlpaca.canvasclock.ui.recycler.decoration.Grid2Decoration
-import com.strayAlpaca.canvasclock.ui.recycler.decoration.Grid3Decoration
-import com.strayAlpaca.canvasclock.ui.recycler.decoration.Grid4Decoration
-import com.strayAlpaca.canvasclock.ui.recycler.decoration.Grid6Decoration
+import com.strayAlpaca.canvasclock.ui.recycler.decoration.*
 
 object BindingAdapter {
     @JvmStatic
@@ -33,20 +30,7 @@ object BindingAdapter {
     @BindingAdapter("gridLayoutManager")
     fun setGridLayoutManager(view : RecyclerView, grid : Int) {
         view.layoutManager = GridLayoutManager(view.context, grid)
-        when (grid) {
-            2 -> {
-                view.addItemDecoration(Grid2Decoration(view.context))
-            }
-            3 -> {
-                view.addItemDecoration(Grid3Decoration(view.context))
-            }
-            4 -> {
-                view.addItemDecoration(Grid4Decoration(view.context))
-            }
-            6 -> {
-                view.addItemDecoration(Grid6Decoration(view.context))
-            }
-        }
+        view.addItemDecoration(GridDecoration(context = view.context, gridColumn = grid))
     }
 
     @JvmStatic
