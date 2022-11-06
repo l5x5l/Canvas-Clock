@@ -97,3 +97,4 @@ lint/tmp/
 /captures
 .cxx
 /.idea/deploymentTargetDropDown.xml
+/app/release/output-metadata.json
