@@ -3,13 +3,9 @@ package com.strayAlpaca.canvasclock.ui.page.widget
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
-import android.widget.RemoteViews
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -23,10 +19,8 @@ import com.strayAlpaca.canvasclock.ui.custom_components.NoticeDialog
 import com.strayAlpaca.canvasclock.ui.page.clock_list.ClockListViewModel
 import com.strayAlpaca.canvasclock.ui.recycler.adapter.ClockListPagingAdapter
 import com.strayAlpaca.canvasclock.ui.recycler.decoration.Grid2Decoration
-import com.strayAlpaca.canvasclock.util.WidgetSizeProvider
+import com.strayAlpaca.canvasclock.ui.widget.ClockWidgetProvider
 import com.strayAlpaca.canvasclock.util.dpToPx
-import com.strayAlpaca.canvasclock.util.drawClock
-import com.strayAlpaca.canvasclock.util.drawTimeHand
 import com.strayAlpaca.data.datasource.shared_preference.SharedPreference
 import com.strayAlpaca.domain.models.ClockData
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +32,6 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
     private val viewModel : ClockListViewModel by viewModels()
     private val widgetViewModel : WidgetClockViewModel by viewModels()
     var widgetId = -1
-    private var remoteView : RemoteViews ?= null
 
     private val noticeDialog : NoticeDialog by lazy { NoticeDialog() }
 
@@ -141,31 +134,11 @@ class WidgetActivity : BaseActivity<ActivityWidgetBinding>(R.layout.activity_wid
 
     // 시계 목록 recyclerView 의 아이템 클릭 이벤트입니다.
     private fun itemClickEvent(clockData : ClockData){
-        remoteView = RemoteViews(this.packageName, R.layout.widget_clock)
-        val appWidgetManger = AppWidgetManager.getInstance(this@WidgetActivity)
-        val widgetSize = WidgetSizeProvider(this, appWidgetManger).getWidgetsSize(widgetId)
-
-        val radius = kotlin.math.min(widgetSize.first, widgetSize.second) / 2
-
-        val shapeBitmap = Bitmap.createBitmap(widgetSize.first, widgetSize.second, Bitmap.Config.ARGB_8888)
-        val shapeCanvas = Canvas(shapeBitmap)
-        drawClock(shapeCanvas, clockData.clockPartList, widgetSize.first / 2, widgetSize.second / 2, radius)
-
-        remoteView?.let {
-            it.setImageViewBitmap(R.id.iv_widget_clock_shape, shapeBitmap)
-            appWidgetManger.partiallyUpdateAppWidget(widgetId, it)
-        }
-
-        val calendar = Calendar.getInstance()
-        val handleBitmap = Bitmap.createBitmap(widgetSize.first, widgetSize.second, Bitmap.Config.ARGB_8888)
-        val handleCanvas = Canvas(handleBitmap)
-        drawTimeHand(canvas = handleCanvas, clock = clockData, mx = widgetSize.first / 2, my = widgetSize.second / 2, radius = radius, is24HourMode = false, hour = calendar.get(Calendar.HOUR), minute = calendar.get(Calendar.MINUTE), second = null )
-
-        remoteView?.let {
-            it.setImageViewBitmap(R.id.iv_widget_clock_handle, handleBitmap)
-            appWidgetManger.partiallyUpdateAppWidget(widgetId, it)
-        }
-
         widgetViewModel.setClock(clockIdx = clockData.clockIdx, widgetId = widgetId)
+
+        val intent = Intent(baseContext, ClockWidgetProvider::class.java)
+        intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+        intent.setPackage("com.strayAlpaca.canvasclock")
+        sendBroadcast(intent)
     }
 }
