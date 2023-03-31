@@ -10,6 +10,12 @@
 <img width="24%" src="https://user-images.githubusercontent.com/39579912/211178563-2244fb71-9d3b-4d6b-9985-8d76e67976a9.png"/>
 <img width="24%" src="https://user-images.githubusercontent.com/39579912/211178568-15c5f598-fd22-4976-a32a-86ba4303ee42.png"/>
 </p>
+시연영상
+<p>
+<img width="24%" src="https://user-images.githubusercontent.com/39579912/228991126-45ac8113-30a1-4ea9-a006-9507ad97c868.gif"/>
+<img width="24%" src="https://user-images.githubusercontent.com/39579912/228989353-c9f5322b-377a-4ed0-8723-e133148c89bb.gif"/>
+<img width="24%" src="https://user-images.githubusercontent.com/39579912/228989259-9b57bee8-044f-4b90-9868-c1ab1ecedad3.gif"/>
+</p>
 
 ## 개발정보
 
